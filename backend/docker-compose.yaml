@@ -1,0 +1,33 @@
+services:
+  backend:
+    build: .
+    container_name: pwe-backend
+    ports:
+      - "8000:8000"
+    environment:
+      DB_HOST: db
+      DB_PORT: "5432"
+      POSTGRES_DB: pwe
+      POSTGRES_USER: pweuser
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    depends_on:
+      db:
+        condition: service_healthy
+  db:
+    image: postgres:17
+    container_name: pwe-db
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: pwe
+      POSTGRES_USER: pweuser
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U pweuser -d pwe"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+volumes:
+  postgres_data:

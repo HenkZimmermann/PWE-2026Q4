@@ -13,13 +13,12 @@ interaktiven Austausch von unterschiedlichsten Themen und Personen.
 - ```Docker```
 
 ## Starten
-```bash
-# Ports
-  ➜  Frontend:   5173
-  ➜  Backend/API:
-  ➜  Datenbank:   
 
-
+#### Ports
+```
+➜  Frontend:    5173
+➜  Backend/API: 8000
+➜  Datenbank:   5432
 ```
 
 #### Frontend
@@ -31,10 +30,20 @@ bash start.sh
 
 # Windows
 cd frontend
-docker build -t pwe-frontend . 
-docker run --name pwe-frontend -p 5173:5173 pwe-frontend
+cmd /c start.bat
 # Ab hier ist der Container über Docker Desktop verwaltbar.
+```
+#### Backend
 
+```bash
+# Linux
+cd backend
+bash start.sh
+
+# Windows
+cd backend
+cmd /c start.bat
+# Ab hier ist der Container über Docker Desktop verwaltbar.
 ```
 
 ## Sonstiges
