@@ -12,6 +12,18 @@ interaktiven Austausch von unterschiedlichsten Themen und Personen.
 - ```PostgreSQL```
 - ```Docker```
 
+## Starten
+
+#### Frontend
+
+```bash
+# Linux
+cd frontend
+bash start.sh
+```
+
+## Sonstiges
+
 #### Geplante Funktionen / Anforderungen
 
 - **Grundidee**: Frage-Antwort Web-Forum
