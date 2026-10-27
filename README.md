@@ -7,6 +7,7 @@ interaktiven Austausch von unterschiedlichsten Themen und Personen.
 #### Technologien
 
 - ```React```
+- ```Vite```
 - ```FastAPI```
 - ```PostgreSQL```
 - ```Docker```
