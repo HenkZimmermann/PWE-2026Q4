@@ -7,9 +7,37 @@ interaktiven Austausch von unterschiedlichsten Themen und Personen.
 #### Technologien
 
 - ```React```
+- ```Vite```
 - ```FastAPI```
 - ```PostgreSQL```
 - ```Docker```
+
+## Starten
+```bash
+# Ports
+  ➜  Frontend:   5173
+  ➜  Backend/API:
+  ➜  Datenbank:   
+
+
+```
+
+#### Frontend
+
+```bash
+# Linux
+cd frontend
+bash start.sh
+
+# Windows
+cd frontend
+docker build -t pwe-frontend . 
+docker run --name pwe-frontend -p 5173:5173 pwe-frontend
+# Ab hier ist der Container über Docker Desktop verwaltbar.
+
+```
+
+## Sonstiges
 
 #### Geplante Funktionen / Anforderungen
 
