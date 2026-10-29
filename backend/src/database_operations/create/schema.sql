@@ -44,12 +44,10 @@ CREATE TABLE IF NOT EXISTS votes (
 );
 CREATE TABLE IF NOT EXISTS member_of(
     user_id INT NOT NULL REFERENCES Users(user_id),
-    group_id INT NOT NULL REFERENCES Groups(group_id),
-    ADD CONSTRAINT member_of_pk PRIMARY KEY (user_id, group_id);
+    group_id INT NOT NULL REFERENCES Groups(group_id)
 
 );
 CREATE TABLE IF NOT EXISTS follows(
     user_id INT NOT NULL REFERENCES Users(user_id),
-    followed_user_id INT NOT NULL REFERENCES Users(user_id),
-    ADD CONSTRAINT follows_pk PRIMARY KEY (user_id, followed_user_id);
+    followed_user_id INT NOT NULL REFERENCES Users(user_id)
 );
