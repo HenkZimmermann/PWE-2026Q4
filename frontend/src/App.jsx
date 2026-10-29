@@ -1,12 +1,13 @@
-import './App.css'
+import Sections from './sections/Sections'
 
 function App() {
-
-  return (
-    <div className="app">
-      <h1>Vite + React</h1>
-    </div>
-  )
+    return (
+        <div>
+            {Sections.map((section) => (
+                section.element
+            ))}
+        </div>
+    );
 }
 
-export default App
+export default App;
