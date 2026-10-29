@@ -36,3 +36,15 @@ CREATE TABLE IF NOT EXISTS Comments (
     user_id INT NOT NULL REFERENCES Users(user_id),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+CREATE TABLE IF NOT EXISTS votes (
+    user_id INT NOT NULL REFERENCES Users(user_id),
+    thread_id INT REFERENCES Threads(thread_id)
+);
+CREATE TABLE IF NOT EXISTS member_of(
+    user_id INT NOT NULL REFERENCES Users(user_id),
+    group_id INT NOT NULL REFERENCES Groups(group_id)
+);
+CREATE TABLE IF NOT EXISTS follows(
+    user_id INT NOT NULL REFERENCES Users(user_id),
+    followed_user_id INT NOT NULL REFERENCES Users(user_id)
+);
