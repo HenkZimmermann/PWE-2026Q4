@@ -3,7 +3,7 @@ function Element() {
 }
 
 export const DashboardSection = {
-    itle: "Dashboard",
+    title: "Dashboard",
     icon: "🖥️",
     url: "/",
     subUrls: [
@@ -12,6 +12,7 @@ export const DashboardSection = {
         element: <... />
         }*/
     ],
+    showInSidebar: true,
     element: <Element />,
 };
 

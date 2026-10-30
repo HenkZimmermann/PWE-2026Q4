@@ -1,28 +1,34 @@
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import Sections from './sections/Sections'
+import { Routes, Route } from "react-router-dom";
+import Sections from "./sections/Sections"
+import Sidebar from "./page/Sidebar"
+import "./App.css"
 
-function AppInner() {
+function RouteRegistration() {
     return (
-        <div className="page-shell">
-            <Routes>
-                {Sections.map((section) => (
-                    <Route key={section.url} path={section.url} element={section.element} />
-                ))}
-                {Sections.map((section) =>
-                    section.subUrls?.map((subUrl) => (
-                        <Route key={subUrl.url} path={subUrl.url} element={subUrl.element} />
-                    ))
-                )}
-            </Routes>
-        </div>
+        <Routes>
+            // Section URLs als Route registrieren
+            {Sections.map((section) => (
+                <Route key={section.url} path={section.url} element={section.element} />
+            ))}
+
+            // Die Sub-URLs der Section auch als Route registrieren
+            {Sections.map((section) =>
+                section.subUrls?.map((subUrl) => (
+                    <Route key={subUrl.url} path={subUrl.url} element={subUrl.element} />
+                ))
+            )}
+        </Routes>
     );
 }
 
 function App() {
     return (
-        <BrowserRouter>
-            <AppInner />
-        </BrowserRouter>
+        <div className="app-layout">
+            <Sidebar />
+            <main className="main-content">
+                <RouteRegistration />
+            </main>
+        </div>
     );
 }
 
