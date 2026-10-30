@@ -1,5 +1,7 @@
 import { Routes, Route } from "react-router-dom";
-import Sections from './sections/Sections'
+import Sections from "./sections/Sections"
+import Sidebar from "./page/Sidebar"
+import "./App.css"
 
 function RouteRegistration() {
     return (
@@ -22,6 +24,7 @@ function RouteRegistration() {
 function App() {
     return (
         <div className="app-layout">
+            <Sidebar />
             <main className="main-content">
                 <RouteRegistration />
             </main>
