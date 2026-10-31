@@ -10,9 +10,9 @@ export function Sidebar() {
             </div>
             <nav>
                 <ul>
-                    {Sections.map((section) => (
+                    {Sections.filter(section => section.showInSidebar).map((section) => (
                         <li key={section.url}>
-                            <Link to={section.url}>{section.title}</Link>
+                            <Link to={section.url}>{section.icon} {section.title}</Link>
                         </li>
                     ))}
                 </ul>
