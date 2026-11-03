@@ -1,0 +1,1 @@
+SELECT * FROM comments WHERE parent_comment_id = %s;
