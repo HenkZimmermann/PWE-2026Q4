@@ -1,7 +1,7 @@
 CREATE TABLE IF NOT EXISTS Roles (
     role_id SERIAL PRIMARY KEY,
     name VARCHAR(50) UNIQUE NOT NULL,
-    permissions TEXT[] NOT NULL
+    permissions TEXT NOT NULL
 );
 CREATE TABLE IF NOT EXISTS Users (
     user_id SERIAL PRIMARY KEY,

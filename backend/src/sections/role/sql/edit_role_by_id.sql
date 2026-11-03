@@ -1,0 +1,1 @@
+UPDATE roles SET name = %s, permissions = %s WHERE role_id = %s;
