@@ -1,0 +1,1 @@
+SELECT * FROM threads ORDER BY votes DESC;

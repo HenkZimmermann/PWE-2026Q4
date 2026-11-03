@@ -1,0 +1,1 @@
+INSERT INTO threads (user_id, title, content) VALUES (%s, %s, %s) RETURNING *;

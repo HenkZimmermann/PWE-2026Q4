@@ -1,0 +1,1 @@
+SELECT * FROM threads WHERE title ILIKE %s ORDER BY created_at DESC;
