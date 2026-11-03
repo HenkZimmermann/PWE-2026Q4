@@ -46,6 +46,18 @@ cmd /c start.bat
 # Ab hier ist der Container über Docker Desktop verwaltbar.
 ```
 
+## Features
+
+#### Sections
+
+- Search
+- Dashboard
+- Groups
+- Explore Page
+- Categories
+- Direct Messages
+- Profile Page
+
 ## Sonstiges
 
 #### Geplante Funktionen / Anforderungen
