@@ -1,0 +1,1 @@
+INSERT INTO groups (group_name, category,members,system_created, description) VALUES ( %s, %s, %s, %s, %s) RETURNING *;

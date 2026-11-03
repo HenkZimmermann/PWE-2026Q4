@@ -1,0 +1,1 @@
+UPDATE groups SET group_name = %s, category = %s, members = %s, system_created = %s, description = %s WHERE group_id = %s;
