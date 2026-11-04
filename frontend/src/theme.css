@@ -1,0 +1,18 @@
+:root {
+  /* Hintergrund */
+  --background:   #0F0F0F;
+  --surface:      #1C1C1C;
+  --elevated:     #262626;
+  --border:       #2E2E2E;
+
+  /* Text */
+  --text:         #FFFFFF;
+  --text-soft:    #D4D4D4;
+  --text-muted:   #A0A0A0;
+
+  /* Akzent */
+  --gold:         #D4AF37;
+  --gold-dark:    #A68B2E;
+  --gold-light:   #E5C76B;
+  --gold-soft:    #F5E6C8;
+}

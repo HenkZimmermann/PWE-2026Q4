@@ -1,7 +1,7 @@
 .sidebar {
     width: 260px;
     height: 100vh;
-    background: #1C1C1C;
+    background: var(--surface);
     padding: 1.5rem 1rem;
     box-sizing: border-box;
     position: fixed;
@@ -28,15 +28,14 @@
 .sidebar nav a {
     display: flex;
     padding: 0.75rem 1rem;
-    color: #FFFFFF;
+    color: var(--text);
     text-decoration: none;
     border-radius: 0.5rem;
     gap: 1.5rem;
-    background: #262626;
-    transition: background 0.2s, color 0.2s;
+    background: var(--elevated);
+    transition: background 0.2s;
 }
 
 .sidebar nav a:hover {
-    background: #D4AF37;
-    color: #FFFFFF;
+    background: var(--gold);
 }
