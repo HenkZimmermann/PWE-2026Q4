@@ -12,7 +12,10 @@ export function Sidebar() {
                 <ul>
                     {Sections.filter(section => section.showInSidebar).map((section) => (
                         <li key={section.url}>
-                            <Link to={section.url}>{section.icon} {section.title}</Link>
+                            <Link to={section.url}>
+                                <span>{section.icon}</span>
+                                {section.title}
+                            </Link>
                         </li>
                     ))}
                 </ul>

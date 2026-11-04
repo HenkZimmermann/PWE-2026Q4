@@ -3,7 +3,7 @@ function Element() {
 }
 
 export const SearchSection = {
-    title: "Search",
+    title: "Suche",
     icon: "🔎",
     url: "/search",
     subUrls: [
