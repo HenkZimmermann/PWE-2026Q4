@@ -1,0 +1,1 @@
+DELETE FROM follows WHERE user_id = %s AND followed_user_id = %s;
