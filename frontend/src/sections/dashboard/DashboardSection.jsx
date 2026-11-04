@@ -12,6 +12,7 @@ function Element() {
         </div>
     );
 }
+
 export const DashboardSection = {
     title: "Dashboard",
     icon: "🖥️",

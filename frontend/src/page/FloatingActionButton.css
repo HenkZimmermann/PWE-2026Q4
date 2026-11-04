@@ -5,7 +5,7 @@
     width: 56px;
     height: 56px;
     border-radius: 50%;
-    background-color: var(--gold);
+    background-color: var(--accent);
     color: var(--text);
     border: none;
     font-size: 28px;
@@ -21,7 +21,7 @@
 
 .floating-action-button:hover {
     transform: scale(1.08);
-    background-color: var(--gold-light);
+    background-color: var(--accent-light);
 }
 
 .floating-action-button span {

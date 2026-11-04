@@ -52,5 +52,5 @@
 }
 
 .sidebar nav a:hover {
-    background: var(--gold);
+    background: var(--accent);
 }
