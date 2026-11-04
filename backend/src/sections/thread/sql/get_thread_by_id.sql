@@ -1,1 +1,1 @@
-SELECT * FROM threads WHERE id = %s;
+SELECT * FROM threads WHERE thread_id = %s;
