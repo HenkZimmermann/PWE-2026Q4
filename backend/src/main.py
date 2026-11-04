@@ -5,6 +5,7 @@ from src.sections.comment import comment_routes
 from src.sections.thread import thread_routes
 from src.sections.follows import follows_routes
 from src.sections.member_of import member_of_routes
+from src.sections.vote import vote_routes
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
@@ -22,6 +23,7 @@ app.include_router(comment_routes.router)
 app.include_router(thread_routes.router)
 app.include_router(follows_routes.router)
 app.include_router(member_of_routes.router)
+app.include_router(vote_routes.router)
 
 
 @app.get("/")

@@ -1,0 +1,1 @@
+INSERT INTO votes (user_id, thread_id) VALUES (%s, %s);
