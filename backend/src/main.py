@@ -2,6 +2,8 @@ from fastapi import FastAPI
 from src.sections.groups import groups_routes
 from src.sections.role import role_routes
 from src.sections.comment import comment_routes
+from src.sections.thread import thread_routes
+
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
@@ -16,6 +18,8 @@ app.add_middleware(
 app.include_router(groups_routes.router)
 app.include_router(role_routes.router)
 app.include_router(comment_routes.router)
+app.include_router(thread_routes.router)
+
 
 
 @app.get("/")
