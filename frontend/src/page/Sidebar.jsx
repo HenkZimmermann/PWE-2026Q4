@@ -6,7 +6,7 @@ export function Sidebar() {
     return (
         <aside className="sidebar">
             <div className="sidebar-header">
-                <h2>PWE-2026Q4 Forum</h2>
+                <h2>PWE-Forum</h2>
             </div>
             <nav>
                 <ul>
