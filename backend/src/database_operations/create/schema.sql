@@ -29,8 +29,8 @@ CREATE TABLE IF NOT EXISTS Threads (
 );
 CREATE TABLE IF NOT EXISTS Comments (
     comment_id SERIAL PRIMARY KEY,
-    thread_id INT NOT NULL REFERENCES Threads(thread_id),
-    parent_comment_id INT REFERENCES Comments(comment_id),
+    thread_id INT NOT NULL REFERENCES Threads(thread_id) ON DELETE CASCADE,
+    parent_comment_id INT REFERENCES Comments(comment_id) ON DELETE CASCADE,
     message TEXT NOT NULL,
     votes INT DEFAULT 0,
     user_id INT NOT NULL REFERENCES Users(user_id),
@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS Comments (
 );
 CREATE TABLE IF NOT EXISTS votes (
     user_id INT NOT NULL REFERENCES Users(user_id),
-    thread_id INT REFERENCES Threads(thread_id),
+    thread_id INT REFERENCES Threads(thread_id) ON DELETE CASCADE,
     PRIMARY KEY (user_id, thread_id)
 
 );
