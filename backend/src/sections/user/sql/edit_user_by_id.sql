@@ -1,0 +1,1 @@
+UPDATE users set username = %s, email = %s, role_id = %s WHERE user_id = %s;
