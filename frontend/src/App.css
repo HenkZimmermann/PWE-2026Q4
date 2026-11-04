@@ -1,0 +1,18 @@
+body {
+    background: #0F0F0F;
+    color: #FFFFFF;
+    font-family: "Geist", system-ui, -apple-system, sans-serif;
+}
+
+.app-layout {
+    display: flex;
+    min-height: 100vh;
+}
+
+.main-content {
+    margin-left: 260px;
+    padding: 2rem;
+    flex: 1;
+    background: #0F0F0F;
+    min-height: 100vh;
+}
