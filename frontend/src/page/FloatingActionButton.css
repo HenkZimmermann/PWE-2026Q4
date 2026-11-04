@@ -1,0 +1,31 @@
+.floating-action-button {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background-color: var(--gold);
+    color: var(--text);
+    border: none;
+    font-size: 28px;
+    font-weight: 300;
+    line-height: 1;
+    cursor: pointer;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.floating-action-button:hover {
+    transform: scale(1.08);
+    background-color: var(--gold-light);
+}
+
+.floating-action-button span {
+    display: block;
+    transform: translateY(-1.5px); /* Sonst ist das + etc. nicht richtig zentriert */
+    user-select: none;
+}

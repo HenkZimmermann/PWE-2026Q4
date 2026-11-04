@@ -12,7 +12,7 @@ zur schnellen Recherche und Analyse von Fehlern.
 
 | Bezeichnung                    | Prompts (Sinngemäß) |
 |--------------------------------|------------------|
-| Design und Styling             | - ```"Gib mir ein Farbschema für ein moderne Website für CSS"``` <br> - ```"Wie kann ich diesen CSS Code besser gestalten [...]"``` <br> - ```"Wie kriege ich eine feste breite zwischen diesen beiden Elementen: [...]"``` <br> - ```"Wie mache ich eine Tabelle in Markdown"```              |
+| Design und Styling             | - ```"Gib mir ein Farbschema für ein moderne Website für CSS"``` <br> - ```"Wie kann ich diesen CSS Code besser gestalten [...]"``` <br> - ```"Wie kriege ich eine feste breite zwischen diesen beiden Elementen: [...]"``` <br> - ```"Wie mache ich eine Tabelle in Markdown"``` <br> - ```"Wieso ist der Text im Button nicht richtig zentriert [...]"```              |
 | Debugging von schweren Fehlern | - ```"Ich versuche [...] zu installieren und kriege diesen Fehler: [...]"``` <br> - ```"React wirft diesen Fehler [...]"``` <br> - ```"Meine React App findet die neu hinzugefügten JS packages nicht"```              |
 
 ## Details
