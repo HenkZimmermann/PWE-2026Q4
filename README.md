@@ -4,6 +4,8 @@ Repository für das Uni-Modul **Projekt: Webenticklung**. Ziel dieses Projektes 
 ähnlich wie [Reddit](https://www.reddit.com/), zu entwickeln. Der Fokus liegt hierbau auf der Funktionalität des Forums. Das Forum ermöglicht einen weltweiten und
 interaktiven Austausch von unterschiedlichsten Themen und Personen.
 
+![Screenshot](/screenshot.jpg?raw=true "Screenshot")
+
 #### Technologien
 
 - ```React```
