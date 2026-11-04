@@ -1,0 +1,1 @@
+INSERT INTO member_of (user_id, group_id) VALUES (%s, %s) RETURNING *;

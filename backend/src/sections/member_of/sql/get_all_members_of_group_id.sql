@@ -1,0 +1,1 @@
+SELECT * FROM member_of WHERE group_id = %s;
