@@ -1,5 +1,16 @@
+import FloatingActionButton from "../../page/FloatingActionButton";
+
 function Element() {
-    return (<h1>Dashboard</h1>);
+    const handleCreate = () => {
+        alert("Neu"); // TODO, beispiel alert
+    };
+
+    return (
+        <div>
+            <h1>Dashboard</h1>
+            <FloatingActionButton onClick={handleCreate} content="+" />
+        </div>
+    );
 }
 
 export const DashboardSection = {

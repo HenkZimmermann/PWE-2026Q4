@@ -1,6 +1,8 @@
+@import './theme.css';
+
 body {
-    background: #0F0F0F;
-    color: #FFFFFF;
+    background: var(--background);
+    color: var(--text);
     font-family: "Geist", system-ui, -apple-system, sans-serif;
 }
 
@@ -13,6 +15,6 @@ body {
     margin-left: 260px;
     padding: 2rem;
     flex: 1;
-    background: #0F0F0F;
+    background: var(--background);
     min-height: 100vh;
 }
