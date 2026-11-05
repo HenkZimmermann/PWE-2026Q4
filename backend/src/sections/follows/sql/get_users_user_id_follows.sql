@@ -1,0 +1,1 @@
+SELECT * FROM follows WHERE user_id = %s;

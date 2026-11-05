@@ -1,0 +1,1 @@
+DELETE FROM member_of WHERE user_id = %s AND group_id = %s;

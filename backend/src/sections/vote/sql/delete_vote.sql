@@ -1,0 +1,1 @@
+DELETE FROM votes WHERE user_id = %s AND thread_id = %s;

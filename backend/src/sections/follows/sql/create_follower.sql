@@ -1,0 +1,1 @@
+INSERT INTO follows (user_id, followed_user_id) VALUES (%s, %s) RETURNING *;

@@ -1,0 +1,1 @@
+SELECT * FROM comments WHERE thread_id = %s;

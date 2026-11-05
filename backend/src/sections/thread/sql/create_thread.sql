@@ -1,0 +1,1 @@
+INSERT INTO threads (message, user_id, votes, group_id, title) VALUES (%s, %s, %s, %s, %s) RETURNING *;

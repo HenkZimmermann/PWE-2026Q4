@@ -19,6 +19,7 @@ services:
     ports:
       - "5432:5432"
     environment:
+      POSTGRES_HOST: db
       POSTGRES_DB: pwe
       POSTGRES_USER: pweuser
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}

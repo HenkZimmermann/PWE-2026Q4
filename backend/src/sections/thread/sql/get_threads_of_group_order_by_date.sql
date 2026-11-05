@@ -1,0 +1,1 @@
+SELECT * FROM Threads WHERE group_id = %s ORDER BY created_at DESC;

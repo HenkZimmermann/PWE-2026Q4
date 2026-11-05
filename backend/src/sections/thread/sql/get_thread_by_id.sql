@@ -1,0 +1,1 @@
+SELECT * FROM threads WHERE thread_id = %s;
