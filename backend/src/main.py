@@ -1,12 +1,12 @@
 from fastapi import FastAPI
-from sections.groups import groups_routes
-from sections.role import role_routes
-from sections.comment import comment_routes
-from sections.thread import thread_routes
-from sections.follows import follows_routes
-from sections.member_of import member_of_routes
-from sections.vote import vote_routes
-from sections.user import user_routes
+from src.sections.groups import groups_routes
+from src.sections.role import role_routes
+from src.sections.comment import comment_routes
+from src.sections.thread import thread_routes
+from src.sections.follows import follows_routes
+from src.sections.member_of import member_of_routes
+from src.sections.vote import vote_routes
+from src.sections.user import user_routes
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
