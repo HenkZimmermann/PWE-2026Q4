@@ -1,7 +1,9 @@
 from fastapi import APIRouter, HTTPException, status
 from src.sections.thread.thread_model import *
 from src.sections.thread.thread_service import *
+
 router = APIRouter()
+
 @router.get("/threads/votes")
 def get_threads_ordered_by_votes_route():
     try:
@@ -11,13 +13,15 @@ def get_threads_ordered_by_votes_route():
         return threads
     except Exception as e:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
+    
 @router.post("/threads/create")
-def create_thread_route(request: threadCreateModel):
+def create_thread_route(request: ThreadModel):
     try:
         thread = create_thread(request)
         return thread
     except Exception as e:
             raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
+    
 @router.delete("/threads/{thread_id}")
 def delete_thread_route(thread_id: int):
     try:
@@ -27,8 +31,9 @@ def delete_thread_route(thread_id: int):
         return {"message": "Thread deleted successfully"}
     except Exception as e:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
+    
 @router.put("/threads/{thread_id}")
-def edit_thread_route(thread_id: int, request: threadCreateModel):
+def edit_thread_route(thread_id: int, request: ThreadModel):
     try:
         result = edit_thread_by_id(thread_id, request)
         if not result:
@@ -36,6 +41,7 @@ def edit_thread_route(thread_id: int, request: threadCreateModel):
         return {"message": "Thread updated successfully"}
     except Exception as e:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
+    
 @router.get("/threads/search/{thread_name}")
 def get_all_threads_by_name_route(thread_name: str):
     try:
@@ -45,6 +51,7 @@ def get_all_threads_by_name_route(thread_name: str):
         return threads
     except Exception as e:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
+    
 @router.get("/threads/{thread_id}")
 def get_thread_by_id_route(thread_id: int):
     try:
@@ -54,6 +61,7 @@ def get_thread_by_id_route(thread_id: int):
         return thread
     except Exception as e:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
+    
 @router.get("/threads/user/{user_id}")
 def get_threads_by_user_id_route(user_id: int):
     try:
@@ -63,6 +71,7 @@ def get_threads_by_user_id_route(user_id: int):
         return threads
     except Exception as e:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
+    
 @router.get("/threads/group/{group_id}")
 def get_threads_by_group_id_route(group_id: int):
     try:

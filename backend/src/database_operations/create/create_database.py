@@ -1,16 +1,10 @@
-from pathlib import Path
-import sys
-sys.path.append(str(Path(__file__).resolve().parent.parent.parent))
-from database_connector import connectToDb
-APP_DIR = Path(__file__).resolve().parent 
-
-def load_sql(filename: str) -> str:
-    return (APP_DIR / filename).read_text(encoding="utf-8")
+from src.utils import get_db_connection, load_sql_file
 
 def create_db():
-    with connectToDb() as conn:
+    with get_db_connection() as conn:
         with conn.cursor() as cur:
-            cur.execute(load_sql("schema.sql"))
+            cur.execute(load_sql_file("schema.sql", __file__))
+
 if __name__ == "__main__":
     create_db()
-    print("Datenbank wurde gemäß dem Schema erstellt.")
+    print("Datenbank wurde erstellt")

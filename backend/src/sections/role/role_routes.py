@@ -1,10 +1,11 @@
 from fastapi import APIRouter, HTTPException, status
 from src.sections.role.role_model import *
 from src.sections.role.role_service import *
+
 router = APIRouter()
 
 @router.post("/roles/create")
-def create_role_route(request: roleCreateModel):
+def create_role_route(request: RoleModel):
     try:
         role = create_role(request)
         return role
@@ -12,7 +13,7 @@ def create_role_route(request: roleCreateModel):
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
 
 @router.put("/roles/{role_id}")
-def edit_role_route(role_id: int, request: roleCreateModel):
+def edit_role_route(role_id: int, request: RoleModel):
     try:
         result = edit_role_by_id(role_id, request)
         if not result:
@@ -20,6 +21,7 @@ def edit_role_route(role_id: int, request: roleCreateModel):
         return {"message": "Role updated successfully"}
     except Exception as e:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
+    
 @router.get("/roles/all")
 def get_all_roles_route():
     try:
@@ -27,6 +29,7 @@ def get_all_roles_route():
         return roles
     except Exception as e:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
+    
 @router.get("/roles/{role_id}")
 def get_role_by_id_route(role_id: int):
     try:

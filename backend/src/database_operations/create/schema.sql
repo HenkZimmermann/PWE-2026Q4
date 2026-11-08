@@ -3,6 +3,7 @@ CREATE TABLE IF NOT EXISTS Roles (
     name VARCHAR(50) UNIQUE NOT NULL,
     permissions TEXT NOT NULL
 );
+
 CREATE TABLE IF NOT EXISTS Users (
     user_id SERIAL PRIMARY KEY,
     username VARCHAR(50) UNIQUE NOT NULL,
@@ -10,6 +11,7 @@ CREATE TABLE IF NOT EXISTS Users (
     password_hash TEXT NOT NULL,
     role_id SERIAL NOT NULL REFERENCES roles(Role_id)
 );
+
 CREATE TABLE IF NOT EXISTS Groups (
     group_id SERIAL PRIMARY KEY,
     group_name VARCHAR(100) UNIQUE NOT NULL,
@@ -18,6 +20,7 @@ CREATE TABLE IF NOT EXISTS Groups (
     system_created BOOLEAN DEFAULT FALSE,
     description TEXT
 );
+
 CREATE TABLE IF NOT EXISTS Threads (
     thread_id SERIAL PRIMARY KEY,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -27,6 +30,7 @@ CREATE TABLE IF NOT EXISTS Threads (
     group_id INT NOT NULL REFERENCES Groups(group_id),
     title VARCHAR(255) NOT NULL
 );
+
 CREATE TABLE IF NOT EXISTS Comments (
     comment_id SERIAL PRIMARY KEY,
     thread_id INT NOT NULL REFERENCES Threads(thread_id) ON DELETE CASCADE,
@@ -36,18 +40,19 @@ CREATE TABLE IF NOT EXISTS Comments (
     user_id INT NOT NULL REFERENCES Users(user_id),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
 CREATE TABLE IF NOT EXISTS votes (
     user_id INT NOT NULL REFERENCES Users(user_id),
     thread_id INT REFERENCES Threads(thread_id) ON DELETE CASCADE,
     PRIMARY KEY (user_id, thread_id)
-
 );
-CREATE TABLE IF NOT EXISTS member_of(
+
+CREATE TABLE IF NOT EXISTS member_of (
     user_id INT NOT NULL REFERENCES Users(user_id),
     group_id INT NOT NULL REFERENCES Groups(group_id)
-
 );
-CREATE TABLE IF NOT EXISTS follows(
+
+CREATE TABLE IF NOT EXISTS follows (
     user_id INT NOT NULL REFERENCES Users(user_id),
     followed_user_id INT NOT NULL REFERENCES Users(user_id)
 );

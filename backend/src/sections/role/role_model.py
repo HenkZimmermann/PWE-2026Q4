@@ -1,4 +1,5 @@
 from pydantic import BaseModel
-class roleCreateModel(BaseModel):
+
+class RoleModel(BaseModel):
     name: str
     permissions: str

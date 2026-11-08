@@ -27,7 +27,6 @@ app.include_router(member_of_routes.router)
 app.include_router(vote_routes.router)
 app.include_router(user_routes.router)
 
-
 @app.get("/")
 def root():
     return {"message": "FastAPI läuft"}

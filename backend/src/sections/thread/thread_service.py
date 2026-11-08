@@ -1,118 +1,120 @@
 from src.sections.thread.thread_model import *
-from src.database_connector import connectToDb
-from pathlib import Path
-SQL_DIR = Path(__file__).parent / "sql"
+from src.utils import get_db_connection, load_sql_file
 
-def load_sql_request(sqlFileName: str) -> str:
-    return (SQL_DIR / sqlFileName).read_text(encoding="utf-8")
-
-def create_thread(request: threadCreateModel):
-    sql = load_sql_request("create_thread.sql")
+def create_thread(request: ThreadModel):
+    sql = load_sql_file("sql/create_thread.sql", __file__)
     try:
-        conn = connectToDb()
+        conn = get_db_connection()
         cursor = conn.cursor()
-        cursor.execute(sql, (
+        cursor.execute(sql, [
             request.message,
             request.user_id,
             request.votes,
             request.group_id,
             request.title
-        ),)
+        ])
         created_thread = cursor.fetchone()
         conn.commit()
         cursor.close()
         return created_thread
     except Exception as e:
-        print("Fehler beim Erstellen des Threads:", e)
+        print("Fehler beim Erstellen des Threads: ", e)
         return False
-def delete_thread_by_id(thread_id:int):
-    sql = load_sql_request("delete_thread_by_id.sql")
+    
+def delete_thread_by_id(thread_id: int):
+    sql = load_sql_file("sql/delete_thread_by_id.sql", __file__)
     try:
-        conn = connectToDb()
+        conn = get_db_connection()
         cursor = conn.cursor()
-        cursor.execute(sql, (thread_id,))
+        cursor.execute(sql, [thread_id])
         conn.commit()
         cursor.close()
         return True
     except Exception as e:
-        print("Fehler beim Löschen des Threads:", e)
+        print("Fehler beim Löschen des Threads: ", e)
         return False
-def edit_thread_by_id(thread_id:int, request: threadCreateModel):
-    sql = load_sql_request("edit_thread_by_id.sql")
+    
+def edit_thread_by_id(thread_id: int, request: ThreadModel):
+    sql = load_sql_file("sql/edit_thread_by_id.sql", __file__)
     try:
-        conn = connectToDb()
+        conn = get_db_connection()
         cursor = conn.cursor()
-        cursor.execute(sql, (
+        cursor.execute(sql, [
             request.group_id,
             request.title,
             request.message,
             request.votes,
             request.user_id,
             thread_id
-        ),)
+        ])
         conn.commit()
         cursor.close()
         return True
     except Exception as e:
-        print("Fehler beim Bearbeiten des Threads:", e)
+        print("Fehler beim Bearbeiten des Threads: ", e)
         return False
-def get_all_threads_by_name(name:str):
-    sql = load_sql_request("get_all_threads_by_name.sql")
+    
+def get_all_threads_by_name(name: str):
+    sql = load_sql_file("sql/get_all_threads_by_name.sql", __file__)
     try:
-        conn = connectToDb()
+        conn = get_db_connection()
         cursor = conn.cursor()
-        cursor.execute(sql, (f"%{name}%",))
+        cursor.execute(sql, [f"%{name}%"])
         threads = cursor.fetchall()
         cursor.close()
         return threads
     except Exception as e:
-        print("Fehler beim Abrufen der Threads:", e)
+        print("Fehler beim Abrufen der Threads: ", e)
         return False
-def get_all_threads_by_user_id(user_id:int):
-    sql = load_sql_request("get_all_threads_by_user_id.sql")
+    
+def get_all_threads_by_user_id(user_id: int):
+    sql = load_sql_file("sql/get_all_threads_by_user_id.sql", __file__)
     try:
-        conn = connectToDb()
+        conn = get_db_connection()
         cursor = conn.cursor()
-        cursor.execute(sql, (user_id,))
+        cursor.execute(sql, [user_id])
         threads = cursor.fetchall()
         cursor.close()
         return threads
     except Exception as e:
-        print("Fehler beim Abrufen der Threads:", e)
+        print("Fehler beim Abrufen der Threads: ", e)
         return False
+    
 def get_all_threads_order_by_votes():
-    sql = load_sql_request("get_all_threads_order_by_votes.sql")
+    sql = load_sql_file("sql/get_all_threads_order_by_votes.sql", __file__)
     try:
-        conn = connectToDb()
+        conn = get_db_connection()
         cursor = conn.cursor()
-        cursor.execute(sql,)
+        cursor.execute(sql)
         threads = cursor.fetchall()
         cursor.close()
         return threads
     except Exception as e:
-        print("Fehler beim Abrufen der Threads:", e)
+        print("Fehler beim Abrufen der Threads: ", e)
         return False
-def get_thread_by_id(thread_id:int):
-    sql = load_sql_request("get_thread_by_id.sql")
+    
+def get_thread_by_id(thread_id: int):
+    sql = load_sql_file("sql/get_thread_by_id.sql", __file__)
     try:
-        conn = connectToDb()
+        conn = get_db_connection()
         cursor = conn.cursor()
-        cursor.execute(sql, (thread_id,))
+        cursor.execute(sql, [thread_id])
         thread = cursor.fetchone()
         cursor.close()
         return thread
     except Exception as e:
         print("Fehler beim Abrufen des Threads:", e)
         return False
-def get_threads_of_group_order_by_date(group_id:int):
-    sql = load_sql_request("get_threads_of_group_order_by_date.sql")
+    
+def get_threads_of_group_order_by_date(group_id: int):
+    sql = load_sql_file("sql/get_threads_of_group_order_by_date.sql", __file__)
     try:
-        conn = connectToDb()
+        conn = get_db_connection()
         cursor = conn.cursor()
-        cursor.execute(sql, (group_id,))
+        cursor.execute(sql, [group_id])
         threads = cursor.fetchall()
         cursor.close()
         return threads
     except Exception as e:
-        print("Fehler beim Abrufen der Threads:", e)
+        print("Fehler beim Abrufen der Threads: ", e)
         return False
