@@ -1,5 +1,6 @@
 from pydantic import BaseModel
-class threadCreateModel(BaseModel):
+
+class ThreadModel(BaseModel):
     message: str
     user_id: int
     votes: int
