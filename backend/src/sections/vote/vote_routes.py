@@ -1,6 +1,8 @@
 from fastapi import APIRouter, HTTPException, status
 from src.sections.vote.vote_service import *
+
 router = APIRouter()
+
 @router.post("/vote/create")
 def create_follower_route(user_id: int, thread_id: int):
     try:
@@ -10,6 +12,7 @@ def create_follower_route(user_id: int, thread_id: int):
         return vote
     except Exception as e:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
+    
 @router.delete("/votes/delete")
 def delete_vote_route(user_id: int, thread_id: int):
     try:
@@ -19,6 +22,7 @@ def delete_vote_route(user_id: int, thread_id: int):
         return {"message": "Vote deleted successfully"}
     except Exception as e:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
+    
 @router.get("/votes/thread/{thread_id}")
 def get_thread_votes_route(thread_id: int):
     try:
@@ -28,6 +32,7 @@ def get_thread_votes_route(thread_id: int):
         return votes
     except Exception as e:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
+    
 @router.get("/votes/user/{user_id}")
 def get_votes_by_user_id_route(user_id: int):   
     try:
