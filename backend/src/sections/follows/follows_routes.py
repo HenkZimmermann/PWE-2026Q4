@@ -1,6 +1,8 @@
 from fastapi import APIRouter, HTTPException, status
 from src.sections.follows.follows_service import *
+
 router = APIRouter()
+
 @router.post("/follows/create")
 def create_follower_route(user_id: int, followed_user_id: int):
     try:
@@ -10,6 +12,7 @@ def create_follower_route(user_id: int, followed_user_id: int):
         return follower
     except Exception as e:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
+
 @router.delete("/follows/delete")
 def delete_follower_route(user_id: int, followed_user_id: int):
     try:
@@ -19,6 +22,7 @@ def delete_follower_route(user_id: int, followed_user_id: int):
         return {"message": "Follower deleted successfully"}
     except Exception as e:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
+
 @router.get("/follows/followers/{user_id}")
 def get_all_followers_of_user_id_route(user_id: int):
     try:
@@ -28,6 +32,7 @@ def get_all_followers_of_user_id_route(user_id: int):
         return followers
     except Exception as e:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
+
 @router.get("/follows/following/{user_id}")
 def get_all_users_user_id_follows_route(user_id: int):
     try:
