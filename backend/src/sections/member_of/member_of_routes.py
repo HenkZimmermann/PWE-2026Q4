@@ -1,6 +1,8 @@
 from fastapi import APIRouter, HTTPException, status
 from src.sections.member_of.member_of_service import *
+
 router = APIRouter()
+
 @router.post("/member_of/create")
 def create_group_membership_route(user_id: int, group_id: int):
     try:
@@ -10,6 +12,7 @@ def create_group_membership_route(user_id: int, group_id: int):
         return member
     except Exception as e:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
+    
 @router.delete("/member_of/delete")
 def delete_group_membership_route(user_id: int, group_id: int):
     try:
@@ -19,6 +22,7 @@ def delete_group_membership_route(user_id: int, group_id: int):
         return {"message": "Group membership deleted successfully"}
     except Exception as e:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
+    
 @router.get("/member_of/members/{group_id}")
 def get_all_members_of_group_id_route(group_id: int):
     try:
@@ -28,6 +32,7 @@ def get_all_members_of_group_id_route(group_id: int):
         return members
     except Exception as e:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
+    
 @router.get("/member_of/memberships/{user_id}")
 def get_memberships_from_user_id_route(user_id: int):   
     try:
