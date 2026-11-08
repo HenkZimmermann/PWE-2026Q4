@@ -1,7 +1,7 @@
 from src.utils import get_db_connection, load_sql_file
 
 def create_group_membership(user_id: int, group_id: int):
-    sql = load_sql_file("create_group_membership.sql")
+    sql = load_sql_file("sql/create_group_membership.sql", __file__)
     try:
         conn = get_db_connection()
         cursor = conn.cursor()
@@ -15,7 +15,7 @@ def create_group_membership(user_id: int, group_id: int):
         return False
     
 def delete_group_membership(user_id: int, group_id: int):
-    sql = load_sql_file("delete_group_membership.sql")
+    sql = load_sql_file("sql/delete_group_membership.sql", __file__)
     try:
         conn = get_db_connection()
         cursor = conn.cursor()
@@ -28,7 +28,7 @@ def delete_group_membership(user_id: int, group_id: int):
         return False
     
 def get_all_members_of_group_id(group_id: int):
-    sql = load_sql_file("get_all_members_of_group_id.sql")
+    sql = load_sql_file("sql/get_all_members_of_group_id.sql", __file__)
     try:
         conn = get_db_connection()
         cursor = conn.cursor()
@@ -41,7 +41,7 @@ def get_all_members_of_group_id(group_id: int):
         return False
     
 def get_memberships_from_user_id(user_id: int):
-    sql = load_sql_file("get_memberships_from_user_id.sql")
+    sql = load_sql_file("sql/get_memberships_from_user_id.sql", __file__)
     try:
         conn = get_db_connection()
         cursor = conn.cursor()

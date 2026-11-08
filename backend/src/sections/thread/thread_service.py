@@ -2,7 +2,7 @@ from src.sections.thread.thread_model import *
 from src.utils import get_db_connection, load_sql_file
 
 def create_thread(request: ThreadModel):
-    sql = load_sql_file("create_thread.sql")
+    sql = load_sql_file("sql/create_thread.sql", __file__)
     try:
         conn = get_db_connection()
         cursor = conn.cursor()
@@ -22,7 +22,7 @@ def create_thread(request: ThreadModel):
         return False
     
 def delete_thread_by_id(thread_id: int):
-    sql = load_sql_file("delete_thread_by_id.sql")
+    sql = load_sql_file("sql/delete_thread_by_id.sql", __file__)
     try:
         conn = get_db_connection()
         cursor = conn.cursor()
@@ -35,7 +35,7 @@ def delete_thread_by_id(thread_id: int):
         return False
     
 def edit_thread_by_id(thread_id: int, request: ThreadModel):
-    sql = load_sql_file("edit_thread_by_id.sql")
+    sql = load_sql_file("sql/edit_thread_by_id.sql", __file__)
     try:
         conn = get_db_connection()
         cursor = conn.cursor()
@@ -55,7 +55,7 @@ def edit_thread_by_id(thread_id: int, request: ThreadModel):
         return False
     
 def get_all_threads_by_name(name: str):
-    sql = load_sql_file("get_all_threads_by_name.sql")
+    sql = load_sql_file("sql/get_all_threads_by_name.sql", __file__)
     try:
         conn = get_db_connection()
         cursor = conn.cursor()
@@ -68,7 +68,7 @@ def get_all_threads_by_name(name: str):
         return False
     
 def get_all_threads_by_user_id(user_id: int):
-    sql = load_sql_file("get_all_threads_by_user_id.sql")
+    sql = load_sql_file("sql/get_all_threads_by_user_id.sql", __file__)
     try:
         conn = get_db_connection()
         cursor = conn.cursor()
@@ -81,7 +81,7 @@ def get_all_threads_by_user_id(user_id: int):
         return False
     
 def get_all_threads_order_by_votes():
-    sql = load_sql_file("get_all_threads_order_by_votes.sql")
+    sql = load_sql_file("sql/get_all_threads_order_by_votes.sql", __file__)
     try:
         conn = get_db_connection()
         cursor = conn.cursor()
@@ -94,7 +94,7 @@ def get_all_threads_order_by_votes():
         return False
     
 def get_thread_by_id(thread_id: int):
-    sql = load_sql_file("get_thread_by_id.sql")
+    sql = load_sql_file("sql/get_thread_by_id.sql", __file__)
     try:
         conn = get_db_connection()
         cursor = conn.cursor()
@@ -107,7 +107,7 @@ def get_thread_by_id(thread_id: int):
         return False
     
 def get_threads_of_group_order_by_date(group_id: int):
-    sql = load_sql_file("get_threads_of_group_order_by_date.sql")
+    sql = load_sql_file("sql/get_threads_of_group_order_by_date.sql", __file__)
     try:
         conn = get_db_connection()
         cursor = conn.cursor()

@@ -2,7 +2,7 @@ from src.sections.role.role_model import *
 from src.utils import get_db_connection, load_sql_file
 
 def create_role(request: RoleModel):
-    sql = load_sql_file("create_role.sql")
+    sql = load_sql_file("sql/create_role.sql", __file__)
     try:
         conn = get_db_connection()
         cursor = conn.cursor()
@@ -19,7 +19,7 @@ def create_role(request: RoleModel):
         return False
     
 def edit_role_by_id(role_id: int, request: RoleModel):
-    sql = load_sql_file("edit_role_by_id.sql")
+    sql = load_sql_file("sql/edit_role_by_id.sql", __file__)
     try:
         conn = get_db_connection()
         cursor = conn.cursor()
@@ -36,7 +36,7 @@ def edit_role_by_id(role_id: int, request: RoleModel):
         return False
     
 def get_all_roles():
-    sql = load_sql_file("get_all_roles.sql")
+    sql = load_sql_file("sql/get_all_roles.sql", __file__)
     try:
         conn = get_db_connection()
         cursor = conn.cursor()
@@ -49,7 +49,7 @@ def get_all_roles():
         return False
     
 def get_role_by_id(role_id: int):
-    sql = load_sql_file("get_role_by_id.sql")
+    sql = load_sql_file("sql/get_role_by_id.sql", __file__)
     try:
         conn = get_db_connection()
         cursor = conn.cursor()

@@ -2,7 +2,7 @@ from src.sections.groups.groups_model import *
 from src.utils import get_db_connection, load_sql_file
 
 def create_group(request: GroupModel):
-    sql = load_sql_file("create_group.sql")
+    sql = load_sql_file("sql/create_group.sql", __file__)
     try:
         conn = get_db_connection()
         cursor = conn.cursor()
@@ -22,7 +22,7 @@ def create_group(request: GroupModel):
         return False
     
 def delete_group_by_id(group_id: int):
-    sql = load_sql_file("delete_group_by_id.sql")
+    sql = load_sql_file("sql/delete_group_by_id.sql", __file__)
     try:
         conn = get_db_connection()
         cursor = conn.cursor()
@@ -35,7 +35,7 @@ def delete_group_by_id(group_id: int):
         return False
     
 def edit_group_by_id(group_id: int, request: GroupModel):
-    sql = load_sql_file("edit_group_by_id.sql")
+    sql = load_sql_file("sql/edit_group_by_id.sql", __file__)
     try:
         conn = get_db_connection()
         cursor = conn.cursor()
@@ -55,7 +55,7 @@ def edit_group_by_id(group_id: int, request: GroupModel):
         return False
     
 def get_all_groups_by_Category(category: str):
-    sql = load_sql_file("get_all_groups_by_category.sql")
+    sql = load_sql_file("sql/get_all_groups_by_category.sql", __file__)
     try:
         conn = get_db_connection()
         cursor = conn.cursor()
@@ -68,7 +68,7 @@ def get_all_groups_by_Category(category: str):
         return False
     
 def get_all_groups_order_by_members():
-    sql = load_sql_file("get_all_groups_order_by_members.sql")
+    sql = load_sql_file("sql/get_all_groups_order_by_members.sql", __file__)
     try:
         conn = get_db_connection()
         cursor = conn.cursor()
@@ -81,7 +81,7 @@ def get_all_groups_order_by_members():
         return False
     
 def get_all_groups():
-    sql = load_sql_file("get_all_groups.sql")
+    sql = load_sql_file("sql/get_all_groups.sql", __file__)
     try:
         conn = get_db_connection()
         cursor = conn.cursor()
@@ -94,7 +94,7 @@ def get_all_groups():
         return False
     
 def get_group_by_id(group_id: int):
-    sql = load_sql_file("get_group_by_id.sql")
+    sql = load_sql_file("sql/get_group_by_id.sql", __file__)
     try:
         conn = get_db_connection()
         cursor = conn.cursor()
@@ -107,7 +107,7 @@ def get_group_by_id(group_id: int):
         return False
     
 def get_group_by_name(group_name: str):
-    sql = load_sql_file("get_group_by_name.sql")
+    sql = load_sql_file("sql/get_group_by_name.sql", __file__)
     try:
         conn = get_db_connection()
         cursor = conn.cursor()

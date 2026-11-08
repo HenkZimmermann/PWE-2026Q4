@@ -10,7 +10,7 @@ def hash_password(password: str) -> str:
 
 def create_user(data: CreateRequest):
     hashed_password = hash_password(data.password)
-    sql = load_sql_file("create_user.sql")
+    sql = load_sql_file("sql/create_user.sql", __file__)
     try:
         conn = get_db_connection()
         cursor = conn.cursor()
@@ -24,7 +24,7 @@ def create_user(data: CreateRequest):
         return False
     
 def delete_user(user_id: int):
-    sql = load_sql_file("delete_user_by_id.sql")
+    sql = load_sql_file("sql/delete_user_by_id.sql", __file__)
     try:
         conn = get_db_connection()
         cursor = conn.cursor()
@@ -37,7 +37,7 @@ def delete_user(user_id: int):
         return False
     
 def edit_user_by_id(user_id: int, data: EditRequest):
-    sql = load_sql_file("edit_user_by_id.sql")
+    sql = load_sql_file("sql/edit_user_by_id.sql", __file__)
     try:
         conn = get_db_connection()
         cursor = conn.cursor()
@@ -51,7 +51,7 @@ def edit_user_by_id(user_id: int, data: EditRequest):
         return False    
 
 def get_all_users():
-    sql = load_sql_file("get_all_users.sql")
+    sql = load_sql_file("sql/get_all_users.sql", __file__)
     try:
         conn = get_db_connection()
         cursor = conn.cursor()
@@ -63,7 +63,7 @@ def get_all_users():
         return False
     
 def get_user_by_email(email: str):
-    sql = load_sql_file("get_user_by_email.sql")
+    sql = load_sql_file("sql/get_user_by_email.sql", __file__)
     try:
         conn = get_db_connection()
         cursor = conn.cursor()
@@ -77,7 +77,7 @@ def get_user_by_email(email: str):
         return False
     
 def get_user_by_id(user_id: int):
-    sql = load_sql_file("get_user_by_id.sql")
+    sql = load_sql_file("sql/get_user_by_id.sql", __file__)
     try:
         conn = get_db_connection()
         cursor = conn.cursor()

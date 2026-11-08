@@ -1,7 +1,7 @@
 from src.utils import get_db_connection, load_sql_file
 
 def create_vote(user_id: int, thread_id: int):
-    sql = load_sql_file("create_vote.sql")
+    sql = load_sql_file("sql/create_vote.sql", __file__)
     try:
         conn = get_db_connection()
         cursor = conn.cursor()
@@ -14,7 +14,7 @@ def create_vote(user_id: int, thread_id: int):
         return False
     
 def delete_vote(user_id: int, thread_id: int):
-    sql = load_sql_file("delete_vote.sql")
+    sql = load_sql_file("sql/delete_vote.sql", __file__)
     try:
         conn = get_db_connection()
         cursor = conn.cursor()
@@ -27,7 +27,7 @@ def delete_vote(user_id: int, thread_id: int):
         return False
     
 def get_thread_votes(thread_id: int):
-    sql = load_sql_file("get_thread_votes_by_thread_id.sql")
+    sql = load_sql_file("sql/get_thread_votes_by_thread_id.sql", __file__)
     try:
         conn = get_db_connection()
         cursor = conn.cursor()
@@ -40,7 +40,7 @@ def get_thread_votes(thread_id: int):
         return False
     
 def get_votes_by_user_id(user_id: int):
-    sql = load_sql_file("get_votes_from_user_id.sql")
+    sql = load_sql_file("sql/get_votes_from_user_id.sql", __file__)
     try:
         conn = get_db_connection()
         cursor = conn.cursor()

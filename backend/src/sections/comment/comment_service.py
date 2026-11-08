@@ -2,7 +2,7 @@ from src.sections.comment.comment_model import *
 from src.utils import get_db_connection, load_sql_file
 
 def create_comment(request: CommentModel):
-    sql = load_sql_file("create_comment.sql")
+    sql = load_sql_file("sql/create_comment.sql", __file__)
     try:
         conn = get_db_connection()
         cursor = conn.cursor()
@@ -22,7 +22,7 @@ def create_comment(request: CommentModel):
         return False
     
 def delete_comment_by_id(comment_id: int):
-    sql = load_sql_file("delete_comment_by_id.sql")
+    sql = load_sql_file("sql/delete_comment_by_id.sql", __file__)
     try:
         conn = get_db_connection()
         cursor = conn.cursor()
@@ -35,7 +35,7 @@ def delete_comment_by_id(comment_id: int):
         return False
     
 def edit_comment_by_id(comment_id: int, request: CommentModel):
-    sql = load_sql_file("edit_comment_by_id.sql")
+    sql = load_sql_file("sql/edit_comment_by_id.sql", __file__)
     try:
         conn = get_db_connection()
         cursor = conn.cursor()
@@ -55,7 +55,7 @@ def edit_comment_by_id(comment_id: int, request: CommentModel):
         return False
     
 def get_all_comments_by_thread_id(thread_id: int):
-    sql = load_sql_file("get_all_comments_by_thread_id.sql")
+    sql = load_sql_file("sql/get_all_comments_by_thread_id.sql", __file__)
     try:
         conn = get_db_connection()
         cursor = conn.cursor()
@@ -68,7 +68,7 @@ def get_all_comments_by_thread_id(thread_id: int):
         return False
     
 def get_all_comments_by_parent_comment_id(parent_comment_id: int):
-    sql = load_sql_file("get_all_child_comments_by_parent_id.sql")
+    sql = load_sql_file("sql/get_all_child_comments_by_parent_id.sql", __file__)
     try:
         conn = get_db_connection()
         cursor = conn.cursor()
@@ -81,7 +81,7 @@ def get_all_comments_by_parent_comment_id(parent_comment_id: int):
         return False
     
 def get_comment_by_id(comment_id: int):
-    sql = load_sql_file("get_comment_by_id.sql")
+    sql = load_sql_file("sql/get_comment_by_id.sql", __file__)
     try:
         conn = get_db_connection()
         cursor = conn.cursor()
