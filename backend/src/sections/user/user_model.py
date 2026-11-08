@@ -1,6 +1,5 @@
 from pydantic import BaseModel, EmailStr
 
-
 class CreateRequest(BaseModel):
     username: str
     email: EmailStr
@@ -11,7 +10,6 @@ class LoginRequest(BaseModel):
     username: str
     email: EmailStr
     password: str
-
 
 class EditRequest(BaseModel):
     username: str
