@@ -3,7 +3,8 @@ import CreateThreadDialog from "../../page/CreateThreadDialog";
 import FloatingActionButton from "../../page/FloatingActionButton";
 import "./DashboardSection.css";
 
-const apiBaseUrl = "http://localhost:8000";
+const apiBaseUrl = "http://localhost:8000"; // TODO sollten wir noch auslagern irgendwie zentral, in env?
+const demoUserId = 2; // TODO Gibt ja noch keinen Login, daher Hard-coded
 
 function ThreadCard({ thread }) {
     return (
@@ -26,46 +27,65 @@ function ThreadCard({ thread }) {
 
 function Element() {
     const [threads, setThreads] = useState([]);
-    const [localThreads, setLocalThreads] = useState([]);
+    const [groups, setGroups] = useState([]);
+    const [feedVersion, setFeedVersion] = useState(0);
     const [showCreateForm, setShowCreateForm] = useState(false);
 
+    // Den Feed aus dem backend laden
     useEffect(() => {
-        fetch(apiBaseUrl + "/threads/feed")
+        const controller = new AbortController();
+        fetch(apiBaseUrl + "/threads/feed", {signal: controller.signal})
             .then((response) => {
                 if (!response.ok)
                     throw new Error("Feed konnte nicht geladen werden.");
                 return response.json();
             })
             .then(setThreads)
+            .catch((error) => {
+                if (!controller.signal.aborted)
+                    console.error(error);
+            });
+        return () => controller.abort();
+    }, [feedVersion]);
+
+    // Gruppen laden für den Thread Erstellen Dialog
+    // Machen wir hier und nicht zentral grade, weil wir ja ggf. dn Dialog aus einer Gruppe später aufrufen
+    // Da wollen wir dann natürlich nur die jewielige Gruppe zur Auswahl haben
+    useEffect(() => {
+        fetch(apiBaseUrl + "/groups/all")
+            .then((response) => response.json())
+            .then((data) => {
+                if (Array.isArray(data))
+                    setGroups(data.map(([id, name]) => ({id, name})));
+            })
             .catch((error) => console.error(error));
     }, []);
 
-    function handleCreate({ title, content, groupName }) {
-        const publishedAt = new Date().toLocaleDateString("sv-SE");
-        setLocalThreads((currentThreads) => [
-            {
-                id: `local-${currentThreads.length + 1}`,
+    // Neuen Thread ans backend geben
+    async function handleCreate({title, content, groupId}) {
+        const response = await fetch(apiBaseUrl + "/threads/create", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
                 title,
-                content,
-                groupName,
-                authorName: "Tim",
-                publishedAt,
-                commentCount: 0
-            },
-            ...currentThreads,
-        ]);
+                message: content,
+                group_id: groupId,
+                user_id: demoUserId,
+            })
+        });
+        if (!response.ok)
+            throw new Error("Beitrag konnte nicht gespeichert werden.");
+        setFeedVersion((version) => version + 1);
     }
-
-    const feed = [...localThreads, ...threads];
 
     return (
         <div>
             <h1>Dashboard</h1>
             {showCreateForm && (
-                <CreateThreadDialog groups={["Global"]} onCreate={handleCreate} onClose={() => setShowCreateForm(false)}/>
+                <CreateThreadDialog groups={groups} onCreate={handleCreate} onClose={() => setShowCreateForm(false)}/>
             )}
 
-            {feed.map((thread) => (
+            {threads.map((thread) => (
                 <ThreadCard key={thread.id} thread={thread} />
             ))}
 

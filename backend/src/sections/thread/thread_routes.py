@@ -6,13 +6,10 @@ router = APIRouter()
 
 @router.get("/threads/feed")
 def get_thread_feed_route():
-    try:        
-        threads = get_thread_feed()
-        if not threads:
-            raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Feed could not be loaded")
-        return threads
-    except Exception as e:
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
+    threads = get_thread_feed()
+    if threads is False:
+        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Feed could not be loaded")
+    return threads
 
 @router.get("/threads/votes")
 def get_threads_ordered_by_votes_route():
@@ -25,12 +22,11 @@ def get_threads_ordered_by_votes_route():
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
     
 @router.post("/threads/create")
-def create_thread_route(request: ThreadModel):
-    try:
-        thread = create_thread(request)
-        return thread
-    except Exception as e:
-            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
+def create_thread_route(request: CreateThreadModel):
+    thread = create_thread(request)
+    if not thread:
+        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Thread could not be created")
+    return thread
     
 @router.delete("/threads/{thread_id}")
 def delete_thread_route(thread_id: int):
