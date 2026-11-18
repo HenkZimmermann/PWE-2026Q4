@@ -1,3 +1,4 @@
+import { useState } from "react";
 import FloatingActionButton from "../../page/FloatingActionButton";
 import "./DashboardSection.css";
 
@@ -9,7 +10,7 @@ const exampleThreads = [
         groupName: "Global",
         authorName: "Tim",
         publishedAt: "2026-11-18",
-        commentCount: 4,
+        commentCount: 4
     },
     {
         id: 2,
@@ -18,7 +19,7 @@ const exampleThreads = [
         groupName: "Global",
         authorName: "Tom",
         publishedAt: "2026-11-17",
-        commentCount: 2,
+        commentCount: 2
     },
     {
         id: 3,
@@ -27,7 +28,7 @@ const exampleThreads = [
         groupName: "Global",
         authorName: "Henk",
         publishedAt: "2026-11-16",
-        commentCount: 0,
+        commentCount: 0
     },
 ];
 
@@ -49,17 +50,64 @@ function ThreadCard({ thread }) {
 }
 
 function Element() {
-    const handleCreate = () => {
-        alert("Neu"); // TODO, beispiel alert
-    };
+    const [threads, setThreads] = useState(exampleThreads);
+    const [showCreateForm, setShowCreateForm] = useState(false);
+
+    function handleCreate(event) {
+        event.preventDefault();
+        const formData = new FormData(event.currentTarget);
+        const title = formData.get("title");
+        const content = formData.get("content");
+        const groupName = formData.get("groupName");
+
+        const publishedAt = new Date().toLocaleDateString("sv-SE");
+        setThreads((currentThreads) => [
+            {
+                id: currentThreads.length + 1,
+                title,
+                content,
+                groupName,
+                authorName: "Tim",
+                publishedAt,
+                commentCount: 0
+            },
+            ...currentThreads,
+        ]);
+        setShowCreateForm(false);
+    }
 
     return (
         <div>
             <h1>Dashboard</h1>
-            {exampleThreads.map((thread) => (
+            {showCreateForm && (
+                <form className="dashboard-thread dashboard-thread-form" onSubmit={handleCreate}>
+                    <h2>Neuer Beitrag</h2>
+                    <label>
+                        Gruppe
+                        <select name="groupName" defaultValue="Global">
+                            <option>Global</option>
+                        </select>
+                    </label>
+                    <label>
+                        Titel
+                        <input name="title" required />
+                    </label>
+                    <label>
+                        Text
+                        <textarea name="content" rows={4} required/>
+                    </label>
+                    <div className="dashboard-thread-form-actions">
+                        <button type="button" onClick={() => setShowCreateForm(false)}>Abbrechen</button>
+                        <button type="submit">Beitrag erstellen</button>
+                    </div>
+                </form>
+            )}
+
+            {threads.map((thread) => (
                 <ThreadCard key={thread.id} thread={thread} />
             ))}
-            <FloatingActionButton onClick={handleCreate} content="+" />
+
+            <FloatingActionButton onClick={() => setShowCreateForm(true)} content="+" />
         </div>
     );
 }

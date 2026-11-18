@@ -19,6 +19,49 @@
     font-size: 0.875rem;
 }
 
+.dashboard-thread-form,
+.dashboard-thread-form label {
+    display: grid;
+    gap: 0.5rem;
+}
+
+.dashboard-thread-form {
+    gap: 1rem;
+}
+
+.dashboard-thread-form h2 {
+    margin: 0;
+}
+
+.dashboard-thread-form :is(input, textarea, select, button) {
+    font: inherit;
+    color: var(--text);
+    background: var(--elevated);
+    border: 1px solid var(--border);
+    border-radius: 0.5rem;
+    padding: 0.6rem 0.75rem;
+    min-width: 0;
+}
+
+.dashboard-thread-form textarea {
+    resize: vertical;
+}
+
+.dashboard-thread-form-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 0.5rem;
+}
+
+.dashboard-thread-form button {
+    cursor: pointer;
+}
+
+.dashboard-thread-form button[type="submit"] {
+    background: var(--accent);
+}
+
 .dashboard-thread h2 {
     margin: 0.85rem 0 0.45rem;
     font-size: clamp(1.2rem, 3vw, 1.5rem);
