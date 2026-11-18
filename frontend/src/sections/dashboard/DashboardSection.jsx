@@ -1,37 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CreateThreadDialog from "../../page/CreateThreadDialog";
 import FloatingActionButton from "../../page/FloatingActionButton";
 import "./DashboardSection.css";
 
-const exampleThreads = [
-    {
-        id: 1,
-        title: "Wieso ist dieses Forum so unfassbar toll?",
-        content: "Ich arbeite mit meinem guten Kollegen Henk an diesem Forum und es ist fantastisch. Einfach besser als jedes Forum würde ich sagen.",
-        groupName: "Global",
-        authorName: "Tim",
-        publishedAt: "2026-11-18",
-        commentCount: 4
-    },
-    {
-        id: 2,
-        title: "Wie organisiert ihr eure Komponenten, wenn ein React-Projekt immer größer wird?",
-        content: "Unser Projekt hat inzwischen mehrere Seiten, die sich Komponenten und Hooks teilen. Wie entscheidet ihr, was in einen gemeinsamen Ordner gehört und was bei der jeweiligen Seite bleibt?",
-        groupName: "Global",
-        authorName: "Tom",
-        publishedAt: "2026-11-17",
-        commentCount: 2
-    },
-    {
-        id: 3,
-        title: "Backend fertig Jungs",
-        content: "Backend ist fertig war anstrengend. Aber hat sich gelohnt, gelle?",
-        groupName: "Global",
-        authorName: "Henk",
-        publishedAt: "2026-11-16",
-        commentCount: 0
-    },
-];
+const apiBaseUrl = "http://localhost:8000";
 
 function ThreadCard({ thread }) {
     return (
@@ -39,7 +11,9 @@ function ThreadCard({ thread }) {
             <header className="dashboard-thread-meta">
                 <strong>{thread.groupName}</strong>
                 <span>von {thread.authorName}</span>
-                <time dateTime={thread.publishedAt}>{thread.publishedAt}</time>
+                {thread.publishedAt && (
+                    <time dateTime={thread.publishedAt}>{thread.publishedAt.slice(0, 10)}</time>
+                )}
             </header>
             <h2>{thread.title}</h2>
             <p>{thread.content}</p>
@@ -51,14 +25,26 @@ function ThreadCard({ thread }) {
 }
 
 function Element() {
-    const [threads, setThreads] = useState(exampleThreads);
+    const [threads, setThreads] = useState([]);
+    const [localThreads, setLocalThreads] = useState([]);
     const [showCreateForm, setShowCreateForm] = useState(false);
+
+    useEffect(() => {
+        fetch(apiBaseUrl + "/threads/feed")
+            .then((response) => {
+                if (!response.ok)
+                    throw new Error("Feed konnte nicht geladen werden.");
+                return response.json();
+            })
+            .then(setThreads)
+            .catch((error) => console.error(error));
+    }, []);
 
     function handleCreate({ title, content, groupName }) {
         const publishedAt = new Date().toLocaleDateString("sv-SE");
-        setThreads((currentThreads) => [
+        setLocalThreads((currentThreads) => [
             {
-                id: currentThreads.length + 1,
+                id: `local-${currentThreads.length + 1}`,
                 title,
                 content,
                 groupName,
@@ -70,6 +56,8 @@ function Element() {
         ]);
     }
 
+    const feed = [...localThreads, ...threads];
+
     return (
         <div>
             <h1>Dashboard</h1>
@@ -77,7 +65,7 @@ function Element() {
                 <CreateThreadDialog groups={["Global"]} onCreate={handleCreate} onClose={() => setShowCreateForm(false)}/>
             )}
 
-            {threads.map((thread) => (
+            {feed.map((thread) => (
                 <ThreadCard key={thread.id} thread={thread} />
             ))}
 

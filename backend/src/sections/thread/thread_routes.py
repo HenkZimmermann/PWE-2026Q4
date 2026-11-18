@@ -4,6 +4,16 @@ from src.sections.thread.thread_service import *
 
 router = APIRouter()
 
+@router.get("/threads/feed")
+def get_thread_feed_route():
+    try:        
+        threads = get_thread_feed()
+        if not threads:
+            raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Feed could not be loaded")
+        return threads
+    except Exception as e:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
+
 @router.get("/threads/votes")
 def get_threads_ordered_by_votes_route():
     try:
