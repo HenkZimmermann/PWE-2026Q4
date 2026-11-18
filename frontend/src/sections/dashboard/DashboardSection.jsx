@@ -1,4 +1,5 @@
 import { useState } from "react";
+import CreateThreadDialog from "../../page/CreateThreadDialog";
 import FloatingActionButton from "../../page/FloatingActionButton";
 import "./DashboardSection.css";
 
@@ -53,13 +54,7 @@ function Element() {
     const [threads, setThreads] = useState(exampleThreads);
     const [showCreateForm, setShowCreateForm] = useState(false);
 
-    function handleCreate(event) {
-        event.preventDefault();
-        const formData = new FormData(event.currentTarget);
-        const title = formData.get("title");
-        const content = formData.get("content");
-        const groupName = formData.get("groupName");
-
+    function handleCreate({ title, content, groupName }) {
         const publishedAt = new Date().toLocaleDateString("sv-SE");
         setThreads((currentThreads) => [
             {
@@ -73,34 +68,13 @@ function Element() {
             },
             ...currentThreads,
         ]);
-        setShowCreateForm(false);
     }
 
     return (
         <div>
             <h1>Dashboard</h1>
             {showCreateForm && (
-                <form className="dashboard-thread dashboard-thread-form" onSubmit={handleCreate}>
-                    <h2>Neuer Beitrag</h2>
-                    <label>
-                        Gruppe
-                        <select name="groupName" defaultValue="Global">
-                            <option>Global</option>
-                        </select>
-                    </label>
-                    <label>
-                        Titel
-                        <input name="title" required />
-                    </label>
-                    <label>
-                        Text
-                        <textarea name="content" rows={4} required/>
-                    </label>
-                    <div className="dashboard-thread-form-actions">
-                        <button type="button" onClick={() => setShowCreateForm(false)}>Abbrechen</button>
-                        <button type="submit">Beitrag erstellen</button>
-                    </div>
-                </form>
+                <CreateThreadDialog groups={["Global"]} onCreate={handleCreate} onClose={() => setShowCreateForm(false)}/>
             )}
 
             {threads.map((thread) => (

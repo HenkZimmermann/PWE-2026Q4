@@ -1,0 +1,57 @@
+.create-thread-dialog {
+    box-sizing: border-box;
+    width: min(44rem, calc(100% - 2rem));
+    max-height: calc(100% - 2rem);
+    padding: clamp(1rem, 3vw, 1.5rem);
+    border: 1px solid var(--border);
+    border-radius: 1rem;
+    background: var(--surface);
+    color: var(--text);
+}
+
+.create-thread-dialog::backdrop {
+    background: color-mix(in srgb, var(--background) 75%, transparent);
+}
+
+.create-thread-dialog form,
+.create-thread-dialog label {
+    display: grid;
+    gap: 0.5rem;
+}
+
+.create-thread-dialog form {
+    gap: 1rem;
+}
+
+.create-thread-dialog h2 {
+    margin: 0;
+}
+
+.create-thread-dialog :is(input, textarea, select, button) {
+    font: inherit;
+    color: var(--text);
+    background: var(--elevated);
+    border: 1px solid var(--border);
+    border-radius: 0.5rem;
+    padding: 0.6rem 0.75rem;
+    min-width: 0;
+}
+
+.create-thread-dialog textarea {
+    resize: vertical;
+}
+
+.create-thread-dialog-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 0.5rem;
+}
+
+.create-thread-dialog button {
+    cursor: pointer;
+}
+
+.create-thread-dialog button[type="submit"] {
+    background: var(--accent);
+}
