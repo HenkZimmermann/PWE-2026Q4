@@ -1,29 +1,10 @@
 import { useEffect, useState } from "react";
 import CreateThreadDialog from "../../page/CreateThreadDialog";
 import FloatingActionButton from "../../page/FloatingActionButton";
-import "./DashboardSection.css";
+import ThreadCard from "../../page/ThreadCard";
 
 const apiBaseUrl = "http://localhost:8000"; // TODO sollten wir noch auslagern irgendwie zentral, in env?
 const demoUserId = 2; // TODO Gibt ja noch keinen Login, daher Hard-coded
-
-function ThreadCard({ thread }) {
-    return (
-        <article className="dashboard-thread">
-            <header className="dashboard-thread-meta">
-                <strong>{thread.groupName}</strong>
-                <span>von {thread.authorName}</span>
-                {thread.publishedAt && (
-                    <time dateTime={thread.publishedAt}>{thread.publishedAt.slice(0, 10)}</time>
-                )}
-            </header>
-            <h2>{thread.title}</h2>
-            <p>{thread.content}</p>
-            <footer className="dashboard-thread-stats">
-                <span>{thread.commentCount} Kommentare</span>
-            </footer>
-        </article>
-    );
-}
 
 function Element() {
     const [threads, setThreads] = useState([]);
