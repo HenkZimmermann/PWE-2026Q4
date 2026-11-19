@@ -1,14 +1,16 @@
 import { apiBaseUrl } from "./config";
 
-export async function getThreadFeed(limit, signal) {
-    const response = await fetch(apiBaseUrl + "/threads/feed?limit=" + limit, {signal});
+// Die neusten Threads vom Backend laden, maximal die "limit" neusten Threads
+export async function getThreadFeed(limit) {
+    const response = await fetch(apiBaseUrl + "/threads/feed?limit=" + limit);
     if (!response.ok)
         throw new Error("Feed konnte nicht geladen werden.");
 
     return response.json();
 }
 
-export async function createThread({ title, content, groupId, userId }) {
+// Thread mit gegebenen Inhalt erstellen und ans Backend schicken
+export async function createThread({title, content, groupId, userId}) {
     const response = await fetch(apiBaseUrl + "/threads/create", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -17,7 +19,7 @@ export async function createThread({ title, content, groupId, userId }) {
             message: content,
             group_id: groupId,
             user_id: userId,
-        }),
+        })
     });
     
     if (!response.ok)

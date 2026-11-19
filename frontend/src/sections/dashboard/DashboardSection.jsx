@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { getGroups } from "../../api/groups";
 import { createThread, getThreadFeed } from "../../api/threads";
 import CreateThreadDialog from "../../page/CreateThreadDialog";
@@ -6,57 +6,43 @@ import FloatingActionButton from "../../page/FloatingActionButton";
 import ThreadCard from "../../page/ThreadCard";
 import "./DashboardSection.css";
 
-const demoUserId = 2; // TODO Gibt ja noch keinen Login, daher Hard-coded
-const feedStep = 5; // Wieviele Threads mehr sollen pro Ladevorgang abgerufen werden
+// TODO Gibt ja noch keinen Login, daher Hard-coded
+const demoUserId = 2;
+
+// Wieviele Threads mehr sollen pro Ladevorgang abgerufen werden
+const feedStep = 10;
 
 function Element() {
     const [threads, setThreads] = useState(null);
     const [groups, setGroups] = useState([]);
     
-    const [hasMore, setHasMore] = useState(false);
-    const [loadingMore, setLoadingMore] = useState(false);
-    const [loadMoreError, setLoadMoreError] = useState(false);
-    
-    const feedController = useRef(null);
-    const [feedVersion, setFeedVersion] = useState(0);
+    const [hasMore, setHasMore] = useState(false);    
+    const [feedRequest, setFeedRequest] = useState({limit: feedStep});
 
     const [showCreateForm, setShowCreateForm] = useState(false);
 
-    // Den Feed aus dem Backend laden
+    // Den Feed aus dem Backend laden (ggf. live via Button)
     useEffect(() => {
-        const controller = new AbortController();
-        feedController.current = controller;
-        getThreadFeed(feedStep, controller.signal)
+        let active = true;
+        getThreadFeed(feedRequest.limit)
             .then((page) => {
-                if (!controller.signal.aborted) {
+                if (active) {
                     setThreads(page.threads);
                     setHasMore(page.hasMore);
                 }
             })
             .catch((error) => {
-                if (!controller.signal.aborted)
+                if (active)
                     console.error(error);
             });
-        return () => controller.abort();
-    }, [feedVersion]);
+        return () => {
+            active = false;
+        };
+    }, [feedRequest]);
 
-    async function loadMoreThreads() {
-        const {signal} = feedController.current;
-        setLoadingMore(true);
-        setLoadMoreError(false);
-        try {
-            const page = await getThreadFeed(threads.length + feedStep, signal);
-            if (!signal.aborted) {
-                setThreads(page.threads);
-                setHasMore(page.hasMore);
-            }
-        } catch {
-            if (!signal.aborted)
-                setLoadMoreError(true);
-        } finally {
-            if (!signal.aborted)
-                setLoadingMore(false);
-        }
+    // Callback für den Button
+    function loadMoreThreads() {
+        setFeedRequest({limit: threads.length + feedStep});
     }
 
     // Gruppen laden aus Backend
@@ -69,11 +55,8 @@ function Element() {
     // Neuen Thread ans Backend geben wenn abgeschickt
     async function handleCreate({title, content, groupId}) {
         await createThread({title, content, groupId, userId: demoUserId});
-        feedController.current?.abort();
         setHasMore(false);
-        setLoadingMore(false);
-        setLoadMoreError(false);
-        setFeedVersion((version) => version + 1);
+        setFeedRequest({limit: feedStep});
     }
 
     return (
@@ -100,11 +83,8 @@ function Element() {
 
             {/* Mehr Threads laden */}
             {hasMore && (
-                <button className="dashboard-load-more" type="button" onClick={loadMoreThreads} disabled={loadingMore}>
-                    {loadingMore ? "Beiträge werden geladen..." : "Weitere Beiträge laden"}
-                </button>
+                <button className="dashboard-load-more" type="button" onClick={loadMoreThreads}>Weitere Beiträge laden</button>
             )}
-            {loadMoreError && <p role="alert">Weitere Beiträge konnten nicht geladen werden.</p>}
 
             {/* Button zum Thread anlegen Dialog öffnen */}
             <FloatingActionButton onClick={() => setShowCreateForm(true)} content="+" />

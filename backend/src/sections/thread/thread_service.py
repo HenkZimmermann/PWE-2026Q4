@@ -7,12 +7,10 @@ def get_thread_feed(limit):
     try:
         conn = get_db_connection()
         cursor = conn.cursor(cursor_factory=RealDictCursor)
-        try:
-            cursor.execute(sql, [limit])
-            return cursor.fetchall()
-        finally:
-            cursor.close()
-            conn.close()
+        cursor.execute(sql, [limit])
+        threads = cursor.fetchall()
+        cursor.close()
+        return threads
     except Exception as e:
         print("Fehler beim Abrufen des Feeds: ", e)
         return False
