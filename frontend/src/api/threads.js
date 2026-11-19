@@ -1,7 +1,7 @@
 import { apiBaseUrl } from "./config";
 
-export async function getThreadFeed(signal) {
-    const response = await fetch(apiBaseUrl + "/threads/feed", { signal });
+export async function getThreadFeed(limit, signal) {
+    const response = await fetch(apiBaseUrl + "/threads/feed?limit=" + limit, {signal});
     if (!response.ok)
         throw new Error("Feed konnte nicht geladen werden.");
 

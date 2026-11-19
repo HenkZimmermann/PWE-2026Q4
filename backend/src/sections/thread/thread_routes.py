@@ -1,15 +1,16 @@
-from fastapi import APIRouter, HTTPException, status
+from fastapi import APIRouter, HTTPException, Query, status
 from src.sections.thread.thread_model import *
 from src.sections.thread.thread_service import *
 
 router = APIRouter()
 
 @router.get("/threads/feed")
-def get_thread_feed_route():
-    threads = get_thread_feed()
+def get_thread_feed_route(limit: int = Query(20, ge=1)):
+    threads = get_thread_feed(limit + 1)
     if threads is False:
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Feed could not be loaded")
-    return threads
+
+    return {"threads": threads[:limit], "hasMore": len(threads) > limit}
 
 @router.get("/threads/votes")
 def get_threads_ordered_by_votes_route():

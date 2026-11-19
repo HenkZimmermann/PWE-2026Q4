@@ -14,4 +14,5 @@ LEFT JOIN (
     FROM comments
     GROUP BY thread_id
 ) AS c ON c.thread_id = t.thread_id
-ORDER BY t.created_at DESC NULLS LAST, t.thread_id DESC;
+ORDER BY t.created_at DESC NULLS LAST, t.thread_id DESC
+LIMIT %s;

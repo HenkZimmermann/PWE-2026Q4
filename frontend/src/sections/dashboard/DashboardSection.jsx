@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { getGroups } from "../../api/groups";
 import { createThread, getThreadFeed } from "../../api/threads";
 import CreateThreadDialog from "../../page/CreateThreadDialog";
@@ -7,24 +7,57 @@ import ThreadCard from "../../page/ThreadCard";
 import "./DashboardSection.css";
 
 const demoUserId = 2; // TODO Gibt ja noch keinen Login, daher Hard-coded
+const feedStep = 5; // Wieviele Threads mehr sollen pro Ladevorgang abgerufen werden
 
 function Element() {
     const [threads, setThreads] = useState(null);
     const [groups, setGroups] = useState([]);
+    
+    const [hasMore, setHasMore] = useState(false);
+    const [loadingMore, setLoadingMore] = useState(false);
+    const [loadMoreError, setLoadMoreError] = useState(false);
+    
+    const feedController = useRef(null);
     const [feedVersion, setFeedVersion] = useState(0);
+
     const [showCreateForm, setShowCreateForm] = useState(false);
 
     // Den Feed aus dem Backend laden
     useEffect(() => {
         const controller = new AbortController();
-        getThreadFeed(controller.signal)
-            .then(setThreads)
+        feedController.current = controller;
+        getThreadFeed(feedStep, controller.signal)
+            .then((page) => {
+                if (!controller.signal.aborted) {
+                    setThreads(page.threads);
+                    setHasMore(page.hasMore);
+                }
+            })
             .catch((error) => {
                 if (!controller.signal.aborted)
                     console.error(error);
             });
         return () => controller.abort();
     }, [feedVersion]);
+
+    async function loadMoreThreads() {
+        const {signal} = feedController.current;
+        setLoadingMore(true);
+        setLoadMoreError(false);
+        try {
+            const page = await getThreadFeed(threads.length + feedStep, signal);
+            if (!signal.aborted) {
+                setThreads(page.threads);
+                setHasMore(page.hasMore);
+            }
+        } catch {
+            if (!signal.aborted)
+                setLoadMoreError(true);
+        } finally {
+            if (!signal.aborted)
+                setLoadingMore(false);
+        }
+    }
 
     // Gruppen laden aus Backend
     useEffect(() => {
@@ -35,7 +68,11 @@ function Element() {
 
     // Neuen Thread ans Backend geben wenn abgeschickt
     async function handleCreate({title, content, groupId}) {
-        await createThread({ title, content, groupId, userId: demoUserId });
+        await createThread({title, content, groupId, userId: demoUserId});
+        feedController.current?.abort();
+        setHasMore(false);
+        setLoadingMore(false);
+        setLoadMoreError(false);
         setFeedVersion((version) => version + 1);
     }
 
@@ -60,6 +97,14 @@ function Element() {
             {threads?.map((thread) => (
                 <ThreadCard key={thread.id} thread={thread} />
             ))}
+
+            {/* Mehr Threads laden */}
+            {hasMore && (
+                <button className="dashboard-load-more" type="button" onClick={loadMoreThreads} disabled={loadingMore}>
+                    {loadingMore ? "Beiträge werden geladen..." : "Weitere Beiträge laden"}
+                </button>
+            )}
+            {loadMoreError && <p role="alert">Weitere Beiträge konnten nicht geladen werden.</p>}
 
             {/* Button zum Thread anlegen Dialog öffnen */}
             <FloatingActionButton onClick={() => setShowCreateForm(true)} content="+" />
