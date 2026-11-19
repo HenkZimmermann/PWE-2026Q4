@@ -1,21 +1,19 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import "./CreateThreadDialog.css";
 
-export default function CreateThreadDialog({ groups, onCreate, onClose }) {
+// Widerverwendbarer modaler Dialog für das Erstellen von einem Thread
+export default function CreateThreadDialog({groups, onCreate, onClose}) {
     const dialogRef = useRef(null);
-    const [saving, setSaving] = useState(false);
-    const [error, setError] = useState("");
 
     useEffect(() => {
         const dialog = dialogRef.current;
         dialog.showModal();
     }, []);
 
+    // Callback wenn abgeschickt wird
     async function handleSubmit(event) {
         event.preventDefault();
         const formData = new FormData(event.currentTarget);
-        setSaving(true);
-        setError("");
         try {
             await onCreate({
                 title: formData.get("title"),
@@ -24,25 +22,17 @@ export default function CreateThreadDialog({ groups, onCreate, onClose }) {
             });
             dialogRef.current?.close();
         } catch {
-            setError("Der Beitrag konnte nicht gespeichert werden.");
-        } finally {
-            setSaving(false);
+            console.error(error);
         }
     }
 
     return (
-        <dialog ref={dialogRef} className="create-thread-dialog" aria-label="Neuer Beitrag" onClose={onClose}
-            onCancel={(event) => {
-                if (saving)
-                    event.preventDefault();
-            }}
-        >
+        <dialog ref={dialogRef} className="create-thread-dialog" aria-label="Neuer Beitrag" onClose={onClose}>
             <form onSubmit={handleSubmit}>
                 <h2>Neuer Beitrag</h2>
                 <label>
                     Gruppe
                     <select name="groupId" required>
-                        {groups.length === 0 && <option value="">Keine Gruppen verfügbar</option>}
                         {groups.map((group) => <option key={group.id} value={group.id}>{group.name}</option>)}
                     </select>
                 </label>
@@ -54,12 +44,9 @@ export default function CreateThreadDialog({ groups, onCreate, onClose }) {
                     Text
                     <textarea name="content" rows={4} required />
                 </label>
-                {error && <p role="alert">{error}</p>}
                 <div className="create-thread-dialog-actions">
-                    <button type="button" disabled={saving} onClick={() => dialogRef.current.close()}>Abbrechen</button>
-                    <button type="submit" disabled={saving || groups.length === 0}>
-                        {saving ? "Wird gespeichert..." : "Beitrag erstellen"}
-                    </button>
+                    <button type="button" onClick={() => dialogRef.current.close()}>Abbrechen</button>
+                    <button type="submit">Beitrag erstellen</button>
                 </div>
             </form>
         </dialog>
