@@ -1,0 +1,16 @@
+.dashboard-empty-feed {
+    max-width: 44rem;
+    box-sizing: border-box;
+    margin-block: 1.25rem;
+    padding: 1rem 1.25rem;
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+    border-radius: 0.75rem;
+    background: var(--surface);
+    color: var(--text);
+}
+
+.dashboard-empty-feed p {
+    margin: 0.35rem 0 0;
+    color: var(--text-soft);
+}
