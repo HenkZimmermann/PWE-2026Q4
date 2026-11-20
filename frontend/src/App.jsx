@@ -1,4 +1,5 @@
 import { Routes, Route } from "react-router-dom";
+import ConnectionMonitor from "./page/ConnectionMonitor";
 import Sections from "./sections/Sections"
 import Sidebar from "./page/Sidebar"
 import "./App.css"
@@ -28,6 +29,7 @@ function App() {
             <main className="main-content">
                 <RouteRegistration />
             </main>
+            <ConnectionMonitor />
         </div>
     );
 }

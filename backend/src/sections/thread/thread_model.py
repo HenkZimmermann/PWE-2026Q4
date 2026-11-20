@@ -6,3 +6,7 @@ class ThreadModel(BaseModel):
     votes: int
     group_id: int
     title: str
+
+# Thread create nimmt kein votes, weil kann ja noch keine haben
+class CreateThreadModel(ThreadModel):
+    votes: int = 0

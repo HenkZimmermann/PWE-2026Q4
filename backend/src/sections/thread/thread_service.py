@@ -1,5 +1,19 @@
+from psycopg2.extras import RealDictCursor
 from src.sections.thread.thread_model import *
 from src.utils import get_db_connection, load_sql_file
+
+def get_thread_feed(limit, group_id=None):
+    sql = load_sql_file("sql/get_thread_feed.sql", __file__)
+    try:
+        conn = get_db_connection()
+        cursor = conn.cursor(cursor_factory=RealDictCursor)
+        cursor.execute(sql, {"limit": limit, "group_id": group_id})
+        threads = cursor.fetchall()
+        cursor.close()
+        return threads
+    except Exception as e:
+        print("Fehler beim Abrufen des Feeds: ", e)
+        return False
 
 def create_thread(request: ThreadModel):
     sql = load_sql_file("sql/create_thread.sql", __file__)

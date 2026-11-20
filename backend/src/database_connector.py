@@ -6,9 +6,10 @@ from dotenv import load_dotenv
 ROOT_DIR = Path(__file__).resolve().parents[1]
 load_dotenv(ROOT_DIR / ".env")
 
-def connectToDb():   
+def connectToDb(connect_timeout=0):
     return psycopg2.connect(database = os.getenv("POSTGRES_DB"),
         user = os.getenv("POSTGRES_USER"),
         host= os.getenv("POSTGRES_HOST"),
         password = os.getenv("POSTGRES_PASSWORD"),
-        port = os.getenv("POSTGRES_PORT"))
+        port = os.getenv("POSTGRES_PORT"),
+        connect_timeout=connect_timeout)
