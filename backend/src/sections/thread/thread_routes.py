@@ -51,15 +51,19 @@ def edit_thread_route(thread_id: int, request: ThreadModel):
     except Exception as e:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
     
-@router.get("/threads/search/{thread_name}")
-def get_all_threads_by_name_route(thread_name: str):
-    try:
-        threads = get_all_threads_by_name(thread_name)
-        if not threads:
-            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Thread not found")
-        return threads
-    except Exception as e:
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
+@router.get("/threads/search")
+def search_threads_route(search_term: str, limit: int, group_id: int | None = None):
+    term = search_term.strip()
+    if not term:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Search term is required")
+
+    # Wir laden hier einen mehr, damit wir unten den check machen obs noch mehr gibt
+    # Wir geben aber nur limit Threads zurück
+    threads = search_threads(term, limit + 1, group_id)
+    if threads is False:
+        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Search could not be completed")
+
+    return {"threads": threads[:limit], "hasMore": len(threads) > limit}
     
 @router.get("/threads/{thread_id}")
 def get_thread_by_id_route(thread_id: int):

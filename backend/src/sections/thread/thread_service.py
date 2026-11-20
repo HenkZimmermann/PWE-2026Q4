@@ -68,17 +68,25 @@ def edit_thread_by_id(thread_id: int, request: ThreadModel):
         print("Fehler beim Bearbeiten des Threads: ", e)
         return False
     
-def get_all_threads_by_name(name: str):
-    sql = load_sql_file("sql/get_all_threads_by_name.sql", __file__)
+def search_threads(term, limit, group_id=None):
+    sql = load_sql_file("sql/search_threads.sql", __file__)
+
+    # SQL Escapen!!!
+    term = term.replace("\\", "\\\\").replace("%", "\\%").replace("_", "\\_")
+    
     try:
         conn = get_db_connection()
-        cursor = conn.cursor()
-        cursor.execute(sql, [f"%{name}%"])
+        cursor = conn.cursor(cursor_factory=RealDictCursor)
+        cursor.execute(sql, {
+            "pattern": f"%{term}%",
+            "limit": limit,
+            "group_id": group_id
+        })
         threads = cursor.fetchall()
         cursor.close()
         return threads
     except Exception as e:
-        print("Fehler beim Abrufen der Threads: ", e)
+        print("Fehler beim Suchen der Threads: ", e)
         return False
     
 def get_all_threads_by_user_id(user_id: int):
