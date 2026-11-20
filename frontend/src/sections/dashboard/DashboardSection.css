@@ -1,3 +1,8 @@
+.dashboard {
+    max-width: 44rem;
+    margin-inline: auto;
+}
+
 .dashboard-group-filter {
     display: flex;
     flex-wrap: wrap;

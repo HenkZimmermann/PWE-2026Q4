@@ -67,7 +67,7 @@ function Element() {
     }
 
     return (
-        <div>
+        <div className="dashboard">
             <h1>Dashboard</h1>
             {/* Thread anlegen Dialog, nur bedingt zeigen */}
             {showCreateForm && (
