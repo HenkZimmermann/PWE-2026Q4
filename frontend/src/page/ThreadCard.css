@@ -38,6 +38,11 @@
     overflow: hidden;
 }
 
+.thread-card mark {
+    background-color: var(--accent-soft);
+    color: var(--background);
+}
+
 .thread-card-stats {
     margin-top: 1rem;
     padding-top: 0.75rem;
