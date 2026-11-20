@@ -1,3 +1,21 @@
+.dashboard-group-filter {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem;
+    color: var(--text-soft);
+}
+
+.dashboard-group-filter select {
+    max-width: 100%;
+    padding: 0.5rem 0.75rem;
+    border: 1px solid var(--border);
+    border-radius: 0.5rem;
+    background: var(--elevated);
+    color: var(--text);
+    font: inherit;
+}
+
 .dashboard-empty-feed {
     max-width: 44rem;
     box-sizing: border-box;

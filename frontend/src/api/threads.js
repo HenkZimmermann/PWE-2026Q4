@@ -1,8 +1,12 @@
 import { apiBaseUrl } from "./config";
 
 // Die neusten Threads vom Backend laden, maximal die "limit" neusten Threads
-export async function getThreadFeed(limit) {
-    const response = await fetch(apiBaseUrl + "/threads/feed?limit=" + limit);
+export async function getThreadFeed(limit, groupId = "") {
+    let url = apiBaseUrl + "/threads/feed?limit=" + limit;
+    if (groupId)
+        url += "&group_id=" + groupId;
+
+    const response = await fetch(url);
     if (!response.ok)
         throw new Error("Feed konnte nicht geladen werden.");
 

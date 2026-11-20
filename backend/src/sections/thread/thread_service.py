@@ -2,12 +2,12 @@ from psycopg2.extras import RealDictCursor
 from src.sections.thread.thread_model import *
 from src.utils import get_db_connection, load_sql_file
 
-def get_thread_feed(limit):
+def get_thread_feed(limit, group_id=None):
     sql = load_sql_file("sql/get_thread_feed.sql", __file__)
     try:
         conn = get_db_connection()
         cursor = conn.cursor(cursor_factory=RealDictCursor)
-        cursor.execute(sql, [limit])
+        cursor.execute(sql, {"limit": limit, "group_id": group_id})
         threads = cursor.fetchall()
         cursor.close()
         return threads

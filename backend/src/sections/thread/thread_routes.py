@@ -5,10 +5,10 @@ from src.sections.thread.thread_service import *
 router = APIRouter()
 
 @router.get("/threads/feed")
-def get_thread_feed_route(limit: int):
+def get_thread_feed_route(limit: int, group_id: int | None = None):
     # Wir laden hier einen mehr, damit wir unten den check machen obs noch mehr gibt
-    # Wir geben aber nur limit threads zurück
-    threads = get_thread_feed(limit + 1)
+    # Wir geben aber nur limit Threads zurück
+    threads = get_thread_feed(limit + 1, group_id)
     if threads is False:
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Feed could not be loaded")
 

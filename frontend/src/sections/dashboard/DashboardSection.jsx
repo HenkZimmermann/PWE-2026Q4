@@ -17,14 +17,14 @@ function Element() {
     const [groups, setGroups] = useState([]);
     
     const [hasMore, setHasMore] = useState(false);    
-    const [feedRequest, setFeedRequest] = useState({limit: feedStep});
+    const [feedRequest, setFeedRequest] = useState({limit: feedStep, groupId: ""});
 
     const [showCreateForm, setShowCreateForm] = useState(false);
 
     // Den Feed aus dem Backend laden (ggf. live via Button)
     useEffect(() => {
         let active = true;
-        getThreadFeed(feedRequest.limit)
+        getThreadFeed(feedRequest.limit, feedRequest.groupId)
             .then((page) => {
                 if (active) {
                     setThreads(page.threads);
@@ -42,7 +42,14 @@ function Element() {
 
     // Callback für den Button
     function loadMoreThreads() {
-        setFeedRequest({limit: threads.length + feedStep});
+        setFeedRequest({...feedRequest, limit: threads.length + feedStep});
+    }
+
+    // Callback für Wechsel von Gruppen Filter
+    function changeGroup(event) {
+        setThreads(null);
+        setHasMore(false);
+        setFeedRequest({limit: feedStep, groupId: event.target.value});
     }
 
     // Gruppen laden aus Backend
@@ -56,22 +63,32 @@ function Element() {
     async function handleCreate({title, content, groupId}) {
         await createThread({title, content, groupId, userId: demoUserId});
         setHasMore(false);
-        setFeedRequest({limit: feedStep});
+        setFeedRequest((request) => ({...request, limit: feedStep}));
     }
 
     return (
         <div>
             <h1>Dashboard</h1>
-            
             {/* Thread anlegen Dialog, nur bedingt zeigen */}
             {showCreateForm && (
                 <CreateThreadDialog groups={groups} onCreate={handleCreate} onClose={() => setShowCreateForm(false)}/>
             )}
 
+            {/* Gruppen Filter */}
+            <label className="dashboard-group-filter">
+                Gruppe
+                <select value={feedRequest.groupId} onChange={changeGroup}>
+                    <option value="">Alle Gruppen</option>
+                    {groups.map((group) => (
+                        <option key={group.id} value={group.id}>{group.name}</option>
+                    ))}
+                </select>
+            </label>
+
             {/* Keine Threads? Nachricht anzeigen */}
             {threads?.length === 0 && (
                 <div className="dashboard-empty-feed" role="status">
-                    <strong>Es gibt noch keine Beiträge.</strong>
+                    <strong>Es gibt noch keine Beiträge</strong>
                     <p>Über + kannst du den ersten erstellen.</p>
                 </div>
             )}
