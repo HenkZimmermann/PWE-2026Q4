@@ -26,6 +26,18 @@ export async function searchThreads(term, groupId, limit) {
     return response.json();
 }
 
+// Thread anhand ID abrufen
+export async function getThreadById(threadId) {
+    const response = await fetch(apiBaseUrl + "/threads/" + encodeURIComponent(threadId));
+    if (response.status === 404)
+        return null;
+    
+    if (!response.ok)
+        throw new Error("Beitrag konnte nicht geladen werden.");
+
+    return response.json();
+}
+
 // Thread mit gegebenen Inhalt erstellen und ans Backend schicken
 export async function createThread({title, content, groupId, userId}) {
     const response = await fetch(apiBaseUrl + "/threads/create", {

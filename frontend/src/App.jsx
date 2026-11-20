@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import ConnectionMonitor from "./page/ConnectionMonitor";
+import ThreadDetail from "./page/ThreadDetail";
 import Sections from "./sections/Sections"
 import Sidebar from "./page/Sidebar"
 import "./App.css"
@@ -8,6 +9,8 @@ import "./App.css"
 function RouteRegistration() {
     return (
         <Routes>
+            <Route path="/threads/:threadId" element={<ThreadDetail />} />
+
             // Section URLs als Route registrieren
             {Sections.map((section) => (
                 <Route key={section.url} path={section.url} element={section.element} />

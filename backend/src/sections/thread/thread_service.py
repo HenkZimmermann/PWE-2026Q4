@@ -128,9 +128,9 @@ def get_thread_by_id(thread_id: int):
     sql = load_sql_file("sql/get_thread_by_id.sql", __file__)
     try:
         conn = get_db_connection()
-        cursor = conn.cursor()
+        cursor = conn.cursor(cursor_factory=RealDictCursor)
         cursor.execute(sql, [thread_id])
-        thread = cursor.fetchone()
+        thread =  cursor.fetchone()
         cursor.close()
         return thread
     except Exception as e:

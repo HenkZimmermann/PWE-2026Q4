@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import "./ThreadCard.css";
 
 function highlightMatches(text, pattern) {
@@ -34,6 +35,8 @@ export default function ThreadCard({thread, preview = false, searchTerm = ""}) {
             content += "...";
     }
 
+    const title = highlightMatches(thread.title, pattern);
+
     return (
         <article className="thread-card">
 
@@ -46,8 +49,10 @@ export default function ThreadCard({thread, preview = false, searchTerm = ""}) {
                 )}
             </header>
 
-            {/* Titel und Inhalt */}
-            <h2>{highlightMatches(thread.title, pattern)}</h2>
+            {/* Titel und Inhalt. Titel als Link, wenn die Card eine Preview ist */}
+            <h2>
+                {preview ? <Link to={"/threads/" + thread.id}>{title}</Link> : title}
+            </h2>
             <p className={preview && !showExcerpt ? "thread-card-preview" : undefined}>
                 {highlightMatches(content, pattern)}
             </p>
