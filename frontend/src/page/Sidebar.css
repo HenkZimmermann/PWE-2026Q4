@@ -52,7 +52,7 @@
 }
 
 .sidebar nav a:hover {
-    background: var(--accent-soft);
+    background: var(--accent-light);
     color: var(--background);
 }
 

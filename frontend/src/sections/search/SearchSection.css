@@ -32,8 +32,8 @@
     font: inherit;
 }
 
-.search-section button {
-    cursor: pointer;
+.search-section button:enabled:hover {
+    background: var(--elevated-hover);
 }
 
 .search-section button:disabled {
