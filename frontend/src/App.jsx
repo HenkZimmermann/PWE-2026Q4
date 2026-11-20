@@ -1,4 +1,5 @@
-import { Routes, Route } from "react-router-dom";
+import { useEffect } from "react";
+import { Routes, Route, useLocation } from "react-router-dom";
 import ConnectionMonitor from "./page/ConnectionMonitor";
 import Sections from "./sections/Sections"
 import Sidebar from "./page/Sidebar"
@@ -23,6 +24,13 @@ function RouteRegistration() {
 }
 
 function App() {
+    const {pathname} = useLocation();
+
+    // Scroll zurücksetzen, wenn Section gewechselt wird
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, [pathname]);
+
     return (
         <div className="app-layout">
             <Sidebar />
