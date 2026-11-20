@@ -82,9 +82,9 @@ def search_threads(term, limit, group_id=None):
             "limit": limit,
             "group_id": group_id
         })
-        threads = cursor.fetchall()
+        results = cursor.fetchone()
         cursor.close()
-        return threads
+        return results
     except Exception as e:
         print("Fehler beim Suchen der Threads: ", e)
         return False

@@ -52,18 +52,20 @@ def edit_thread_route(thread_id: int, request: ThreadModel):
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
     
 @router.get("/threads/search")
-def search_threads_route(search_term: str, limit: int, group_id: int | None = None):
+def search_threads_route(search_term: str, limit: int = Query(ge=1), group_id: int | None = None):
     term = search_term.strip()
     if not term:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Search term is required")
 
-    # Wir laden hier einen mehr, damit wir unten den check machen obs noch mehr gibt
-    # Wir geben aber nur limit Threads zurück
-    threads = search_threads(term, limit + 1, group_id)
-    if threads is False:
+    results = search_threads(term, limit, group_id)
+    if results is False:
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Search could not be completed")
 
-    return {"threads": threads[:limit], "hasMore": len(threads) > limit}
+    return {
+        "threads": results["threads"],
+        "totalCount": results["totalCount"],
+        "hasMore": results["totalCount"] > limit,
+    }
     
 @router.get("/threads/{thread_id}")
 def get_thread_by_id_route(thread_id: int):

@@ -28,8 +28,7 @@ function Element() {
 function Search({searchTerm, searchGroupId, groups, onSearch}) {
     const [term, setTerm] = useState(searchTerm);
     const [groupId, setGroupId] = useState(searchGroupId);
-    const [threads, setThreads] = useState(null);
-    const [hasMore, setHasMore] = useState(false);
+    const [results, setResults] = useState(null);
     const [request, setRequest] = useState({limit: pageSize});
 
     // Suche aus der URL laden, z.B. wenn wir über Bookmark oder "zurück" auf die Seite kommen
@@ -39,10 +38,7 @@ function Search({searchTerm, searchGroupId, groups, onSearch}) {
             return;
 
         searchThreads(searchTerm, searchGroupId, request.limit)
-            .then((page) => {
-                setThreads(page.threads);
-                setHasMore(page.hasMore);
-            })
+            .then(setResults)
             .catch((error) => console.error(error));
     }, [searchTerm, searchGroupId, request]);
 
@@ -83,17 +79,16 @@ function Search({searchTerm, searchGroupId, groups, onSearch}) {
                 <button type="submit">Suchen</button>
             </form>
 
-            {/* Keine Threads? Nachricht anzeigen */}
-            {threads?.length === 0 && <p role="status">Keine Beiträge gefunden.</p>}
+            {results && <p role="status">{results.totalCount} Treffer</p>}
 
             {/* Geladene Threads aus Backend anzeigen */}
-            {threads?.map((thread) => (
+            {results?.threads.map((thread) => (
                 <ThreadCard key={thread.id} thread={thread} preview searchTerm={searchTerm} />
             ))}
 
             {/* Mehr Threads laden */}
-            {hasMore && (
-                <button type="button" onClick={() => setRequest({limit: threads.length + pageSize})}>Weitere Beiträge laden</button>
+            {results?.hasMore && (
+                <button type="button" onClick={() => setRequest({limit: results.threads.length + pageSize})}>Weitere Beiträge laden</button>
             )}
         </div>
     );
