@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useLocation, useSearchParams } from "react-router-dom";
 import { getGroups } from "../../api/groups";
 import { searchThreads } from "../../api/threads";
 import ThreadCard from "../../page/ThreadCard";
@@ -8,12 +9,9 @@ import "./SearchSection.css";
 const pageSize = 10;
 
 function Element() {
-    const [term, setTerm] = useState("");
-    const [groupId, setGroupId] = useState("");
+    const {key} = useLocation();
+    const [params, setParams] = useSearchParams();
     const [groups, setGroups] = useState([]);
-    const [search, setSearch] = useState(null);
-    const [threads, setThreads] = useState(null);
-    const [hasMore, setHasMore] = useState(false);
 
     // Gruppen laden aus Backend
     useEffect(() => {
@@ -22,26 +20,45 @@ function Element() {
             .catch((error) => console.error(error));
     }, []);
 
-    // Suche laden
-    async function loadResults(request) {
-        try {
-            const page = await searchThreads(request.term, request.groupId, pageSize);
-            setThreads(() => page.threads);
-            setHasMore(page.hasMore);
-        } catch (error) {
-            console.error(error);
-        }
-    }
+    return (
+        <Search key={key} searchTerm={(params.get("q") || "").trim()} searchGroupId={params.get("group_id") || ""} groups={groups} onSearch={setParams}/>
+    );
+}
+
+function Search({searchTerm, searchGroupId, groups, onSearch}) {
+    const [term, setTerm] = useState(searchTerm);
+    const [groupId, setGroupId] = useState(searchGroupId);
+    const [threads, setThreads] = useState(null);
+    const [hasMore, setHasMore] = useState(false);
+    const [request, setRequest] = useState({limit: pageSize});
+
+    // Suche aus der URL laden, z.B. wenn wir über Bookmark oder "zurück" auf die Seite kommen
+    // Parameter werden aus übergeordnetem Element() übergeben
+    useEffect(() => {
+        if (!searchTerm)
+            return;
+
+        searchThreads(searchTerm, searchGroupId, request.limit)
+            .then((page) => {
+                setThreads(page.threads);
+                setHasMore(page.hasMore);
+            })
+            .catch((error) => console.error(error));
+    }, [searchTerm, searchGroupId, request]);
 
     // Callback für den Button
     function handleSearch(event) {
         event.preventDefault();
 
-        const request = {term: term.trim(), groupId};
-        setSearch(request);
-        setThreads(null);
-        setHasMore(false);
-        loadResults(request);
+        // Haben wir überhaupt Inhalt in der Query?
+        const query = term.trim();
+        if (!query)
+            return;
+
+        const params = {q: query};
+        if (groupId)
+            params.group_id = groupId;
+        onSearch(params);
     }
 
     return (
@@ -71,12 +88,12 @@ function Element() {
 
             {/* Geladene Threads aus Backend anzeigen */}
             {threads?.map((thread) => (
-                <ThreadCard key={thread.id} thread={thread} preview searchTerm={search.term} />
+                <ThreadCard key={thread.id} thread={thread} preview searchTerm={searchTerm} />
             ))}
 
             {/* Mehr Threads laden */}
             {hasMore && (
-                <button type="button" disabled={loading} onClick={() => loadResults(search, threads.length)}>Weitere Beiträge laden</button>
+                <button type="button" onClick={() => setRequest({limit: threads.length + pageSize})}>Weitere Beiträge laden</button>
             )}
         </div>
     );
