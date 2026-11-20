@@ -1,4 +1,7 @@
-from fastapi import FastAPI
+from contextlib import closing
+from fastapi import FastAPI, HTTPException
+from psycopg2 import OperationalError
+from src.database_connector import connectToDb
 from src.sections.groups import groups_routes
 from src.sections.role import role_routes
 from src.sections.comment import comment_routes
@@ -30,3 +33,11 @@ app.include_router(user_routes.router)
 @app.get("/")
 def root():
     return {"message": "FastAPI läuft"}
+
+@app.get("/health")
+def health():
+    try:
+        with closing(connectToDb(connect_timeout=3)):
+            return {"status": "ok"}
+    except OperationalError:
+        raise HTTPException(status_code=503, detail="Database unavailable")

@@ -1,0 +1,23 @@
+.connection-dialog {
+    box-sizing: border-box;
+    width: min(28rem, calc(100% - 2rem));
+    padding: 1.5rem;
+    border: 1px solid var(--border);
+    border-radius: 0.75rem;
+    background: var(--surface);
+    color: var(--text);
+}
+
+.connection-dialog::backdrop {
+    background: color-mix(in srgb, var(--background) 80%, transparent);
+}
+
+.connection-dialog h2 {
+    margin: 0;
+    font-size: 1.25rem;
+}
+
+.connection-dialog p {
+    margin: 0.75rem 0 0;
+    color: var(--text-soft);
+}
