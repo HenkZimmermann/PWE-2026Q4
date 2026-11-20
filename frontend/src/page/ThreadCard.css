@@ -30,6 +30,14 @@
     line-height: 1.6;
 }
 
+.thread-card-preview {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    overflow: hidden;
+}
+
 .thread-card-stats {
     margin-top: 1rem;
     padding-top: 0.75rem;

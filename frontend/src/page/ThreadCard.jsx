@@ -1,6 +1,6 @@
 import "./ThreadCard.css";
 
-export default function ThreadCard({ thread }) {
+export default function ThreadCard({thread, preview = false}) {
     return (
         <article className="thread-card">
             <header className="thread-card-meta">
@@ -11,7 +11,7 @@ export default function ThreadCard({ thread }) {
                 )}
             </header>
             <h2>{thread.title}</h2>
-            <p>{thread.content}</p>
+            <p className={preview ? "thread-card-preview" : undefined}>{thread.content}</p>
             <footer className="thread-card-stats">
                 <span>{thread.commentCount} Kommentare</span>
             </footer>

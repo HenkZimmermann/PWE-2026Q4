@@ -78,7 +78,7 @@ function Element() {
 
             {/* Geladene Threads aus Backend anzeigen */}
             {threads?.map((thread) => (
-                <ThreadCard key={thread.id} thread={thread} />
+                <ThreadCard key={thread.id} thread={thread} preview />
             ))}
 
             {/* Mehr Threads laden */}
