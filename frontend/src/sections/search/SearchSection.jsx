@@ -79,6 +79,7 @@ function Search({searchTerm, searchGroupId, groups, onSearch}) {
                 <button type="submit">Suchen</button>
             </form>
 
+            {/* Anzahl Ergebnisse */}
             {results && <p role="status">{results.totalCount} Treffer</p>}
 
             {/* Geladene Threads aus Backend anzeigen */}

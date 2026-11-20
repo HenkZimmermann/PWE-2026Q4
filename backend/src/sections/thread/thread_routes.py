@@ -52,7 +52,7 @@ def edit_thread_route(thread_id: int, request: ThreadModel):
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
     
 @router.get("/threads/search")
-def search_threads_route(search_term: str, limit: int = Query(ge=1), group_id: int | None = None):
+def search_threads_route(search_term: str, limit: int, group_id: int | None = None):
     term = search_term.strip()
     if not term:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Search term is required")

@@ -70,6 +70,7 @@ def edit_thread_by_id(thread_id: int, request: ThreadModel):
     
 def search_threads(term, limit, group_id=None):
     sql = load_sql_file("sql/search_threads.sql", __file__)
+    count_sql = load_sql_file("sql/count_search_threads.sql", __file__)
 
     # SQL Escapen!!!
     term = term.replace("\\", "\\\\").replace("%", "\\%").replace("_", "\\_")
@@ -77,14 +78,22 @@ def search_threads(term, limit, group_id=None):
     try:
         conn = get_db_connection()
         cursor = conn.cursor(cursor_factory=RealDictCursor)
-        cursor.execute(sql, {
+        params = {
             "pattern": f"%{term}%",
             "limit": limit,
             "group_id": group_id
-        })
-        results = cursor.fetchone()
+        }
+
+        # Eigentlich Suche
+        cursor.execute(sql, params)
+        threads = cursor.fetchall()
+
+        # Anzahl Ergebnisse
+        cursor.execute(count_sql, params)
+        total_count = cursor.fetchone()["totalCount"]
+        
         cursor.close()
-        return results
+        return {"threads": threads, "totalCount": total_count}
     except Exception as e:
         print("Fehler beim Suchen der Threads: ", e)
         return False
