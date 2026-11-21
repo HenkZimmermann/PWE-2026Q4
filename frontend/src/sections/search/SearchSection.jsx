@@ -1,5 +1,123 @@
+import { useEffect, useState } from "react";
+import { useLocation, useSearchParams } from "react-router-dom";
+import { getGroups } from "../../api/groups";
+import { searchThreads } from "../../api/threads";
+import ThreadCard from "../../page/ThreadCard";
+import "./SearchSection.css";
+
+// Wieviele Threads mehr sollen pro Ladevorgang abgerufen werden
+const pageSize = 10;
+
+// Die letzten Suchen merken. Dadurch können wir beim zurückkehren wieder auf die Scrollposition zurück
+const searchHistory = new Map();
+
 function Element() {
-    return (<h1>Suche</h1>);
+    const {key} = useLocation();
+    const [params, setParams] = useSearchParams();
+    const [groups, setGroups] = useState([]);
+
+    // Gruppen laden aus Backend
+    useEffect(() => {
+        getGroups()
+            .then(setGroups)
+            .catch((error) => console.error(error));
+    }, []);
+
+    return (
+        <Search key={key} historyKey={key} searchTerm={(params.get("q") || "").trim()} searchGroupId={params.get("group_id") || ""} groups={groups} onSearch={setParams}/>
+    );
+}
+
+function Search({historyKey, searchTerm, searchGroupId, groups, onSearch}) {
+    const [term, setTerm] = useState(searchTerm);
+    const [groupId, setGroupId] = useState(searchGroupId);
+    const [results, setResults] = useState(null);
+    const [request, setRequest] = useState(() => searchHistory.get(historyKey) ?? {limit: pageSize});
+
+    // Suche aus der URL laden, z.B. wenn wir über Bookmark oder "zurück" auf die Seite kommen
+    // Parameter werden aus übergeordnetem Element() übergeben
+    useEffect(() => {
+        if (!searchTerm)
+            return;
+
+        let active = true;
+        searchThreads(searchTerm, searchGroupId, request.limit)
+            .then((page) => {
+                if (active)
+                    setResults(page);
+            })
+            .catch((error) => console.error(error));
+
+        return () => {
+            active = false;
+        };
+    }, [searchTerm, searchGroupId, request]);
+
+    // Erst scrollen, wenn die Treffer wieder angezeigt werden
+    useEffect(() => {
+        if (results && request.scrollY !== undefined)
+            window.scrollTo(0, request.scrollY);
+    }, [results, request]);
+
+    // Suche merken, sobald wir einen Thread öffnen
+    function rememberSearch() {
+        searchHistory.set(historyKey, {
+            limit: results.threads.length,
+            scrollY: window.scrollY
+        });
+    }
+
+    // Callback für den Button
+    function handleSearch(event) {
+        event.preventDefault();
+
+        // Haben wir überhaupt Inhalt in der Query?
+        const query = term.trim();
+        if (!query)
+            return;
+
+        const params = {q: query};
+        if (groupId)
+            params.group_id = groupId;
+        onSearch(params);
+    }
+
+    return (
+        <div className="search-section">
+            <h1>Suche</h1>
+            <form className="search-form" onSubmit={handleSearch}>
+                <label>
+                    Suchbegriff
+                    <input type="search" value={term} onChange={(event) => setTerm(event.target.value)} required/>
+                </label>
+
+                {/* Gruppen Filter */}
+                <label>
+                    Gruppe
+                    <select value={groupId} onChange={(event) => setGroupId(event.target.value)}>
+                        <option value="">Alle Gruppen</option>
+                        {groups.map((group) => (
+                            <option key={group.id} value={group.id}>{group.name}</option>
+                        ))}
+                    </select>
+                </label>
+                <button type="submit">Suchen</button>
+            </form>
+
+            {/* Anzahl Ergebnisse */}
+            {results && <p role="status">{results.totalCount} Treffer</p>}
+
+            {/* Geladene Threads aus Backend anzeigen */}
+            {results?.threads.map((thread) => (
+                <ThreadCard key={thread.id} thread={thread} preview searchTerm={searchTerm} onOpen={rememberSearch} />
+            ))}
+
+            {/* Mehr Threads laden */}
+            {results?.hasMore && (
+                <button type="button" onClick={() => setRequest({limit: results.threads.length + pageSize})}>Weitere Beiträge laden</button>
+            )}
+        </div>
+    );
 }
 
 export const SearchSection = {

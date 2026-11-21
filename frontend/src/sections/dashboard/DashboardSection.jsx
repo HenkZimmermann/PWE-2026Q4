@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import { getGroups } from "../../api/groups";
 import { createThread, getThreadFeed } from "../../api/threads";
 import CreateThreadDialog from "../../page/CreateThreadDialog";
@@ -12,12 +13,16 @@ const demoUserId = 2;
 // Wieviele Threads mehr sollen pro Ladevorgang abgerufen werden
 const feedStep = 10;
 
+// Die letzten Anzeigen merken. Dadurch können wir beim zurückkehren wieder auf die Scrollposition zurück
+const dashboardHistory = new Map();
+
 function Element() {
+    const {key} = useLocation();
     const [threads, setThreads] = useState(null);
     const [groups, setGroups] = useState([]);
     
     const [hasMore, setHasMore] = useState(false);    
-    const [feedRequest, setFeedRequest] = useState({limit: feedStep, groupId: ""});
+    const [feedRequest, setFeedRequest] = useState(() => dashboardHistory.get(key) ?? {limit: feedStep, groupId: ""});
 
     const [showCreateForm, setShowCreateForm] = useState(false);
 
@@ -40,9 +45,24 @@ function Element() {
         };
     }, [feedRequest]);
 
+    // Erst scrollen, wenn der Feed wieder geladen hat
+    useEffect(() => {
+        if (threads && feedRequest.scrollY !== undefined)
+            window.scrollTo(0, feedRequest.scrollY);
+    }, [threads, feedRequest]);
+
+    // Scroll Position merken wenn wir einen Thread öffnen
+    function rememberDashboard() {
+        dashboardHistory.set(key, {
+            limit: threads.length,
+            groupId: feedRequest.groupId,
+            scrollY: window.scrollY
+        });
+    }
+
     // Callback für den Button
     function loadMoreThreads() {
-        setFeedRequest({...feedRequest, limit: threads.length + feedStep});
+        setFeedRequest({limit: threads.length + feedStep, groupId: feedRequest.groupId});
     }
 
     // Callback für Wechsel von Gruppen Filter
@@ -63,7 +83,7 @@ function Element() {
     async function handleCreate({title, content, groupId}) {
         await createThread({title, content, groupId, userId: demoUserId});
         setHasMore(false);
-        setFeedRequest((request) => ({...request, limit: feedStep}));
+        setFeedRequest((request) => ({limit: feedStep, groupId: request.groupId}));
     }
 
     return (
@@ -95,7 +115,7 @@ function Element() {
 
             {/* Geladene Threads aus Backend anzeigen */}
             {threads?.map((thread) => (
-                <ThreadCard key={thread.id} thread={thread} preview />
+                <ThreadCard key={thread.id} thread={thread} preview onOpen={rememberDashboard} />
             ))}
 
             {/* Mehr Threads laden */}

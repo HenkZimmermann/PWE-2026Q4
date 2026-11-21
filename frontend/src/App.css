@@ -6,6 +6,11 @@ body {
     font-family: "Geist", system-ui, -apple-system, sans-serif;
 }
 
+button:enabled,
+select:enabled {
+    cursor: pointer;
+}
+
 .app-layout {
     display: flex;
     min-height: 100vh;
