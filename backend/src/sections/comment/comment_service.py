@@ -1,3 +1,4 @@
+from psycopg2.extras import RealDictCursor
 from src.sections.comment.comment_model import *
 from src.utils import get_db_connection, load_sql_file
 
@@ -58,11 +59,9 @@ def get_all_comments_by_thread_id(thread_id: int):
     sql = load_sql_file("sql/get_all_comments_by_thread_id.sql", __file__)
     try:
         conn = get_db_connection()
-        cursor = conn.cursor()
-        cursor.execute(sql, [thread_id])
-        comments = cursor.fetchall()
-        cursor.close()
-        return comments
+        with conn.cursor(cursor_factory=RealDictCursor) as cursor:
+            cursor.execute(sql, [thread_id])
+            return cursor.fetchall()
     except Exception as e:
         print("Fehler beim Abrufen der Thread Kommentare: ", e)
         return False
