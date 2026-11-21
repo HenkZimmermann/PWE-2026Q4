@@ -8,6 +8,9 @@ import "./SearchSection.css";
 // Wieviele Threads mehr sollen pro Ladevorgang abgerufen werden
 const pageSize = 10;
 
+// Die letzten Suchen merken. Dadurch können wir beim zurückkehren wieder auf die Scrollposition zurück
+const searchHistory = new Map();
+
 function Element() {
     const {key} = useLocation();
     const [params, setParams] = useSearchParams();
@@ -21,15 +24,15 @@ function Element() {
     }, []);
 
     return (
-        <Search key={key} searchTerm={(params.get("q") || "").trim()} searchGroupId={params.get("group_id") || ""} groups={groups} onSearch={setParams}/>
+        <Search key={key} historyKey={key} searchTerm={(params.get("q") || "").trim()} searchGroupId={params.get("group_id") || ""} groups={groups} onSearch={setParams}/>
     );
 }
 
-function Search({searchTerm, searchGroupId, groups, onSearch}) {
+function Search({historyKey, searchTerm, searchGroupId, groups, onSearch}) {
     const [term, setTerm] = useState(searchTerm);
     const [groupId, setGroupId] = useState(searchGroupId);
     const [results, setResults] = useState(null);
-    const [request, setRequest] = useState({limit: pageSize});
+    const [request, setRequest] = useState(() => searchHistory.get(historyKey) ?? {limit: pageSize});
 
     // Suche aus der URL laden, z.B. wenn wir über Bookmark oder "zurück" auf die Seite kommen
     // Parameter werden aus übergeordnetem Element() übergeben
@@ -37,10 +40,32 @@ function Search({searchTerm, searchGroupId, groups, onSearch}) {
         if (!searchTerm)
             return;
 
+        let active = true;
         searchThreads(searchTerm, searchGroupId, request.limit)
-            .then(setResults)
+            .then((page) => {
+                if (active)
+                    setResults(page);
+            })
             .catch((error) => console.error(error));
+
+        return () => {
+            active = false;
+        };
     }, [searchTerm, searchGroupId, request]);
+
+    // Erst scrollen, wenn die Treffer wieder angezeigt werden
+    useEffect(() => {
+        if (results && request.scrollY !== undefined)
+            window.scrollTo(0, request.scrollY);
+    }, [results, request]);
+
+    // Suche merken, sobald wir einen Thread öffnen
+    function rememberSearch() {
+        searchHistory.set(historyKey, {
+            limit: results.threads.length,
+            scrollY: window.scrollY
+        });
+    }
 
     // Callback für den Button
     function handleSearch(event) {
@@ -84,7 +109,7 @@ function Search({searchTerm, searchGroupId, groups, onSearch}) {
 
             {/* Geladene Threads aus Backend anzeigen */}
             {results?.threads.map((thread) => (
-                <ThreadCard key={thread.id} thread={thread} preview searchTerm={searchTerm} />
+                <ThreadCard key={thread.id} thread={thread} preview searchTerm={searchTerm} onOpen={rememberSearch} />
             ))}
 
             {/* Mehr Threads laden */}

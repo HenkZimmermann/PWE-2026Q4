@@ -11,7 +11,7 @@ function highlightMatches(text, pattern) {
     ));
 }
 
-export default function ThreadCard({thread, preview = false, searchTerm = ""}) {
+export default function ThreadCard({thread, preview = false, searchTerm = "", onOpen}) {
     // Sonderzeichen als normalen Text suchen, nicht als Regex interpretieren
     const escapedTerm = searchTerm.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
     const pattern = escapedTerm ? new RegExp("(" + escapedTerm + ")", "iu") : null;
@@ -51,7 +51,7 @@ export default function ThreadCard({thread, preview = false, searchTerm = ""}) {
 
             {/* Titel und Inhalt. Titel als Link, wenn die Card eine Preview ist */}
             <h2>
-                {preview ? <Link to={"/threads/" + thread.id}>{title}</Link> : title}
+                {preview ? <Link to={"/threads/" + thread.id} onClick={onOpen}>{title}</Link> : title}
             </h2>
             <p className={preview && !showExcerpt ? "thread-card-preview" : undefined}>
                 {highlightMatches(content, pattern)}
