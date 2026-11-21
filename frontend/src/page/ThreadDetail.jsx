@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { getThreadById } from "../api/threads";
 import ThreadCard from "./ThreadCard";
 import ThreadComments from "./ThreadComments";
+import "./ThreadDetail.css";
 
 export default function ThreadDetail() {
     const {threadId} = useParams();
@@ -24,14 +25,16 @@ export default function ThreadDetail() {
         };
     }, [threadId]);
 
-
-    if (thread === null)
-        return <p role="status">Beitrag nicht gefunden.</p>;
-
     return (
-        <>
-            <ThreadCard thread={thread} />
-            <ThreadComments key={thread.id} threadId={thread.id} />
-        </>
+        <div className="thread-detail">
+            {thread === null ? (
+                <p role="status">Beitrag nicht gefunden.</p>
+            ) : (
+                <>
+                    <ThreadCard thread={thread} />
+                    <ThreadComments key={thread.id} threadId={thread.id} />
+                </>
+            )}
+        </div>
     );
 }
