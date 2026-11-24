@@ -6,6 +6,7 @@ export function Sidebar() {
     return (
         <aside className="sidebar">
             <div className="sidebar-header">
+                <img src="/forum-logo.png" width="36" height="36" alt="" />
                 <h2>PWE-Forum</h2>
             </div>
             <nav>
