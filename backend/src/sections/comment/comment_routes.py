@@ -8,6 +8,8 @@ router = APIRouter()
 def create_comment_route(request: CommentModel):
     try:
         comment = create_comment(request)
+        if comment is False:
+            raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Comment could not be created")
         return comment
     except Exception as e:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
@@ -32,7 +34,7 @@ def edit_comment_route(comment_id: int, request: CommentModel):
     except Exception as e:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
 
-@router.get("/comments/thread/{parent_comment_id}")
+@router.get("/comments/parent/{parent_comment_id}")
 def get_comments_by_parent_comment_id_route(parent_comment_id: int):
     try:
         comments = get_all_comments_by_parent_comment_id(parent_comment_id)
@@ -44,6 +46,8 @@ def get_comments_by_parent_comment_id_route(parent_comment_id: int):
 def get_comments_by_thread_id_route(thread_id: int):
     try:
         comments = get_all_comments_by_thread_id(thread_id)
+        if comments is False:
+            raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Comments could not be loaded")
         return comments
     except Exception as e:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))

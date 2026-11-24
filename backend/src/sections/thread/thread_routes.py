@@ -51,25 +51,32 @@ def edit_thread_route(thread_id: int, request: ThreadModel):
     except Exception as e:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
     
-@router.get("/threads/search/{thread_name}")
-def get_all_threads_by_name_route(thread_name: str):
-    try:
-        threads = get_all_threads_by_name(thread_name)
-        if not threads:
-            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Thread not found")
-        return threads
-    except Exception as e:
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
+@router.get("/threads/search")
+def search_threads_route(search_term: str, limit: int, group_id: int | None = None):
+    term = search_term.strip()
+    if not term:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Search term is required")
+
+    results = search_threads(term, limit, group_id)
+    if results is False:
+        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Search could not be completed")
+
+    return {
+        "threads": results["threads"],
+        "totalCount": results["totalCount"],
+        "hasMore": results["totalCount"] > limit,
+    }
     
 @router.get("/threads/{thread_id}")
 def get_thread_by_id_route(thread_id: int):
-    try:
-        thread = get_thread_by_id(thread_id)
-        if not thread:
-            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Thread not found")
-        return thread
-    except Exception as e:
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
+    thread = get_thread_by_id(thread_id)
+    if thread is False:
+        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Thread could not be loaded")
+    
+    if thread is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Thread not found")
+    
+    return thread
     
 @router.get("/threads/user/{user_id}")
 def get_threads_by_user_id_route(user_id: int):

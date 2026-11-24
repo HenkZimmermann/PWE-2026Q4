@@ -45,7 +45,10 @@
     background: var(--elevated);
     color: var(--text);
     font: inherit;
-    cursor: pointer;
+}
+
+.dashboard-load-more:enabled:hover {
+    background: var(--elevated-hover);
 }
 
 .dashboard-load-more:disabled {

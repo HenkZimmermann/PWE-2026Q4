@@ -48,10 +48,15 @@
     gap: 0.5rem;
 }
 
-.create-thread-dialog button {
-    cursor: pointer;
+.create-thread-dialog button:enabled:hover {
+    background: var(--elevated-hover);
 }
 
 .create-thread-dialog button[type="submit"] {
     background: var(--accent);
+    color: var(--background);
+}
+
+.create-thread-dialog button[type="submit"]:enabled:hover {
+    background: var(--accent-light);
 }

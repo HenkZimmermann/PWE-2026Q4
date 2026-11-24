@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom"
+import { NavLink } from "react-router-dom"
 import Sections from "../sections/Sections"
 import "./Sidebar.css"
 
@@ -13,10 +13,10 @@ export function Sidebar() {
                 <ul>
                     {Sections.filter(section => section.showInSidebar).map((section) => (
                         <li key={section.url}>
-                            <Link to={section.url}>
+                            <NavLink to={section.url}>
                                 <span>{section.icon}</span>
                                 {section.title}
-                            </Link>
+                            </NavLink>
                         </li>
                     ))}
                 </ul>
