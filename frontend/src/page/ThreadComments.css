@@ -1,0 +1,61 @@
+.thread-comments {
+    max-width: 44rem;
+}
+
+.thread-comment-form {
+    display: grid;
+    gap: 0.5rem;
+}
+
+.thread-comment-form textarea,
+.thread-comment-form button {
+    border: 1px solid var(--border);
+    border-radius: 0.5rem;
+    padding: 0.6rem 0.75rem;
+    font: inherit;
+}
+
+.thread-comment-form textarea {
+    background: var(--elevated);
+    color: var(--text);
+    resize: vertical;
+}
+
+.thread-comment-form button {
+    justify-self: start;
+    background: var(--accent);
+    color: var(--background);
+}
+
+.thread-comment-form button:enabled:hover {
+    background: var(--accent-light);
+}
+
+.thread-comment-form button:disabled {
+    opacity: 0.6;
+}
+
+.thread-comment {
+    margin-block: 0.75rem;
+    padding: 1rem;
+    border: 1px solid var(--border);
+    border-radius: 0.75rem;
+    background: var(--surface);
+    overflow-wrap: anywhere;
+}
+
+.thread-comment header {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem 0.75rem;
+    font-size: 0.875rem;
+}
+
+.thread-comment time {
+    color: var(--text-soft);
+}
+
+.thread-comment p {
+    margin: 0.5rem 0 0;
+    white-space: pre-wrap;
+}

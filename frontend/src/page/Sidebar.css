@@ -52,5 +52,12 @@
 }
 
 .sidebar nav a:hover {
+    background: var(--accent-light);
+    color: var(--background);
+}
+
+.sidebar nav a[aria-current="page"] {
     background: var(--accent);
+    color: var(--background);
+    font-weight: 600;
 }
