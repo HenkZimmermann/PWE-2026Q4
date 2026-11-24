@@ -1,11 +1,18 @@
 import { useEffect, useState } from "react";
-import { getThreadComments } from "../api/comments";
+import { createComment, getThreadComments } from "../api/comments";
 import "./ThreadComments.css";
 
-// Komponente für Kommentarspalte, lädt Daten selber aus Backend für gegebene Thread ID
-export default function ThreadComments({threadId}) {
-    const [comments, setComments] = useState(null);
+// TODO Selben Demo User wie im Dashboard verwenden
+const demoUserId = 2;
 
+// Komponente für Kommentarspalte, lädt Daten selber aus Backend für gegebene Thread ID
+export default function ThreadComments({threadId, onCommentCreated}) {
+    const [comments, setComments] = useState(null);
+    const [message, setMessage] = useState("");
+    const [loadError, setLoadError] = useState("");
+    const [reload, setReload] = useState(0);
+
+    // Thread Kommentare laden
     useEffect(() => {
         let active = true;
         getThreadComments(threadId)
@@ -18,11 +25,32 @@ export default function ThreadComments({threadId}) {
         return () => {
             active = false;
         };
-    }, [threadId]);
+    }, [threadId, reload]);
+
+    // Abschicken
+    async function handleSubmit(event) {
+        event.preventDefault();
+        const text = message.trim();
+
+        try {
+            await createComment({threadId, message: text, userId: demoUserId});
+            setMessage("");
+            setReload((value) => value + 1);
+            onCommentCreated(threadId);
+        } catch (error) {
+            console.error(error);
+        }
+    }
 
     return (
         <section className="thread-comments">
             <h2>Kommentare</h2>
+
+            <form className="thread-comment-form" onSubmit={handleSubmit}>
+                <label htmlFor="comment-message">Kommentar schreiben</label>
+                <textarea id="comment-message" rows={3} value={message} onChange={(event) => setMessage(event.target.value)} required />
+                <button type="submit" disabled={!message.trim()}>Kommentar senden</button>
+            </form>
 
             {/* Keine Kommentare? Nachricht*/}
             {comments?.length === 0 && <p>Es gibt noch keine Kommentare.</p>}

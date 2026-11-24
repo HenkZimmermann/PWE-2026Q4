@@ -25,6 +25,12 @@ export default function ThreadDetail() {
         };
     }, [threadId]);
 
+    function handleCommentCreated(commentThreadId) {
+        setThread((current) => current?.id === commentThreadId
+            ? {...current, commentCount: current.commentCount + 1}
+            : current);
+    }
+
     return (
         <div className="thread-detail">
             {thread === null ? (
@@ -32,7 +38,7 @@ export default function ThreadDetail() {
             ) : (
                 <>
                     <ThreadCard thread={thread} />
-                    <ThreadComments key={thread.id} threadId={thread.id} />
+                    <ThreadComments key={thread.id} threadId={thread.id} onCommentCreated={handleCommentCreated} />
                 </>
             )}
         </div>

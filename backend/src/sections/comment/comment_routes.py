@@ -8,6 +8,8 @@ router = APIRouter()
 def create_comment_route(request: CommentModel):
     try:
         comment = create_comment(request)
+        if comment is False:
+            raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Comment could not be created")
         return comment
     except Exception as e:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))

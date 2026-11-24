@@ -1,3 +1,4 @@
+from contextlib import closing
 from psycopg2.extras import RealDictCursor
 from src.sections.comment.comment_model import *
 from src.utils import get_db_connection, load_sql_file
@@ -8,9 +9,9 @@ def create_comment(request: CommentModel):
         conn = get_db_connection()
         cursor = conn.cursor()
         cursor.execute(sql, [
-            request.thread_id, 
-            request.parent_comment_id, 
-            request.message, 
+            request.thread_id,
+            request.parent_comment_id,
+            request.message,
             request.votes,
             request.user_id
         ])

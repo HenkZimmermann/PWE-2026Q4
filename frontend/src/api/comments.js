@@ -8,3 +8,20 @@ export async function getThreadComments(threadId) {
 
     return response.json();
 }
+
+// Kommenatr anlegen unter gegebenen Thread
+export async function createComment({threadId, message, userId}) {
+    const response = await fetch(apiBaseUrl + "/comments/create", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            thread_id: threadId,
+            message,
+            votes: 0,
+            user_id: userId
+        })
+    });
+
+    if (!response.ok)
+        throw new Error("Kommentar konnte nicht gespeichert werden.");
+}
