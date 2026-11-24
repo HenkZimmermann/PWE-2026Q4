@@ -1,4 +1,7 @@
-# PWE-2026Q4
+<h1>
+  <img src="frontend/public/forum-logo.png" alt="" width="40" align="middle">
+  PWE-2026Q4
+</h1>
 
 Repository für das Uni-Modul **Projekt: Webenticklung**. Ziel dieses Projektes ist es, ein funktionsfähiges, web-basiertes und einfach aufzusetzendes Frage-Anwtort-Forum,
 ähnlich wie [Reddit](https://www.reddit.com/), zu entwickeln. Der Fokus liegt hierbau auf der Funktionalität des Forums. Das Forum ermöglicht einen weltweiten und
