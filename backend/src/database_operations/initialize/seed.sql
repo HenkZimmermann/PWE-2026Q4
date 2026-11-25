@@ -22,14 +22,14 @@ ON CONFLICT DO NOTHING;
 INSERT INTO Users (
     user_id, username, email, password_hash, role_id
 ) VALUES
-(1, 'admin', 'admin@example.com', 'DEMO_HASH_ADMIN', 1),
-(2, 'max_mustermann', 'max@example.com', 'DEMO_HASH_MAX', 3),
-(3, 'lisa_dev', 'lisa@example.com', 'DEMO_HASH_LISA', 3),
-(4, 'tom_gaming', 'tom@example.com', 'DEMO_HASH_TOM', 3),
-(5, 'anna_mod', 'anna@example.com', 'DEMO_HASH_ANNA', 2),
-(6, 'sarah_design', 'sarah@example.com', 'DEMO_HASH_SARAH', 3),
-(7, 'ben_python', 'ben@example.com', 'DEMO_HASH_BEN', 3),
-(8, 'mia_student', 'mia@example.com', 'DEMO_HASH_MIA', 3)
+(1, 'admin', 'admin@example.com', '$2b$12$gz9dyVPiDxaJ9d6ap1rYyuCWucIj3Wllk7y5YsBo1lIkoRR9aiIpO', 1),
+(2, 'max_mustermann', 'max@example.com', '$2b$12$gz9dyVPiDxaJ9d6ap1rYyuCWucIj3Wllk7y5YsBo1lIkoRR9aiIpO', 3),
+(3, 'lisa_dev', 'lisa@example.com', '$2b$12$gz9dyVPiDxaJ9d6ap1rYyuCWucIj3Wllk7y5YsBo1lIkoRR9aiIpO', 3),
+(4, 'tom_gaming', 'tom@example.com', '$2b$12$gz9dyVPiDxaJ9d6ap1rYyuCWucIj3Wllk7y5YsBo1lIkoRR9aiIpO', 3),
+(5, 'anna_mod', 'anna@example.com', '$2b$12$gz9dyVPiDxaJ9d6ap1rYyuCWucIj3Wllk7y5YsBo1lIkoRR9aiIpO', 2),
+(6, 'sarah_design', 'sarah@example.com', '$2b$12$gz9dyVPiDxaJ9d6ap1rYyuCWucIj3Wllk7y5YsBo1lIkoRR9aiIpO', 3),
+(7, 'ben_python', 'ben@example.com', '$2b$12$gz9dyVPiDxaJ9d6ap1rYyuCWucIj3Wllk7y5YsBo1lIkoRR9aiIpO', 3),
+(8, 'mia_student', 'mia@example.com', '$2b$12$gz9dyVPiDxaJ9d6ap1rYyuCWucIj3Wllk7y5YsBo1lIkoRR9aiIpO', 3)
 ON CONFLICT DO NOTHING;
 
 
