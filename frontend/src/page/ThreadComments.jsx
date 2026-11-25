@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { createComment, getThreadComments } from "../api/comments";
+import MarkdownContent from "./MarkdownContent";
 import "./ThreadComments.css";
 
 // TODO Selben Demo User wie im Dashboard verwenden
@@ -64,7 +65,7 @@ export default function ThreadComments({threadId, onCommentCreated}) {
                             <time dateTime={comment.publishedAt}>{comment.publishedAt.slice(0, 10)}</time>
                         )}
                     </header>
-                    <p>{comment.content}</p>
+                    <MarkdownContent>{comment.content}</MarkdownContent>
                 </article>
             ))}
         </section>
