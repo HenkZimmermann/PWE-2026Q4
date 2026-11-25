@@ -14,7 +14,8 @@
 }
 
 .create-thread-dialog form,
-.create-thread-dialog label {
+.create-thread-dialog label,
+.create-thread-dialog-content {
     display: grid;
     gap: 0.5rem;
 }

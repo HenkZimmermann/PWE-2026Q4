@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { createComment, getThreadComments } from "../api/comments";
-import MarkdownContent from "./MarkdownContent";
+import MarkdownContent, { MarkdownHint } from "./MarkdownContent";
 import "./ThreadComments.css";
 
 // TODO Selben Demo User wie im Dashboard verwenden
@@ -49,7 +49,8 @@ export default function ThreadComments({threadId, onCommentCreated}) {
 
             <form className="thread-comment-form" onSubmit={handleSubmit}>
                 <label htmlFor="comment-message">Kommentar schreiben</label>
-                <textarea id="comment-message" rows={3} value={message} onChange={(event) => setMessage(event.target.value)} required />
+                <textarea id="comment-message" rows={3} value={message} onChange={(event) => setMessage(event.target.value)} aria-describedby="comment-markdown-hint" required />
+                <MarkdownHint id="comment-markdown-hint" />
                 <button type="submit" disabled={!message.trim()}>Kommentar senden</button>
             </form>
 

@@ -10,3 +10,12 @@ export default function MarkdownContent({children}) {
         </div>
     );
 }
+
+// Markdown Hinweis, der an den Textfeldern angezeigt werden kann, dass sie Markdown unterstützen
+export function MarkdownHint({id}) {
+    return (
+        <small id={id}>
+            Markdown möglich, z. B. <code>**fett**</code>, <code>- Listenpunkt</code> oder <code>{"`Code`"}</code>.
+        </small>
+    );
+}
