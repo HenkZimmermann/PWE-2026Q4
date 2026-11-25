@@ -25,30 +25,19 @@ interaktiven Austausch von unterschiedlichsten Themen und Personen.
 ➜  Backend/API: 8000
 ➜  Datenbank:   5432
 ```
-
-#### Frontend
-
+#### Startvorgang
 ```bash
 # Linux
-cd frontend
+cd docker
 bash start.sh
 
-# Windows
-cd frontend
-cmd /c start.bat
-# Ab hier ist der Container über Docker Desktop verwaltbar.
-```
-#### Backend
-
-```bash
-# Linux
-cd backend
-bash start.sh
 
 # Windows
-cd backend
+
+#➜ Docker Desktop starten!
+cd docker
 cmd /c start.bat
-# Ab hier ist der Container über Docker Desktop verwaltbar.
+# !WICHTIG! Docker Desktop muss im Hintergrund laufen, da die Docker Ressourcen sonst nicht gefunden werden!
 ```
 
 ## Features
