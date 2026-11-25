@@ -1,8 +1,39 @@
 from fastapi import APIRouter, HTTPException, status
 from src.sections.user.user_model import * 
 from src.sections.user.user_service import *
+from src.security.security import create_access_token, get_current_user
+
 
 router = APIRouter()
+@router.get("/users/me")
+def get_me(current_user: dict = Depends(get_current_user)):
+    return {
+        "success": True,
+        "user_id": current_user["user_id"],
+        "email": current_user["email"],
+        "role": current_user["role"],
+    }
+
+@router.post("/users/login")
+def login(data: LoginRequest):
+    user = check_login_request(data)
+    if not user:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="E-Mail oder Passwort falsch!",
+        )
+    access_token = create_access_token(
+        data={
+            "user_id": user["user_id"],
+            "email": user["email"],
+            "role": user["role"],
+        }
+    )
+    return {
+        "success": True,
+        "access_token": access_token,
+        "token_type": "bearer",
+    }
 
 @router.post("/users/create")
 def create_user_route(request: CreateRequest):
