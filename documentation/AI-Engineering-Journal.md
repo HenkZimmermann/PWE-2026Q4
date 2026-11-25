@@ -37,6 +37,7 @@ zur schnellen Recherche und Analyse von Fehlern.
 - "Hat React einen Standard um Client sided Health checks durchzuführen?"
 - "Gib mir eine grobe SQL Abfrage um Thread Titel via String zu durchsuchen"
 - "Wie kann ich mit react markdown render ohne viel Aufwand"
+- "Schreib dieses seed script neu mit mehr daten und markdown Inhalten [...]"
 
 ### Entwicklung (Suche)
 
