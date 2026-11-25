@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import MarkdownContent from "./MarkdownContent";
 import "./ThreadCard.css";
 
 function highlightMatches(text, pattern) {
@@ -53,9 +54,13 @@ export default function ThreadCard({thread, preview = false, searchTerm = "", on
             <h2>
                 {preview ? <Link to={"/threads/" + thread.id} onClick={onOpen}>{title}</Link> : title}
             </h2>
-            <p className={preview && !showExcerpt ? "thread-card-preview" : undefined}>
-                {highlightMatches(content, pattern)}
-            </p>
+            {preview ? (
+                <p className={!showExcerpt ? "thread-card-preview" : undefined}>
+                    {highlightMatches(content, pattern)}
+                </p>
+            ) : (
+                <MarkdownContent>{thread.content}</MarkdownContent>
+            )}
 
             {/* Statistik wie Anzahl Kommentare und mehr später */}
             <footer className="thread-card-stats">

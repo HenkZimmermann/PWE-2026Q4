@@ -1,0 +1,10 @@
+.markdown-content > * + * {
+    margin-block-start: 0.75rem;
+}
+
+.markdown-content pre {
+    padding: 0.75rem;
+    overflow-x: auto;
+    background: var(--elevated);
+    border-radius: 0.5rem;
+}
