@@ -43,6 +43,7 @@ zur schnellen Recherche und Analyse von Fehlern.
 
 - "Gib mir eine grobe SQL Abfrage um Thread Titel via String zu durchsuchen"
 - "Wie könnte ich so simpel wie möglich Suchergebnisse in Text finden und markieren"
+- "Skizzier mir den besten und schnellsten Weg, um in React Markdown Formatierung aus Text zu entfernen"
 
 ## Details
 
