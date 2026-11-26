@@ -21,6 +21,7 @@ zur schnellen Recherche und Analyse von Fehlern.
 - "Mach Vorschläge wie die Styles bis jetzt einheitlicher und generell besser für UX werden"
 - "Designe für das Projekt ein Logo/Icon"
 - "Erstelle mir basieren auf dem Dashboard Design, ein Login Design mit CSS"
+- "Ich habe in der Sidebar diese Elemente [...] zum Anzeigen der Userinfos hinzugefügt. Kannst du mir die CSS dafür erweitern?"
 
 ### Debugging von schweren Fehlern
 
