@@ -1,5 +1,5 @@
-import { useState,  } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
 import { requestLogin, requestUserData } from "../../api/login";
 import { useUser } from "../../context/UserProvider";
 import "./Login.css";
@@ -83,6 +83,9 @@ const LoginSection = () => {
 
                 <button type="submit">Login</button>
             </form>
+            <p>
+                Noch kein Benutzer? <Link to="/register">!Klick mich!</Link>
+            </p>
         </section>
     );
 };
