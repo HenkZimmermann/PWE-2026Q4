@@ -22,7 +22,7 @@ def check_login_request(data: LoginRequest):
     return {
         "user_id": user["user_id"],
         "email": user["email"],
-        "role": user["role"],
+        "role": user["role_id"],
     }
 
 def create_user(data: CreateRequest):
@@ -86,6 +86,9 @@ def get_user_by_email(email: str):
         cursor = conn.cursor()
         cursor.execute(sql, [email])
         user = cursor.fetchone()
+        #notwendig um auf die einzelnen Elemente, bpw. email zugreifen zu können
+        column_names = [column[0] for column in cursor.description]
+        user = dict(zip(column_names, user)) if user is not None else None    
         conn.commit()
         cursor.close()
         return user
