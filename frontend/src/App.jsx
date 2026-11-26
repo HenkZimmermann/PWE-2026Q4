@@ -66,7 +66,9 @@ function App() {
                             break;
                     }
                     // Userdaten zwischenspeichern
-                    setUser({id: userData.user_id,
+                    setUser({
+                            username: userData.username,
+                            id: userData.user_id,
                             email: userData.email,
                             role: roleName 
                     })

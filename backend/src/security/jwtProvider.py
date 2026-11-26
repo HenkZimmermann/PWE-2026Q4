@@ -20,6 +20,7 @@ def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(securit
     token = credentials.credentials
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        username = payload.get("username")
         user_id = payload.get("user_id")
         email = payload.get("email")
         role = payload.get("role")
@@ -29,6 +30,7 @@ def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(securit
                 detail="Ungültiges Token"
             )
         return {
+            "username": username,
             "user_id": user_id,
             "email": email,
             "role": role

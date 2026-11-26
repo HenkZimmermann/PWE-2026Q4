@@ -1,8 +1,25 @@
+import { useState } from "react";
 import { NavLink } from "react-router-dom"
+import { useUser } from "../context/UserProvider";
 import Sections from "../sections/Sections"
 import "./Sidebar.css"
 
 export function Sidebar() {
+    //Username aus Zwischenspeicher (UserProvider) holen
+    const { user, setUser } = useUser();
+    const [failedAvatar, setFailedAvatar] = useState(null);
+    
+    const displayName = user?.username|| "Profil";
+    const avatarUrl = user?.avatarUrl || "/profile-default.png";
+
+    function logout() {
+        const confirmed = window.confirm("Möchtest du dich wirklich abmelden?");
+        // AccessToken aus lokalem Speicher löschen
+        if (confirmed) {
+            localStorage.removeItem("accessToken");
+            setUser(null);
+        }
+    }
     return (
         <aside className="sidebar">
             <div className="sidebar-header">
@@ -21,6 +38,30 @@ export function Sidebar() {
                     ))}
                 </ul>
             </nav>
+            {user && (
+                <button
+                    type="button"
+                    className="sidebar-profile"
+                    onClick={logout}
+                >
+                    <span className="sidebar-avatar" aria-hidden="true">
+                        {failedAvatar === avatarUrl ? (
+                            displayName.charAt(0).toUpperCase()
+                        ) : (
+                            <img
+                                src={avatarUrl}
+                                alt=""
+                                onError={() => setFailedAvatar(avatarUrl)}
+                            />
+                        )}
+                    </span>
+                    <span className="sidebar-profile-text">
+                        <strong>{displayName}</strong>
+                        <span>{user.email}</span>
+                    </span>
+
+                </button>
+            )}
         </aside>
     );
 }
