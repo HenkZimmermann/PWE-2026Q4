@@ -38,8 +38,11 @@ def login(data: LoginRequest):
 @router.post("/users/create")
 def create_user_route(request: CreateRequest):
     try:
-        user = create_user(request)
-        return user
+        if get_user_by_email(request.email) is not None:
+            user = create_user(request)
+            return True
+        else:
+            return False
     except Exception as e:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
     
@@ -88,7 +91,7 @@ def get_user_by_id_route(email: EmailStr):
     try:
         user = get_user_by_email(email)
         if not user:
-            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
+            return False
         return user
     except Exception as e:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
