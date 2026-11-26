@@ -71,7 +71,7 @@ const LoginSection = () => {
                     required
                 />
 
-                <button type="submit">Login</button>
+                <button type="submit">Registrieren</button>
             </form>
         </section>
     );
