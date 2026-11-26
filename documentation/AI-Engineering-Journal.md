@@ -45,15 +45,20 @@ zur schnellen Recherche und Analyse von Fehlern.
 - "Wie könnte ich so simpel wie möglich Suchergebnisse in Text finden und markieren"
 - "Skizzier mir den besten und schnellsten Weg, um in React Markdown Formatierung aus Text zu entfernen"
 
-### Entwicklung (Login)
+### Entwicklung (Login / Registrierung)
 
 - "Ich klicke auf Login, doch die onSubmit Methode wird nicht ausgeführt. Die API bekommt wohl auch keine Anfrage. Woran kann das liegen?"
-- "Die App bleibt nach dem Login bei "Anmeldung wird geprüft" hängen. Warum wird das Backend nicht angefragt?
+- "Die App bleibt nach dem Login bei "Anmeldung wird geprüft" hängen. Warum wird das Backend nicht angefragt?"
 - "Wie kann ich mir den JWT Token am besten lokal zwischenspeichern?"
 - "Das Login liefert Status 200 Ok, im Localstorage wird das Token mit dem Wert undefined angelegt. Users/me antwortet danach mit unauthorized, weil das Token weg ist. Wo geht das Token verloren?"
 - "Die SQL Abfrage findet den Benutzer, aber bei user["password_hash"] meldet Python TypeError: tuple indices must be integers or slices, not str. Wie lese ich die Spalte richtig aus?"
 - "Was bedeutet Context in React, und wie kann ich Benutzername, Rolle und ID in mehreren Komponenten verwenden"
-- „Wie lege ich Testbenutzer mit gehashten Passwörtern direkt in meiner SQL-Seed-Datei an?“
+- "Wie lege ich Testbenutzer mit gehashten Passwörtern direkt in meiner SQL-Seed-Datei an?"
+- "Wie ergänze ich auf der Login Sectione einen Link zur Registrierung"
+- "Kannst du mir basierend auf dem login.css und dem register.jsx ein register.css erstellen?"
+
+
+
 
 ## Details
 

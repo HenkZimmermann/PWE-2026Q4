@@ -31,7 +31,7 @@ def create_user(data: CreateRequest):
     try:
         conn = get_db_connection()
         cursor = conn.cursor()
-        cursor.execute(sql, [data.username, data.email, hashed_password, data.role_id])
+        cursor.execute(sql, [data.username, data.email, hashed_password])
         created_user = cursor.fetchone()
         conn.commit()
         cursor.close()

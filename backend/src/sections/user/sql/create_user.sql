@@ -1,1 +1,1 @@
-INSERT INTO users (username, email, password_hash, role_id) VALUES (%s,%s,%s,%s) RETURNING*;
+INSERT INTO users (username, email, password_hash, role_id) VALUES (%s,%s,%s,3) RETURNING*;

@@ -76,7 +76,7 @@ cmd /c start.bat
 - Durchsuchen bestehender Beiträge via Text und Schlagwörter
 - Profilansicht mit Profilbild, Userinfos und Beitragsübersicht
 - Erstellen von Gruppen / Communities mit untergeordneten Beiträgen
-- Logik für Registrierung neuer User und Passwortänderungen
+- Logik für Registrierung neuer User
 - Admin- und Moderationsansicht, User- und Beitragsverwaltung
 - Backend, welches über Frontend erreichbar ist
 - Zugangs- und Rechteprüfung auf Backendebene (bsp. verhindern von Datenmanipulation durch User)
