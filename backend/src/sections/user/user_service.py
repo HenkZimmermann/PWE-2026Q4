@@ -20,9 +20,10 @@ def check_login_request(data: LoginRequest):
     if not verify_password(data.password, user["password_hash"]):
         return False
     return {
+        "username": user["username"],
         "user_id": user["user_id"],
         "email": user["email"],
-        "role": user["role_id"],
+        "role": user["role_id"]
     }
 
 def create_user(data: CreateRequest):

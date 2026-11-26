@@ -9,6 +9,7 @@ router = APIRouter()
 def get_me(current_user: dict = Depends(get_current_user)):
     return {
         "success": True,
+        "username": current_user["username"],
         "user_id": current_user["user_id"],
         "email": current_user["email"],
         "role": current_user["role"],
@@ -23,7 +24,8 @@ def login(data: LoginRequest):
             detail="E-Mail oder Passwort falsch!",
         )
     access_token = create_access_token(
-        data={
+        data={            
+            "username": user["username"],
             "user_id": user["user_id"],
             "email": user["email"],
             "role": user["role"],
