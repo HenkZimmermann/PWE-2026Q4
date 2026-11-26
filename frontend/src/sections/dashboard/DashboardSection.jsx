@@ -2,13 +2,11 @@ import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { getGroups } from "../../api/groups";
 import { createThread, getThreadFeed } from "../../api/threads";
+import { useUser } from "../../context/UserProvider";
 import CreateThreadDialog from "../../page/CreateThreadDialog";
 import FloatingActionButton from "../../page/FloatingActionButton";
 import ThreadCard from "../../page/ThreadCard";
 import "./DashboardSection.css";
-
-// TODO Gibt ja noch keinen Login, daher Hard-coded
-const demoUserId = 2;
 
 // Wieviele Threads mehr sollen pro Ladevorgang abgerufen werden
 const feedStep = 10;
@@ -17,6 +15,7 @@ const feedStep = 10;
 const dashboardHistory = new Map();
 
 function Element() {
+    const {user} = useUser();
     const {key} = useLocation();
     const [threads, setThreads] = useState(null);
     const [groups, setGroups] = useState([]);
@@ -81,7 +80,7 @@ function Element() {
 
     // Neuen Thread ans Backend geben wenn abgeschickt
     async function handleCreate({title, content, groupId}) {
-        await createThread({title, content, groupId, userId: demoUserId});
+        await createThread({title, content, groupId, userId: user.id});
         setHasMore(false);
         setFeedRequest((request) => ({limit: feedStep, groupId: request.groupId}));
     }

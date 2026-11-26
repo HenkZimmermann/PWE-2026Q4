@@ -1,16 +1,14 @@
 import { useEffect, useState } from "react";
 import { createComment, getThreadComments } from "../api/comments";
+import { useUser } from "../context/UserProvider";
 import MarkdownContent, { MarkdownHint } from "./MarkdownContent";
 import "./ThreadComments.css";
 
-// TODO Selben Demo User wie im Dashboard verwenden
-const demoUserId = 2;
-
 // Komponente für Kommentarspalte, lädt Daten selber aus Backend für gegebene Thread ID
 export default function ThreadComments({threadId, onCommentCreated}) {
+    const {user} = useUser();
     const [comments, setComments] = useState(null);
     const [message, setMessage] = useState("");
-    const [loadError, setLoadError] = useState("");
     const [reload, setReload] = useState(0);
 
     // Thread Kommentare laden
@@ -34,7 +32,7 @@ export default function ThreadComments({threadId, onCommentCreated}) {
         const text = message.trim();
 
         try {
-            await createComment({threadId, message: text, userId: demoUserId});
+            await createComment({threadId, message: text, userId: user.id});
             setMessage("");
             setReload((value) => value + 1);
             onCommentCreated(threadId);
