@@ -69,6 +69,14 @@ cmd /c start.bat
 - Datenbank, die nur für das Backend erreichbar ist
 - Datenbank zur Speicherung und Verwaltung von Userdaten, Beiträgen, etc.
 
+#### Bedeutung ROllen IDs
+
+- 1 Administrator
+- 2 Moderator
+- 3 User 
+
+
+
 #### Autoren
 
 - [Henk Zimmermann](https://github.com/HenkZimmermann)
