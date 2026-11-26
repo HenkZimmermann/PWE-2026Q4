@@ -3,10 +3,27 @@ from src.utils import get_db_connection, load_sql_file
 from passlib.context import CryptContext
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+
+def verify_password(plain_password: str, password_hash: str) -> bool:
+    return pwd_context.verify(plain_password, password_hash)
+
 def hash_password(password: str) -> str:
     if len(password.encode("utf-8")) > 72:
         raise ValueError("Passwort darf maximal 72 Bytes lang sein.")
     return pwd_context.hash(password)
+
+def check_login_request(data: LoginRequest):
+    user = get_user_by_email(data.email)
+    if not user:
+        print("User nicht gefunden")
+        return False
+    if not verify_password(data.password, user["password_hash"]):
+        return False
+    return {
+        "user_id": user["user_id"],
+        "email": user["email"],
+        "role": user["role_id"],
+    }
 
 def create_user(data: CreateRequest):
     hashed_password = hash_password(data.password)
@@ -69,6 +86,9 @@ def get_user_by_email(email: str):
         cursor = conn.cursor()
         cursor.execute(sql, [email])
         user = cursor.fetchone()
+        #notwendig um auf die einzelnen Elemente, bpw. email zugreifen zu können
+        column_names = [column[0] for column in cursor.description]
+        user = dict(zip(column_names, user)) if user is not None else None    
         conn.commit()
         cursor.close()
         return user

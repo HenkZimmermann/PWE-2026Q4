@@ -1,10 +1,13 @@
-import { useEffect } from "react";
-import { Routes, Route, useLocation } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import ConnectionMonitor from "./page/ConnectionMonitor";
 import ThreadDetail from "./page/ThreadDetail";
-import Sections from "./sections/Sections"
-import Sidebar from "./page/Sidebar"
-import "./App.css"
+import LoginSection  from "./sections/login/login";
+import { requestUserData } from "./api/login";
+import { useUser } from "./context/UserProvider";
+import Sections from "./sections/Sections";
+import Sidebar from "./page/Sidebar";
+import "./App.css";
 
 function RouteRegistration() {
     return (
@@ -28,20 +31,91 @@ function RouteRegistration() {
 
 function App() {
     const {pathname} = useLocation();
-
+    const {user, setUser} = useUser();
+    const [isChecking, setIsChecking] = useState(true);
     // Scroll zurücksetzen, wenn Section gewechselt wird
     useEffect(() => {
         window.scrollTo(0, 0);
     }, [pathname]);
+    useEffect(()=>{
+        let active = true;
+        // Login bei aktivem Token wiederherstellen
+        async function restoreLogin() {
+            try {
+                // Access Token abfragen
+                const token = localStorage.getItem("accessToken");
+                if (!token) {
+                    setUser(null);
+                    return;
+                }
+                // Abfragen der User Data per Token. Automatische validierung des Token vom Backend
+                const userData = await requestUserData(token)
+                if(active){
+                    // Setzen der Attribute im Userprovider (Zwischenspeicher)
+                    let roleName;
+                    switch (Number(userData.role)) {
+                        case 1:
+                            roleName = "Admin";
+                            break;
+                        case 2:
+                            roleName = "Moderator";
+                            break;
+                        case 3:
+                            roleName = "User";
+                            break;
+                    }
+                    // Userdaten zwischenspeichern
+                    setUser({id: userData.user_id,
+                            email: userData.email,
+                            role: roleName 
+                    })
+                }
+            } catch (error) {
+                if (active) {
+                    console.error(error);
+                    setUser(null);
+                }
+            } finally {
+                if (active) {
+                    setIsChecking(false);
+                }
+            }
+        }
+        restoreLogin();
+        return () => {
+            active = false;
+        };
+    }, [setUser]);
+    // Bei erstmaligem aufrufen wenn ggf. noch ein Access Token gespeichert ist
+    if (isChecking) {
+        return <p>Anmeldung wird geprüft …</p>;
+    }
 
-    return (
-        <div className="app-layout">
-            <Sidebar />
-            <main className="main-content">
-                <RouteRegistration />
-            </main>
-            <ConnectionMonitor />
-        </div>
+     return (
+        // erst auf die Forum Routen weiterleiten wenn der User authentifiziert ist
+        <Routes>
+            <Route
+                path="/login"
+                element={user ? <Navigate to="/" replace /> : <LoginSection />}
+            />
+
+            <Route
+                path="*"
+                element={
+                    user ? (
+                        <div className="app-layout">
+                            <Sidebar />
+                            <main className="main-content">
+                                <RouteRegistration />
+                            </main>
+                            <ConnectionMonitor />
+                        </div>
+                    ) : (
+                        <Navigate to="/login" replace />
+                    )
+                }
+            />
+        </Routes>
     );
 }
 

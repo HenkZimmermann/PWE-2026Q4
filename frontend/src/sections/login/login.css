@@ -1,0 +1,69 @@
+.login-card {
+    box-sizing: border-box;
+    width: min(28rem, calc(100% - 2rem));
+    margin: 2rem auto;
+    padding: clamp(1rem, 4vw, 2rem);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+    border-radius: 0.75rem;
+    background: var(--surface);
+    color: var(--text);
+}
+
+.login-card h1 {
+    margin: 0 0 1.25rem;
+}
+
+.login-card form {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.5rem;
+}
+
+.login-card label {
+    color: var(--text-soft);
+}
+
+.login-card input + label,
+.login-card button {
+    margin-top: 0.75rem;
+}
+
+.login-card input,
+.login-card button {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 0.65rem 0.85rem;
+    border: 1px solid var(--border);
+    border-radius: 0.5rem;
+    background: var(--elevated);
+    color: var(--text);
+    font: inherit;
+}
+
+.login-card button {
+    cursor: pointer;
+}
+
+.login-card button:hover {
+    background: var(--elevated-hover);
+}
+
+.login-card input:focus-visible,
+.login-card button:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+}
+
+.login-card .errmsg {
+    margin: 0 0 1rem;
+    padding: 0.65rem 0.85rem;
+    border-left: 3px solid var(--accent);
+    border-radius: 0.5rem;
+    background: var(--elevated);
+    overflow-wrap: anywhere;
+}
+
+.login-card .offscreen {
+    display: none;
+}

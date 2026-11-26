@@ -4,3 +4,5 @@ psycopg2-binary
 dotenv
 passlib
 pydantic[email]
+python-jose[cryptography]==3.5.0
+bcrypt==4.3.0
