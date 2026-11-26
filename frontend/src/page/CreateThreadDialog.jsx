@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import { MarkdownHint } from "./MarkdownContent";
 import "./CreateThreadDialog.css";
 
 // Widerverwendbarer modaler Dialog für das Erstellen von einem Thread
@@ -40,10 +41,11 @@ export default function CreateThreadDialog({groups, onCreate, onClose}) {
                     Titel
                     <input name="title" maxLength={255} required autoFocus />
                 </label>
-                <label>
-                    Text
-                    <textarea name="content" rows={4} required />
-                </label>
+                <div className="create-thread-dialog-content">
+                    <label htmlFor="thread-content">Text</label>
+                    <textarea id="thread-content" name="content" rows={4} aria-describedby="thread-markdown-hint" required />
+                    <MarkdownHint id="thread-markdown-hint" />
+                </div>
                 <div className="create-thread-dialog-actions">
                     <button type="button" onClick={() => dialogRef.current.close()}>Abbrechen</button>
                     <button type="submit">Beitrag erstellen</button>
