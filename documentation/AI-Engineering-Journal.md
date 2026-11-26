@@ -20,13 +20,13 @@ zur schnellen Recherche und Analyse von Fehlern.
 - "Wie kann ich den angehängten css code verbessern und einfacher machen"
 - "Mach Vorschläge wie die Styles bis jetzt einheitlicher und generell besser für UX werden"
 - "Designe für das Projekt ein Logo/Icon"
+- "Erstelle mir basieren auf dem Dashboard Design, ein Login Design mit CSS"
 
 ### Debugging von schweren Fehlern
 
 - "Ich versuche [...] zu installieren und kriege diesen Fehler: [...]"
 - "React wirft diesen Fehler [...]"
 - "Meine React App findet die neu hinzugefügten JS packages nicht"
-
 ### Entwicklung (Dashboard)
 
 - "Wie kann ich das aktuelle Datum in jsx verarbeiten"
@@ -41,6 +41,16 @@ zur schnellen Recherche und Analyse von Fehlern.
 
 - "Gib mir eine grobe SQL Abfrage um Thread Titel via String zu durchsuchen"
 - "Wie könnte ich so simpel wie möglich Suchergebnisse in Text finden und markieren"
+
+### Entwicklung (Login)
+
+- "Ich klicke auf Login, doch die onSubmit Methode wird nicht ausgeführt. Die API bekommt wohl auch keine Anfrage. Woran kann das liegen?"
+- "Die App bleibt nach dem Login bei "Anmeldung wird geprüft" hängen. Warum wird das Backend nicht angefragt?
+- "Wie kann ich mir den JWT Token am besten lokal zwischenspeichern?"
+- "Das Login liefert Status 200 Ok, im Localstorage wird das Token mit dem Wert undefined angelegt. Users/me antwortet danach mit unauthorized, weil das Token weg ist. Wo geht das Token verloren?"
+- "Die SQL Abfrage findet den Benutzer, aber bei user["password_hash"] meldet Python TypeError: tuple indices must be integers or slices, not str. Wie lese ich die Spalte richtig aus?"
+- "Was bedeutet Context in React, und wie kann ich Benutzername, Rolle und ID in mehreren Komponenten verwenden"
+- „Wie lege ich Testbenutzer mit gehashten Passwörtern direkt in meiner SQL-Seed-Datei an?“
 
 ## Details
 
