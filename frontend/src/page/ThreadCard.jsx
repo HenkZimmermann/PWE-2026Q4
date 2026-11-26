@@ -1,5 +1,23 @@
 import { Link } from "react-router-dom";
+import { fromMarkdown } from "mdast-util-from-markdown";
+import MarkdownContent from "./MarkdownContent";
 import "./ThreadCard.css";
+
+const blockContainers = new Set(["root", "blockquote", "list", "listItem"]);
+
+function readText(node) {
+    if (node.type === "text" || node.type === "inlineCode" || node.type === "code")
+        return node.value;
+
+    if (node.type === "break")
+        return " ";
+
+    return node.children?.map(readText).join(blockContainers.has(node.type) ? " " : "") ?? "";
+}
+
+function markdownToPlainText(markdown) {
+    return readText(fromMarkdown(markdown)).replace(/\s+/gu, " ").trim();
+}
 
 function highlightMatches(text, pattern) {
     if (!pattern)
@@ -16,22 +34,23 @@ export default function ThreadCard({thread, preview = false, searchTerm = "", on
     const escapedTerm = searchTerm.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
     const pattern = escapedTerm ? new RegExp("(" + escapedTerm + ")", "iu") : null;
     
-    const matchIndex = pattern ? thread.content.search(pattern) : -1;
-    const showExcerpt = preview && matchIndex !== -1;
-    let content = thread.content;
+    const plainText = preview ? markdownToPlainText(thread.content) : "";
+    const matchIndex = pattern ? plainText.search(pattern) : -1;
+    const showContent = matchIndex !== -1;
+    let content = plainText;
 
     // Content zuschneiden wenn preview und Suchergebnis im Content
-    if (showExcerpt) {
+    if (showContent) {
         // 60 zeichen vor und 100 Zeichen nach dem Treffer den text zeigen
         const start = Math.max(0, matchIndex - 60);
         const end = matchIndex + searchTerm.length + 100;
-        content = thread.content.slice(start, end);
+        content = plainText.slice(start, end);
         
         // ... wenn was abgeschnitten wurde
         if (start > 0)
             content = "..." + content;
 
-        if (end < thread.content.length)
+        if (end < plainText.length)
             content += "...";
     }
 
@@ -53,9 +72,13 @@ export default function ThreadCard({thread, preview = false, searchTerm = "", on
             <h2>
                 {preview ? <Link to={"/threads/" + thread.id} onClick={onOpen}>{title}</Link> : title}
             </h2>
-            <p className={preview && !showExcerpt ? "thread-card-preview" : undefined}>
-                {highlightMatches(content, pattern)}
-            </p>
+            {preview ? (
+                <p className={!showContent ? "thread-card-preview" : undefined}>
+                    {highlightMatches(content, pattern)}
+                </p>
+            ) : (
+                <MarkdownContent>{thread.content}</MarkdownContent>
+            )}
 
             {/* Statistik wie Anzahl Kommentare und mehr später */}
             <footer className="thread-card-stats">

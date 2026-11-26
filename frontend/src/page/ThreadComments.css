@@ -55,7 +55,18 @@
     color: var(--text-soft);
 }
 
-.thread-comment p {
-    margin: 0.5rem 0 0;
-    white-space: pre-wrap;
+.thread-comment .markdown-content {
+    margin-block-start: 0.5rem;
+}
+
+.thread-comment .markdown-content p {
+    white-space: pre-line;
+}
+
+.thread-comment .markdown-content > :first-child {
+    margin-block-start: 0;
+}
+
+.thread-comment .markdown-content > :last-child {
+    margin-block-end: 0;
 }

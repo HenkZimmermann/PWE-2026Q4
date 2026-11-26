@@ -36,11 +36,14 @@ zur schnellen Recherche und Analyse von Fehlern.
 - "Wie kann ich Elemente aus dem Backend live nachladen? Ohne die Seite vollständig neu aufzubauen"
 - "Hat React einen Standard um Client sided Health checks durchzuführen?"
 - "Gib mir eine grobe SQL Abfrage um Thread Titel via String zu durchsuchen"
+- "Wie kann ich mit react markdown render ohne viel Aufwand"
+- "Schreib dieses seed script neu mit mehr daten und markdown Inhalten [...]"
 
 ### Entwicklung (Suche)
 
 - "Gib mir eine grobe SQL Abfrage um Thread Titel via String zu durchsuchen"
 - "Wie könnte ich so simpel wie möglich Suchergebnisse in Text finden und markieren"
+- "Skizzier mir den besten und schnellsten Weg, um in React Markdown Formatierung aus Text zu entfernen"
 
 ### Entwicklung (Login)
 
