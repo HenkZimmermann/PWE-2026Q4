@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import ConnectionMonitor from "./page/ConnectionMonitor";
 import ThreadDetail from "./page/ThreadDetail";
-import LoginSection  from "./sections/login/login";
+import LoginSection  from "./sections/login/Login";
 import RegisterSection from "./sections/register/Register"
 import { requestUserData } from "./api/login";
 import { useUser } from "./context/UserProvider";
