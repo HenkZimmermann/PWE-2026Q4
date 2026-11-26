@@ -54,6 +54,20 @@ cmd /c start.bat
 
 ## Sonstiges
 
+#### Loign Credentials
+
+- PW: 1234
+
+- Accounts:
+  admin@example.com
+  max@example.com
+  lisa@example.com
+  tom@example.com
+  anna@example.com
+  sarah@example.com
+  ben@example.com
+  mia@example.com
+
 #### Geplante Funktionen / Anforderungen
 
 - **Grundidee**: Frage-Antwort Web-Forum
@@ -69,7 +83,7 @@ cmd /c start.bat
 - Datenbank, die nur für das Backend erreichbar ist
 - Datenbank zur Speicherung und Verwaltung von Userdaten, Beiträgen, etc.
 
-#### Bedeutung ROllen IDs
+#### Bedeutung Rollen IDs
 
 - 1 Administrator
 - 2 Moderator
