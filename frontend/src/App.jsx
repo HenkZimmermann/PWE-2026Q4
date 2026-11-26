@@ -3,6 +3,7 @@ import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import ConnectionMonitor from "./page/ConnectionMonitor";
 import ThreadDetail from "./page/ThreadDetail";
 import LoginSection  from "./sections/login/login";
+import RegisterSection from "./sections/register/Register"
 import { requestUserData } from "./api/login";
 import { useUser } from "./context/UserProvider";
 import Sections from "./sections/Sections";
@@ -93,12 +94,16 @@ function App() {
 
      return (
         // erst auf die Forum Routen weiterleiten wenn der User authentifiziert ist
+        // Registrierung auch für nicht authentifizierte Benutzer erreichbar
         <Routes>
             <Route
                 path="/login"
                 element={user ? <Navigate to="/" replace /> : <LoginSection />}
             />
-
+            <Route
+                path="/register"
+                element={user ? <Navigate to="/" replace /> : <RegisterSection />}
+            />
             <Route
                 path="*"
                 element={
