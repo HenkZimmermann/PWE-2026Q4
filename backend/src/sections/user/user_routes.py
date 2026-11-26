@@ -1,7 +1,7 @@
-from fastapi import APIRouter, HTTPException, status
+from fastapi import APIRouter, HTTPException, status, Depends
 from src.sections.user.user_model import * 
 from src.sections.user.user_service import *
-from src.security.security import create_access_token, get_current_user
+from backend.src.security.jwtProvider import create_access_token, get_current_user
 
 
 router = APIRouter()
@@ -31,7 +31,7 @@ def login(data: LoginRequest):
     )
     return {
         "success": True,
-        "access_token": access_token,
+        "accessToken": access_token,
         "token_type": "bearer",
     }
 
