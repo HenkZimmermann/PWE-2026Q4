@@ -1,0 +1,75 @@
+.registration-card {
+    box-sizing: border-box;
+    width: min(26rem, calc(100% - 2rem));
+    margin: clamp(2rem, 8vh, 5rem) auto;
+    padding: clamp(1.25rem, 4vw, 2rem);
+    background: #fff;
+    color: #1e293b;
+    border: 1px solid #dbe2ea;
+    border-radius: 1rem;
+    box-shadow: 0 8px 28px rgb(15 23 42 / 8%);
+}
+
+.registration-card h1 {
+    margin: 0 0 1.5rem;
+    font-size: 1.75rem;
+    line-height: 1.2;
+}
+
+.registration-card form {
+    display: grid;
+    gap: 0.5rem;
+}
+
+.registration-card label {
+    font-weight: 600;
+}
+
+.registration-card input + label {
+    margin-top: 0.75rem;
+}
+
+.registration-card input {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 0.75rem 0.875rem;
+    border: 1px solid #94a3b8;
+    border-radius: 0.5rem;
+    background: #fff;
+    color: #1e293b;
+    font: inherit;
+}
+
+.registration-card button {
+    margin-top: 1rem;
+    padding: 0.8rem 1rem;
+    border: 0;
+    border-radius: 0.5rem;
+    background: #1d4ed8;
+    color: #fff;
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.registration-card button:hover {
+    background: #1e40af;
+}
+
+.registration-card :is(input, button):focus-visible {
+    outline: 3px solid #2563eb;
+    outline-offset: 3px;
+}
+
+.registration-card .errmsg {
+    margin: 0 0 1rem;
+    padding: 0.75rem 1rem;
+    border-left: 3px solid #b91c1c;
+    border-radius: 0.25rem;
+    background: #fef2f2;
+    color: #991b1b;
+}
+
+.registration-card .offscreen {
+    display: none;
+}
