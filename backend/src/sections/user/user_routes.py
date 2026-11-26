@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException, status, Depends
 from src.sections.user.user_model import * 
 from src.sections.user.user_service import *
-from backend.src.security.jwtProvider import create_access_token, get_current_user
+from src.security.jwtProvider import create_access_token, get_current_user
 
 
 router = APIRouter()
