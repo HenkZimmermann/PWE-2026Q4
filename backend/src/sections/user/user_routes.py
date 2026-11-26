@@ -38,8 +38,9 @@ def login(data: LoginRequest):
 @router.post("/users/create")
 def create_user_route(request: CreateRequest):
     try:
-        if get_user_by_email(request.email) is not None:
-            user = create_user(request)
+        # User noch nicht registriert
+        if get_user_by_email(request.email) is None:
+            create_user(request)
             return True
         else:
             return False
@@ -72,7 +73,7 @@ def edit_user_route(user_id: int, request: EditRequest):
         result= edit_user_by_id(user_id, request)
         if not result:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
-        return {"message": "USer updated successfully"}
+        return {"message": "User updated successfully"}
     except Exception as e:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))  
        
