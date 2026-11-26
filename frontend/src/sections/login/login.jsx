@@ -37,9 +37,11 @@ const LoginSection = () => {
                     roleName = "User";
                     break;
             }
-            setUser({id: userData.user_id,
+            setUser({
+                    username: userData.username,
+                    id: userData.user_id,
                     email: userData.email,
-                    role: roleName
+                    role: roleName 
             })
 
             navigate("/", { replace: true });
