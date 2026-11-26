@@ -7,7 +7,6 @@ class CreateRequest(BaseModel):
     role_id: str
 
 class LoginRequest(BaseModel):
-    username: str
     email: EmailStr
     password: str
 
