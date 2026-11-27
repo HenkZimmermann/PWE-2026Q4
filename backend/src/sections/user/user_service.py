@@ -75,6 +75,9 @@ def get_all_users():
         cursor = conn.cursor()
         cursor.execute(sql)
         users = cursor.fetchall()
+        #notwendig um auf die einzelnen Elemente, bpw. email zugreifen zu können
+        column_names = [column[0] for column in cursor.description]
+        users = [dict(zip(column_names, user)) for user in users]
         return users
     except Exception as e:
         print("Fehler beim Laden der User: ", e)

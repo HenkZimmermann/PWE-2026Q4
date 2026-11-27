@@ -49,7 +49,7 @@ def create_user_route(request: CreateRequest):
     except Exception as e:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
     
-@router.get("/user/all")
+@router.get("/users/all")
 def get_all_users_route():
     try:
         users = get_all_users()
