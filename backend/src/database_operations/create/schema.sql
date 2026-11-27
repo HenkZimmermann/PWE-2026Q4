@@ -9,7 +9,8 @@ CREATE TABLE IF NOT EXISTS Users (
     username VARCHAR(50) UNIQUE NOT NULL,
     email VARCHAR(255) UNIQUE NOT NULL,
     password_hash TEXT NOT NULL,
-    role_id SERIAL NOT NULL REFERENCES roles(Role_id)
+    role_id SERIAL NOT NULL REFERENCES roles(Role_id),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE IF NOT EXISTS Groups (
@@ -23,12 +24,13 @@ CREATE TABLE IF NOT EXISTS Groups (
 
 CREATE TABLE IF NOT EXISTS Threads (
     thread_id SERIAL PRIMARY KEY,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     message TEXT NOT NULL,
     user_id INT NOT NULL REFERENCES Users(user_id),
     votes INT DEFAULT 0,
     group_id INT NOT NULL REFERENCES Groups(group_id),
-    title VARCHAR(255) NOT NULL
+    title VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+
 );
 
 CREATE TABLE IF NOT EXISTS Comments (
@@ -44,15 +46,21 @@ CREATE TABLE IF NOT EXISTS Comments (
 CREATE TABLE IF NOT EXISTS votes (
     user_id INT NOT NULL REFERENCES Users(user_id),
     thread_id INT REFERENCES Threads(thread_id) ON DELETE CASCADE,
-    PRIMARY KEY (user_id, thread_id)
+    PRIMARY KEY (user_id, thread_id),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+
 );
 
 CREATE TABLE IF NOT EXISTS member_of (
     user_id INT NOT NULL REFERENCES Users(user_id),
-    group_id INT NOT NULL REFERENCES Groups(group_id)
+    group_id INT NOT NULL REFERENCES Groups(group_id),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+
 );
 
 CREATE TABLE IF NOT EXISTS follows (
     user_id INT NOT NULL REFERENCES Users(user_id),
-    followed_user_id INT NOT NULL REFERENCES Users(user_id)
+    followed_user_id INT NOT NULL REFERENCES Users(user_id),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+
 );
