@@ -1,12 +1,5 @@
 import pytest
-from fastapi.testclient import TestClient
-from src.main import app
 from src.sections.thread import thread_routes
-
-@pytest.fixture
-def client():
-    with TestClient(app) as test_client:
-        yield test_client
 
 def test_create_thread_requires_title(client, monkeypatch):
     def unexpected_create(request):
