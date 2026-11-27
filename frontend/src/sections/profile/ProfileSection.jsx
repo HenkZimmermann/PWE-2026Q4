@@ -50,6 +50,7 @@ function Element() {
                 </div>
             </dl>
             <h2 className="profile-card-title">Statistiken</h2>
+                {/*Aufrufen der User Statistiken per User ID*/}
                 <section className="profile-card">
                     <ProfileStats userId={user.id}/>
                 </section>
