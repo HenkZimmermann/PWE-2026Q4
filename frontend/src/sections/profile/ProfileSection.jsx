@@ -4,6 +4,7 @@ import { editUser, deleteUser } from "../../api/user";
 import EditProfileDialog from "../../page/EditProfileDialog.jsx"
 import FloatingActionButton from "../../page/FloatingActionButton";
 import "./ProfileSection.css";
+import ProfileStats from "../../page/UserStatistics.jsx";
 
 function Element() {
     const {user,setUser} = useUser();
@@ -49,9 +50,10 @@ function Element() {
                 </div>
             </dl>
             <h2 className="profile-card-title">Statistiken</h2>
+                <section className="profile-card">
+                    <ProfileStats userId={user.id}/>
+                </section>
 
-            <div className="profile-card">
-            </div>
             {showEditForm && (
                 <EditProfileDialog
                     username={user.username}
