@@ -50,7 +50,8 @@ cd docker
 bash test.sh
 
 # Windows
-TODO
+cd docker
+cmd /c test.bat
 ```
 
 ## Features
