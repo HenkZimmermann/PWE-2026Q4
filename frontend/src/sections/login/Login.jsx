@@ -41,7 +41,8 @@ const LoginSection = () => {
                     username: userData.username,
                     id: userData.user_id,
                     email: userData.email,
-                    role: roleName 
+                    role: roleName,
+                    roleId: userData.role
             })
 
             navigate("/", { replace: true });
