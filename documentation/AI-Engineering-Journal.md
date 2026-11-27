@@ -64,6 +64,7 @@ zur schnellen Recherche und Analyse von Fehlern.
 - "Welche Möglichkeiten für Tests würden in unser Projekt passen?"
 - "Gib mir ein paar Idee für erste Tests"
 - "Übersetz dieses bash script [...] in ein .bat Script"
+- "Gib mir Unit Tests für unsere jwtProvider implementierung"
 
 ## Details
 
