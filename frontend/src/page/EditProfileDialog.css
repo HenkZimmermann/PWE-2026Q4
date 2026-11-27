@@ -1,0 +1,69 @@
+.edit-profile-dialog {
+    box-sizing: border-box;
+    width: min(44rem, calc(100% - 2rem));
+    max-height: calc(100% - 2rem);
+    padding: clamp(1rem, 3vw, 1.5rem);
+    border: 1px solid var(--border);
+    border-radius: 1rem;
+    background: var(--surface);
+    color: var(--text);
+}
+
+.edit-profile-dialog::backdrop {
+    background: color-mix(in srgb, var(--background) 75%, transparent);
+}
+
+.edit-profile-dialog form {
+    display: grid;
+    gap: 1rem;
+}
+
+.edit-profile-dialog label {
+    display: grid;
+    gap: 0.5rem;
+}
+
+.edit-profile-dialog h2 {
+    margin: 0;
+}
+
+.edit-profile-dialog :is(input, button) {
+    min-width: 0;
+    padding: 0.6rem 0.75rem;
+    border: 1px solid var(--border);
+    border-radius: 0.5rem;
+    background: var(--elevated);
+    color: var(--text);
+    font: inherit;
+}
+
+.edit-profile-dialog-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 0.5rem;
+}
+
+.edit-profile-dialog button:enabled:hover {
+    background: var(--elevated-hover);
+}
+
+.edit-profile-dialog button[type="submit"] {
+    background: var(--accent);
+    color: var(--background);
+}
+
+.edit-profile-dialog button[type="submit"]:enabled:hover {
+    background: var(--accent-light);
+}
+.edit-profile-dialog .delete-button {
+    margin-right: auto;
+    background: #b91c1c;
+    border-color: #b91c1c;
+    color: #fff;
+}
+
+.edit-profile-dialog .delete-button:enabled:hover {
+    background: #991b1b;
+    border-color: #991b1b;
+}
