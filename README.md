@@ -25,6 +25,7 @@ interaktiven Austausch von unterschiedlichsten Themen und Personen.
 ➜  Backend/API: 8000
 ➜  Datenbank:   5432
 ```
+
 #### Startvorgang
 ```bash
 # Linux
@@ -34,10 +35,22 @@ bash start.sh
 
 # Windows
 
-#➜ Docker Desktop starten!
+# Docker Desktop starten!
 cd docker
 cmd /c start.bat
 # !WICHTIG! Docker Desktop muss im Hintergrund laufen, da die Docker Ressourcen sonst nicht gefunden werden!
+```
+
+#### Tests
+Für das Ausführen der Tests müssen auf dem System ```Python Virtual Enviroments``` verfügbar sein.
+
+```bash
+# Linux
+cd docker
+bash test.sh
+
+# Windows
+TODO
 ```
 
 ## Features
@@ -88,8 +101,6 @@ cmd /c start.bat
 - 1 Administrator
 - 2 Moderator
 - 3 User 
-
-
 
 #### Autoren
 
