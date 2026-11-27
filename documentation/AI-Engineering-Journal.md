@@ -23,7 +23,8 @@ zur schnellen Recherche und Analyse von Fehlern.
 - "Erstelle mir basieren auf dem Dashboard Design, ein Login Design mit CSS"
 - "Ich habe in der Sidebar diese Elemente [...] zum Anzeigen der Userinfos hinzugefügt. Kannst du mir die CSS dafür erweitern?"
 - "Erstelle mir für meine User Statistiken noch ein passendes CSS zum designen."
-
+- "Anbei ist meine .JSX Datei für das bearbeiten zum Anzeigen des Userprofils inkl. Bearbeitungs Dialog. Scheribe dafür eine CSS Datei."
+- "Wie bekomme ich Benutzername, E-Mail, Rolle und User-ID gleichmäßig nebeneinander in eine Card, sodass unter jeder Beschriftung der jeweilige Wert steht? Die Überschrift ‚Mein Profil‘ soll mittig über der Card stehen."
 
 ### Debugging von schweren Fehlern
 
@@ -59,6 +60,13 @@ zur schnellen Recherche und Analyse von Fehlern.
 - "Wie lege ich Testbenutzer mit gehashten Passwörtern direkt in meiner SQL-Seed-Datei an?"
 - "Wie ergänze ich auf der Login Sectione einen Link zur Registrierung"
 - "Kannst du mir basierend auf dem login.css und dem register.jsx ein register.css erstellen?"
+
+### Entwicklung (User Profil)
+
+- "Beim Löschen kommt im Backend DELETE /users/%5Bobject%20Object%5D statt /users/1 an. An welcher Stelle übergebe ich ein Objekt statt der ID?"
+- "Beim Bearbeiten erreicht PUT /users/1 das Backend, aber FastAPI antwortet mit 422. Der Dialog übergibt onSave({ username, email }), während meine Funktion handleSave(username, email) erwartet. Warum kommt username als Objekt an und email fehlt im JSON?" 
+- "Mein Dialog ruft onDelete() auf, und in der Profilseite steht handleDelete({id}). Warum bekomme ich TypeError: (destructured parameter) is undefined, obwohl die User-ID im Profil angezeigt wird?"
+
 
 ### Entwicklung (User Statistiken)
 
