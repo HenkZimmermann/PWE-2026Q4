@@ -1,0 +1,87 @@
+
+.users-section {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    width: 100%;
+    min-width: 0;
+}
+
+/* Header */
+
+.users-section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.users-section-header h1 {
+    margin: 0 0 6px;
+    font-size: 26px;
+    font-weight: 600;
+}
+
+.users-section-header p {
+    margin: 0;
+    font-size: 14px;
+    color: var(--text-muted, #6b7280);
+}
+
+/* Suche */
+
+.users-section-search {
+    width: 280px;
+    max-width: 100%;
+    padding: 11px 14px;
+    border: 1px solid var(--border-color, #e5e7eb);
+    border-radius: 8px;
+    background: var(--card-background, #ffffff);
+    color: var(--text-color, #1f2937);
+    font: inherit;
+    outline: none;
+    transition: border-color 0.2s;
+    box-sizing: border-box;
+}
+
+.users-section-search:focus {
+    border-color: var(--primary-color, #6366f1);
+}
+
+/* Anzahl der Benutzer */
+
+.users-section-count {
+    margin: 0;
+    font-size: 13px;
+    color: var(--text-muted, #6b7280);
+}
+
+/* Cards */
+
+.users-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 53px;
+}
+
+/* Lade- und Fehlerzustände */
+
+.users-section-message {
+    padding: 32px;
+    text-align: center;
+    color: var(--text-muted, #6b7280);
+}
+
+.users-section-error {
+    padding: 16px;
+    border-radius: 8px;
+    background: #fee2e2;
+    color: #b91c1c;
+}
+
+@media (max-width: 600px) {
+    .users-section-search {
+        width: 100%;
+    }
+}
