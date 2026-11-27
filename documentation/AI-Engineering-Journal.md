@@ -22,6 +22,8 @@ zur schnellen Recherche und Analyse von Fehlern.
 - "Designe für das Projekt ein Logo/Icon"
 - "Erstelle mir basieren auf dem Dashboard Design, ein Login Design mit CSS"
 - "Ich habe in der Sidebar diese Elemente [...] zum Anzeigen der Userinfos hinzugefügt. Kannst du mir die CSS dafür erweitern?"
+- "Erstelle mir für meine User Statistiken noch ein passendes CSS zum designen."
+
 
 ### Debugging von schweren Fehlern
 
@@ -57,6 +59,15 @@ zur schnellen Recherche und Analyse von Fehlern.
 - "Wie lege ich Testbenutzer mit gehashten Passwörtern direkt in meiner SQL-Seed-Datei an?"
 - "Wie ergänze ich auf der Login Sectione einen Link zur Registrierung"
 - "Kannst du mir basierend auf dem login.css und dem register.jsx ein register.css erstellen?"
+
+### Entwicklung (User Statistiken)
+
+- "Ich möchte verschiedene Statistiken der Benutzer des Forums auswerten und anzeigen lassen, wie das Beitrittsdatum, die Anzahl an Threads oder Kommentaren. Was für interessante Statistiken kann man aus meinem Datenbankschema noch hervorheben?"
+- "Kannst du mir eine SQL Abfrage erstellen die mir die interessanten Statistiken der Benutzer anhand der user_id zurückliefert?"
+- "Mein Backend stellt die Daten per API bereit. Das Frontend kann die Route schon korrekt abfragen. Kannst du mir eine JSX Komponente bauen, die die Statistiken übersichtlich anzeigt, sodass ich sie in meiner Profile Page integrieren kann?"
+- "Kannst du die Anzahl an Threads und Kommentaren pro woche noch als Balkendiagramm darstellen?"
+- "Füg mir unter den Statistiken noch ein Link zu dem letzen Thread des Users ein."
+
 
 
 
