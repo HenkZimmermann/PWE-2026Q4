@@ -1,11 +1,11 @@
 import SearchSection from './search/SearchSection'
 import DashboardSection from './dashboard/DashboardSection'
-import LoginSection from './login/Login';
-
+import ProfileSection from './profile/ProfileSection'
 export const Sections = [
     SearchSection,
     DashboardSection,
-    LoginSection
+    ProfileSection
+    
 ];
 
 export default Sections;
