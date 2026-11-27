@@ -30,3 +30,14 @@ export async function deleteUser(userId) {
     }
     return response.json();
 }
+
+export async function getAllUsers(){
+    const response = await fetch(apiBaseUrl+"/users/all")
+    if (response.status === 404)
+        throw new Error("Benutzer konnten nicht geladen werden");
+    
+    if (!response.ok)
+        throw new Error("Fehler beim laden der Benutzer." + response.status);
+    const data =response.json()
+    return data;
+}
