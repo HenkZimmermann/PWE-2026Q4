@@ -1,0 +1,120 @@
+.user-card {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+    border: 1px solid var(--border);
+    border-radius: 0.75rem;
+    background: var(--surface);
+    color: var(--text);
+    min-width: 0;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.user-card:hover {
+    border-color: var(--text-soft);
+}
+
+/* Profilbereich */
+
+.user-card-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.user-card-avatar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: var(--border);
+    color: var(--text);
+    font-size: 20px;
+    font-weight: 600;
+    user-select: none;
+}
+
+.user-card-info {
+    min-width: 0;
+}
+
+.user-card-info h2 {
+    margin: 0;
+    font-size: 17px;
+    font-weight: 600;
+    overflow-wrap: anywhere;
+}
+
+.user-card-info h2 a {
+    color: var(--text);
+    text-decoration: none;
+}
+
+.user-card-info h2 a:hover {
+    text-decoration: underline;
+}
+
+.user-card-info span {
+    font-size: 12px;
+    color: var(--text-soft);
+}
+
+/* Statistiken */
+
+.user-card-stats {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    padding: 16px 0;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+}
+
+.user-card-stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+
+.user-card-stat + .user-card-stat {
+    border-left: 1px solid var(--border);
+}
+
+.user-card-stat strong {
+    color: var(--text);
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.user-card-stat span {
+    font-size: 13px;
+    color: var(--text-soft);
+}
+
+/* Aktivste Gruppe */
+
+.user-card-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 12px;
+    margin-top: auto;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+}
+
+.user-card-group span {
+    font-size: 12px;
+    color: var(--text-soft);
+}
+
+.user-card-group strong {
+    color: var(--text);
+    font-size: 14px;
+    overflow-wrap: anywhere;
+}
