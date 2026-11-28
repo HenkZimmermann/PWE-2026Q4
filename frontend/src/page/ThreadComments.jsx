@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { createComment, getThreadComments } from "../api/comments";
 import { useUser } from "../context/UserProvider";
 import MarkdownContent, { MarkdownHint } from "./MarkdownContent";
+import VoteControls from "./VoteControls";
 import "./ThreadComments.css";
 
 // Komponente für Kommentarspalte, lädt Daten selber aus Backend für gegebene Thread ID
@@ -65,6 +66,9 @@ export default function ThreadComments({threadId, onCommentCreated}) {
                         )}
                     </header>
                     <MarkdownContent>{comment.content}</MarkdownContent>
+                    <footer>
+                        <VoteControls label="Kommentar bewerten" />
+                    </footer>
                 </article>
             ))}
         </section>

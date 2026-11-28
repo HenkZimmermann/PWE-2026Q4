@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { fromMarkdown } from "mdast-util-from-markdown";
 import MarkdownContent from "./MarkdownContent";
+import VoteControls from "./VoteControls";
 import "./ThreadCard.css";
 
 const blockContainers = new Set(["root", "blockquote", "list", "listItem"]);
@@ -80,8 +81,8 @@ export default function ThreadCard({thread, preview = false, searchTerm = "", on
                 <MarkdownContent>{thread.content}</MarkdownContent>
             )}
 
-            {/* Statistik wie Anzahl Kommentare und mehr später */}
             <footer className="thread-card-stats">
+                <VoteControls key={thread.id} label="Beitrag bewerten" />
                 <span>{thread.commentCount} Kommentare</span>
             </footer>
         </article>

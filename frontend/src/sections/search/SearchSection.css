@@ -23,7 +23,8 @@
 
 .search-form input,
 .search-form select,
-.search-section button {
+.search-form button,
+.search-section > button {
     padding: 0.5rem 0.75rem;
     border: 1px solid var(--border);
     border-radius: 0.5rem;
@@ -32,11 +33,13 @@
     font: inherit;
 }
 
-.search-section button:enabled:hover {
+.search-form button:enabled:hover,
+.search-section > button:enabled:hover {
     background: var(--elevated-hover);
 }
 
-.search-section button:disabled {
+.search-form button:disabled,
+.search-section > button:disabled {
     color: var(--text-muted);
     cursor: default;
 }

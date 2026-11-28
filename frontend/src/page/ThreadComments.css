@@ -55,6 +55,10 @@
     color: var(--text-soft);
 }
 
+.thread-comment footer {
+    margin-block-start: 0.75rem;
+}
+
 .thread-comment .markdown-content {
     margin-block-start: 0.5rem;
 }
