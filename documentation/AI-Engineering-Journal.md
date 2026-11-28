@@ -31,6 +31,7 @@ zur schnellen Recherche und Analyse von Fehlern.
 - "Ich versuche [...] zu installieren und kriege diesen Fehler: [...]"
 - "React wirft diesen Fehler [...]"
 - "Meine React App findet die neu hinzugefügten JS packages nicht"
+
 ### Entwicklung (Dashboard)
 
 - "Wie kann ich das aktuelle Datum in jsx verarbeiten"
@@ -76,9 +77,12 @@ zur schnellen Recherche und Analyse von Fehlern.
 - "Kannst du die Anzahl an Threads und Kommentaren pro woche noch als Balkendiagramm darstellen?"
 - "Füg mir unter den Statistiken noch ein Link zu dem letzen Thread des Users ein."
 
+### Emtwicklung (Tests)
 
-
-
+- "Welche Möglichkeiten für Tests würden in unser Projekt passen?"
+- "Gib mir ein paar Idee für erste Tests"
+- "Übersetz dieses bash script [...] in ein .bat Script"
+- "Gib mir Unit Tests für unsere jwtProvider implementierung"
 
 ## Details
 
