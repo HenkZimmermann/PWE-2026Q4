@@ -28,6 +28,7 @@ zur schnellen Recherche und Analyse von Fehlern.
 - "Ich versuche [...] zu installieren und kriege diesen Fehler: [...]"
 - "React wirft diesen Fehler [...]"
 - "Meine React App findet die neu hinzugefügten JS packages nicht"
+
 ### Entwicklung (Dashboard)
 
 - "Wie kann ich das aktuelle Datum in jsx verarbeiten"
@@ -58,8 +59,12 @@ zur schnellen Recherche und Analyse von Fehlern.
 - "Wie ergänze ich auf der Login Sectione einen Link zur Registrierung"
 - "Kannst du mir basierend auf dem login.css und dem register.jsx ein register.css erstellen?"
 
+## Emtwicklung (Tests)
 
-
+- "Welche Möglichkeiten für Tests würden in unser Projekt passen?"
+- "Gib mir ein paar Idee für erste Tests"
+- "Übersetz dieses bash script [...] in ein .bat Script"
+- "Gib mir Unit Tests für unsere jwtProvider implementierung"
 
 ## Details
 
