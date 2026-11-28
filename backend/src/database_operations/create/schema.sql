@@ -44,6 +44,7 @@ CREATE TABLE IF NOT EXISTS Comments (
 CREATE TABLE IF NOT EXISTS votes (
     user_id INT NOT NULL REFERENCES Users(user_id),
     thread_id INT REFERENCES Threads(thread_id) ON DELETE CASCADE,
+    direction SMALLINT NOT NULL DEFAULT 1 CHECK (direction IN (-1, 1)),
     PRIMARY KEY (user_id, thread_id)
 );
 

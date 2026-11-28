@@ -82,7 +82,7 @@ export default function ThreadCard({thread, preview = false, searchTerm = "", on
             )}
 
             <footer className="thread-card-stats">
-                <VoteControls key={thread.id} label="Beitrag bewerten" />
+                <VoteControls key={thread.id} threadId={thread.id} label="Beitrag bewerten" />
                 <span>{thread.commentCount} Kommentare</span>
             </footer>
         </article>

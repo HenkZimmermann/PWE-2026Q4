@@ -1,5 +1,36 @@
 from src.utils import get_db_connection, load_sql_file
 
+def _read_thread_vote_summary(cursor, user_id: int, thread_id: int):
+    sql = load_sql_file("sql/get_thread_vote_summary.sql", __file__)
+    cursor.execute(sql, [user_id, thread_id])
+    row = cursor.fetchone()
+    return {"score": row[0], "ownVote": row[1]} if row is not None else None
+
+def get_thread_vote_summary(user_id: int, thread_id: int):
+    conn = get_db_connection()
+    try:
+        cursor = conn.cursor()
+        return _read_thread_vote_summary(cursor, user_id, thread_id)
+    finally:
+        conn.close()
+
+def set_thread_vote(user_id: int, thread_id: int, direction: int):
+    conn = get_db_connection()
+    try:
+        cursor = conn.cursor()
+        if direction == 0:
+            sql = load_sql_file("sql/delete_vote.sql", __file__)
+            cursor.execute(sql, [user_id, thread_id])
+        else:
+            sql = load_sql_file("sql/set_thread_vote.sql", __file__)
+            cursor.execute(sql, [user_id, direction, thread_id])
+
+        vote = _read_thread_vote_summary(cursor, user_id, thread_id)
+        conn.commit()
+        return vote
+    finally:
+        conn.close()
+
 def create_vote(user_id: int, thread_id: int):
     sql = load_sql_file("sql/create_vote.sql", __file__)
     try:
