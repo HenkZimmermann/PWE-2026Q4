@@ -1,32 +1,46 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from psycopg2 import Error
 from src.security.jwtProvider import get_current_user
-from src.sections.vote.vote_model import ThreadVoteRequest
+from src.sections.vote.vote_model import VoteRequest
 from src.sections.vote.vote_service import *
 
 router = APIRouter()
 
 @router.get("/threads/{thread_id}/vote")
 def get_thread_vote_route(thread_id: int, current_user: dict = Depends(get_current_user)):
+    return load_vote(current_user["user_id"], thread_id, "thread")
+
+@router.get("/comments/{comment_id}/vote")
+def get_comment_vote_route(comment_id: int, current_user: dict = Depends(get_current_user)):
+    return load_vote(current_user["user_id"], comment_id, "comment")
+
+def load_vote(user_id: int, target_id: int, target: str):
     try:
-        vote = get_thread_vote_summary(current_user["user_id"], thread_id)
+        vote = get_vote_summary(user_id, target_id, target)
     except Error:
         raise HTTPException(status_code=500, detail="Votes could not be loaded")
     if vote is None:
-        raise HTTPException(status_code=404, detail="Thread not found")
+        raise HTTPException(status_code=404, detail=f"{target.capitalize()} not found")
     return vote
 
 @router.put("/threads/{thread_id}/vote")
-def set_thread_vote_route(thread_id: int, request: ThreadVoteRequest, current_user: dict = Depends(get_current_user)):
-    if request.direction not in (-1, 0, 1):
+def set_thread_vote_route(thread_id: int, request: VoteRequest, current_user: dict = Depends(get_current_user)):
+    return save_vote(current_user["user_id"], thread_id, request.direction, "thread")
+
+@router.put("/comments/{comment_id}/vote")
+def set_comment_vote_route(comment_id: int, request: VoteRequest, current_user: dict = Depends(get_current_user)):
+    return save_vote(current_user["user_id"], comment_id, request.direction, "comment")
+
+def save_vote(user_id: int, target_id: int, direction: int, target: str):
+    if direction not in (-1, 0, 1):
         raise HTTPException(status_code=422, detail="Direction must be -1, 0 or 1")
 
     try:
-        vote = set_thread_vote(current_user["user_id"], thread_id, request.direction)
+        vote = set_vote(user_id, target_id, direction, target)
     except Error:
         raise HTTPException(status_code=500, detail="Vote could not be saved")
     if vote is None:
-        raise HTTPException(status_code=404, detail="Thread not found")
+        raise HTTPException(status_code=404, detail=f"{target.capitalize()} not found")
     return vote
 
 @router.post("/vote/create")

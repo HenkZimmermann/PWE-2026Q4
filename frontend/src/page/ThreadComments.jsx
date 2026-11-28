@@ -67,7 +67,7 @@ export default function ThreadComments({threadId, onCommentCreated}) {
                     </header>
                     <MarkdownContent>{comment.content}</MarkdownContent>
                     <footer>
-                        <VoteControls label="Kommentar bewerten" />
+                        <VoteControls path={`/comments/${comment.id}/vote`} label="Kommentar bewerten" />
                     </footer>
                 </article>
             ))}

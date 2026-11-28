@@ -1,31 +1,32 @@
 from src.utils import get_db_connection, load_sql_file
 
-def _read_thread_vote_summary(cursor, user_id: int, thread_id: int):
-    sql = load_sql_file("sql/get_thread_vote_summary.sql", __file__)
-    cursor.execute(sql, [user_id, thread_id])
+def _read_vote_summary(cursor, user_id: int, target_id: int, target: str):
+    sql = load_sql_file(f"sql/get_{target}_vote_summary.sql", __file__)
+    cursor.execute(sql, [user_id, target_id])
     row = cursor.fetchone()
     return {"score": row[0], "ownVote": row[1]} if row is not None else None
 
-def get_thread_vote_summary(user_id: int, thread_id: int):
+def get_vote_summary(user_id: int, target_id: int, target: str):
     conn = get_db_connection()
     try:
         cursor = conn.cursor()
-        return _read_thread_vote_summary(cursor, user_id, thread_id)
+        return _read_vote_summary(cursor, user_id, target_id, target)
     finally:
         conn.close()
 
-def set_thread_vote(user_id: int, thread_id: int, direction: int):
+def set_vote(user_id: int, target_id: int, direction: int, target: str):
     conn = get_db_connection()
     try:
         cursor = conn.cursor()
         if direction == 0:
-            sql = load_sql_file("sql/delete_vote.sql", __file__)
-            cursor.execute(sql, [user_id, thread_id])
+            filename = "delete_vote.sql" if target == "thread" else "delete_comment_vote.sql"
+            sql = load_sql_file(f"sql/{filename}", __file__)
+            cursor.execute(sql, [user_id, target_id])
         else:
-            sql = load_sql_file("sql/set_thread_vote.sql", __file__)
-            cursor.execute(sql, [user_id, direction, thread_id])
+            sql = load_sql_file(f"sql/set_{target}_vote.sql", __file__)
+            cursor.execute(sql, [user_id, direction, target_id])
 
-        vote = _read_thread_vote_summary(cursor, user_id, thread_id)
+        vote = _read_vote_summary(cursor, user_id, target_id, target)
         conn.commit()
         return vote
     finally:

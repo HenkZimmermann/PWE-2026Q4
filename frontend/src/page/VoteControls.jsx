@@ -1,39 +1,31 @@
 import { useEffect, useState } from "react";
-import { getThreadVote, setThreadVote } from "../api/votes";
+import { getVote, setVote } from "../api/votes";
 import "./VoteControls.css";
 
-export default function VoteControls({label, threadId}) {
-    const isThread = threadId !== undefined;
-    const [vote, setVote] = useState(isThread ? null : {score: 0, ownVote: 0});
+export default function VoteControls({label, path}) {
+    const [vote, setVoteState] = useState(null);
 
     useEffect(() => {
-        if (!isThread)
-            return;
-
         let active = true;
-        getThreadVote(threadId)
+        getVote(path)
             .then((result) => {
                 if (active)
-                    setVote(result);
+                    setVoteState(result);
             })
             .catch((error) => console.error(error));
 
         return () => {
             active = false;
         };
-    }, [isThread, threadId]);
+    }, [path]);
 
     async function toggleVote(direction) {
         const nextVote = vote.ownVote === direction ? 0 : direction;
-        if (!isThread) {
-            setVote({score: nextVote, ownVote: nextVote});
-            return;
-        }
 
         try {
-            setVote(await setThreadVote(threadId, nextVote));
+            setVoteState(await setVote(path, nextVote));
         } catch (error) {
-            console.error(error)
+            console.error(error);
         }
     }
 

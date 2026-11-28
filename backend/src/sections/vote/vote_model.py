@@ -1,4 +1,4 @@
 from pydantic import BaseModel
 
-class ThreadVoteRequest(BaseModel):
+class VoteRequest(BaseModel):
     direction: int

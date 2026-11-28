@@ -1,8 +1,8 @@
 import { apiBaseUrl } from "./config";
 
-export async function getThreadVote(threadId) {
+export async function getVote(path) {
     const token = localStorage.getItem("accessToken");
-    const url = apiBaseUrl + "/threads/" + encodeURIComponent(threadId) + "/vote";
+    const url = apiBaseUrl + path;
     const response = await fetch(url, {
         headers: {Authorization: `Bearer ${token}`},
     });
@@ -13,9 +13,9 @@ export async function getThreadVote(threadId) {
     return response.json();
 }
 
-export async function setThreadVote(threadId, direction) {
+export async function setVote(path, direction) {
     const token = localStorage.getItem("accessToken");
-    const url = apiBaseUrl + "/threads/" + encodeURIComponent(threadId) + "/vote";
+    const url = apiBaseUrl + path;
     const response = await fetch(url, {
         method: "PUT",
         headers: {

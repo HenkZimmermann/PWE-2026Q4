@@ -51,6 +51,14 @@ CREATE TABLE IF NOT EXISTS votes (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+CREATE TABLE IF NOT EXISTS comment_votes (
+    user_id INT NOT NULL REFERENCES Users(user_id),
+    comment_id INT NOT NULL REFERENCES Comments(comment_id) ON DELETE CASCADE,
+    direction SMALLINT NOT NULL CHECK (direction IN (-1, 1)),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (user_id, comment_id)
+);
+
 CREATE TABLE IF NOT EXISTS member_of (
     user_id INT NOT NULL REFERENCES Users(user_id),
     group_id INT NOT NULL REFERENCES Groups(group_id),
