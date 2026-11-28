@@ -68,7 +68,6 @@ zur schnellen Recherche und Analyse von Fehlern.
 - "Beim Bearbeiten erreicht PUT /users/1 das Backend, aber FastAPI antwortet mit 422. Der Dialog übergibt onSave({ username, email }), während meine Funktion handleSave(username, email) erwartet. Warum kommt username als Objekt an und email fehlt im JSON?" 
 - "Mein Dialog ruft onDelete() auf, und in der Profilseite steht handleDelete({id}). Warum bekomme ich TypeError: (destructured parameter) is undefined, obwohl die User-ID im Profil angezeigt wird?"
 
-
 ### Entwicklung (User Statistiken)
 
 - "Ich möchte verschiedene Statistiken der Benutzer des Forums auswerten und anzeigen lassen, wie das Beitrittsdatum, die Anzahl an Threads oder Kommentaren. Was für interessante Statistiken kann man aus meinem Datenbankschema noch hervorheben?"
