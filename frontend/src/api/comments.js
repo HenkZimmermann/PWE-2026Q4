@@ -40,3 +40,16 @@ export async function editComment(commentId, message) {
     if (!response.ok)
         throw new Error("Änderungen konnten nicht gespeichert werden.");
 }
+
+export async function deleteComment(commentId) {
+    const token = localStorage.getItem("accessToken");
+    const response = await fetch(apiBaseUrl + "/comments/" + encodeURIComponent(commentId), {
+        method: "DELETE",
+        headers: {Authorization: `Bearer ${token}`},
+    });
+
+    if (!response.ok)
+        throw new Error("Kommentar konnte nicht gelöscht werden.");
+
+    return response.json();
+}

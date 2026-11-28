@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import { createComment, editComment, getThreadComments } from "../api/comments";
+import { createComment, deleteComment, editComment, getThreadComments } from "../api/comments";
 import { useUser } from "../context/UserProvider";
 import MarkdownContent, { MarkdownHint } from "./MarkdownContent";
 import VoteControls from "./VoteControls";
 import "./ThreadComments.css";
 
 // Komponente für Kommentarspalte, lädt Daten selber aus Backend für gegebene Thread ID
-export default function ThreadComments({threadId, onCommentCreated}) {
+export default function ThreadComments({threadId, onCommentCreated, onCommentDeleted}) {
     const {user} = useUser();
     const [comments, setComments] = useState(null);
     const [message, setMessage] = useState("");
@@ -61,6 +61,20 @@ export default function ThreadComments({threadId, onCommentCreated}) {
         }
     }
 
+    async function handleDelete(commentId) {
+        if (!window.confirm("Diesen Kommentar löschen? Vorhandene Antworten bleiben erhalten."))
+            return;
+
+        try {
+            const {removed} = await deleteComment(commentId);
+            if (removed)
+                onCommentDeleted(threadId);
+            setReload((value) => value + 1);
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
     return (
         <section className="thread-comments">
             <h2>Kommentare</h2>
@@ -84,7 +98,7 @@ export default function ThreadComments({threadId, onCommentCreated}) {
                             <time dateTime={comment.publishedAt}>{comment.publishedAt.slice(0, 10)}</time>
                         )}
                     </header>
-                    {editingId === comment.id ? (
+                    {editingId === comment.id && !comment.deleted ? (
                         <form className="thread-comment-form thread-comment-edit-form" onSubmit={(event) => handleEdit(event, comment.id)}>
                             <label htmlFor={`edit-comment-${comment.id}`}>Kommentar bearbeiten</label>
                             <textarea id={`edit-comment-${comment.id}`} name="message" rows={3} defaultValue={comment.content} aria-describedby="edit-comment-markdown-hint" required autoFocus />
@@ -97,12 +111,17 @@ export default function ThreadComments({threadId, onCommentCreated}) {
                     ) : (
                         <MarkdownContent>{comment.content}</MarkdownContent>
                     )}
-                    <footer>
-                        <VoteControls path={`/comments/${comment.id}/vote`} label="Kommentar bewerten" />
-                        {editingId !== comment.id && (user.id === comment.authorId || user.role === "Admin") && (
-                            <button className="thread-comment-edit" type="button" onClick={() => setEditingId(comment.id)}>Bearbeiten</button>
-                        )}
-                    </footer>
+                    {!comment.deleted && (
+                        <footer>
+                            <VoteControls path={`/comments/${comment.id}/vote`} label="Kommentar bewerten" />
+                            {editingId !== comment.id && (user.id === comment.authorId || user.role === "Admin") && (
+                                <div className="thread-comment-actions">
+                                    <button type="button" onClick={() => setEditingId(comment.id)}>Bearbeiten</button>
+                                    <button type="button" onClick={() => handleDelete(comment.id)}>Löschen</button>
+                                </div>
+                            )}
+                        </footer>
+                    )}
                 </article>
             ))}
         </section>

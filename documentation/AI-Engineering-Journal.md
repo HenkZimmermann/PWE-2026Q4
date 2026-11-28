@@ -48,6 +48,7 @@ zur schnellen Recherche und Analyse von Fehlern.
 - "Nimm diese SQL statements der thread votes [...] und pass die an für Kommentare"
 - "Löschroute wirft immer Fehler, findest du was [...] [...]"
 - "Wieso löscht das hier den thread nicht [...]"
+- "Wie baue ich die Comment lösch route auf, damit wir den quasi nur als gelöscht markieren, scripts: [...]"
 
 ### Entwicklung (Suche)
 

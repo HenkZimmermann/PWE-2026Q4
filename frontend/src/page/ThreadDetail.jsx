@@ -37,6 +37,12 @@ export default function ThreadDetail() {
             : current);
     }
 
+    function handleCommentDeleted(commentThreadId) {
+        setThread((current) => current?.id === commentThreadId
+            ? {...current, commentCount: current.commentCount - 1}
+            : current);
+    }
+
     async function handleEdit(changes) {
         const id = thread.id;
         await editThread(id, changes);
@@ -66,7 +72,7 @@ export default function ThreadDetail() {
                 <>
                     <ThreadCard thread={thread} onEdit={canManage ? () => setEditing(true) : undefined} onDelete={canManage ? handleDelete : undefined} />
                     {editing && <EditThreadDialog thread={thread} onSave={handleEdit} onClose={() => setEditing(false)} />}
-                    <ThreadComments key={thread.id} threadId={thread.id} onCommentCreated={handleCommentCreated} />
+                    <ThreadComments key={thread.id} threadId={thread.id} onCommentCreated={handleCommentCreated} onCommentDeleted={handleCommentDeleted} />
                 </>
             )}
         </div>

@@ -67,14 +67,18 @@
     margin-block-start: 0.5rem;
 }
 
-.thread-comment-edit-actions {
+.thread-comment-edit-actions,
+.thread-comment-actions {
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
 }
 
-.thread-comment-edit {
+.thread-comment-actions {
     margin-inline-start: auto;
+}
+
+.thread-comment-actions button {
     padding: 0.4rem 0.65rem;
     border: 1px solid var(--border);
     border-radius: 0.5rem;
@@ -84,7 +88,7 @@
     cursor: pointer;
 }
 
-.thread-comment-edit:hover,
+.thread-comment-actions button:hover,
 .thread-comment-edit-actions button[type="button"]:hover {
     background: var(--elevated-hover);
 }

@@ -17,14 +17,17 @@ def create_comment_route(request: CommentModel):
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
 
 @router.delete("/comments/{comment_id}")
-def delete_comment_route(comment_id: int):
+def delete_comment_route(comment_id: int, current_user: dict = Depends(get_current_user)):
     try:
-        result = delete_comment_by_id(comment_id)
-        if not result:
-            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Comment not found")
-        return {"message": "Comment deleted successfully"}
-    except Exception as e:
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
+        deleted = delete_comment_by_id(comment_id, current_user["user_id"], current_user["role"] == 1)
+    except Error:
+        raise HTTPException(status_code=500, detail="Comment could not be deleted")
+
+    if deleted is None:
+        raise HTTPException(status_code=404, detail="Comment not found")
+    if deleted is False:
+        raise HTTPException(status_code=403, detail="Only the author or an admin can delete this comment")
+    return {"message": "Comment deleted successfully", **deleted}
 
 @router.put("/comments/{comment_id}")
 def edit_comment_route(comment_id: int, request: EditCommentModel, current_user: dict = Depends(get_current_user)):

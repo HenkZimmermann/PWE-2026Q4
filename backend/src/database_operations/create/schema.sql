@@ -40,7 +40,8 @@ CREATE TABLE IF NOT EXISTS Comments (
     message TEXT NOT NULL,
     votes INT DEFAULT 0,
     user_id INT NOT NULL REFERENCES Users(user_id),
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    deleted_at TIMESTAMP
 );
 
 CREATE TABLE IF NOT EXISTS votes (

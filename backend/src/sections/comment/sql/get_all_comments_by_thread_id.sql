@@ -3,6 +3,7 @@ SELECT
     c.message AS content,
     c.created_at AS "publishedAt",
     c.user_id AS "authorId",
+    (c.deleted_at IS NOT NULL) AS deleted,
     u.username AS "authorName"
 FROM comments AS c
 JOIN users AS u ON u.user_id = c.user_id

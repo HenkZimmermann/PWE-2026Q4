@@ -23,25 +23,33 @@ def create_comment(request: CommentModel):
         print("Fehler beim Erstellen des Kommentars: ", e)
         return False
     
-def delete_comment_by_id(comment_id: int):
-    sql = load_sql_file("sql/delete_comment_by_id.sql", __file__)
+def delete_comment_by_id(comment_id: int, user_id: int, is_admin: bool):
+    conn = get_db_connection()
     try:
-        conn = get_db_connection()
         cursor = conn.cursor()
+        cursor.execute("SELECT user_id FROM comments WHERE comment_id = %s AND deleted_at IS NULL FOR UPDATE", [comment_id])
+        comment = cursor.fetchone()
+        if comment is None:
+            return None
+        if comment[0] != user_id and not is_admin:
+            return False
+
+        cursor.execute("SELECT 1 FROM comments WHERE parent_comment_id = %s LIMIT 1", [comment_id])
+        has_replies = cursor.fetchone() is not None
+        filename = "mark_comment_deleted.sql" if has_replies else "delete_comment_by_id.sql"
+        sql = load_sql_file(f"sql/{filename}", __file__)
         cursor.execute(sql, [comment_id])
         conn.commit()
-        cursor.close()
-        return True
-    except Exception as e:
-        print("Fehler beim Löschen des Kommentars: ", e)
-        return False
+        return {"removed": not has_replies}
+    finally:
+        conn.close()
     
 def edit_comment_by_id(comment_id: int, request: EditCommentModel, user_id: int, is_admin: bool):
     sql = load_sql_file("sql/edit_comment_by_id.sql", __file__)
     conn = get_db_connection()
     try:
         cursor = conn.cursor()
-        cursor.execute("SELECT user_id FROM comments WHERE comment_id = %s FOR UPDATE", [comment_id])
+        cursor.execute("SELECT user_id FROM comments WHERE comment_id = %s AND deleted_at IS NULL FOR UPDATE", [comment_id])
         comment = cursor.fetchone()
         if comment is None:
             return None
