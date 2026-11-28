@@ -30,6 +30,7 @@ zur schnellen Recherche und Analyse von Fehlern.
 - "Ich versuche [...] zu installieren und kriege diesen Fehler: [...]"
 - "React wirft diesen Fehler [...]"
 - "Meine React App findet die neu hinzugefügten JS packages nicht"
+
 ### Entwicklung (Dashboard)
 
 - "Wie kann ich das aktuelle Datum in jsx verarbeiten"
@@ -60,6 +61,7 @@ zur schnellen Recherche und Analyse von Fehlern.
 - "Wie ergänze ich auf der Login Sectione einen Link zur Registrierung"
 - "Kannst du mir basierend auf dem login.css und dem register.jsx ein register.css erstellen?"
 
+
 ### Entwicklung (User Statistiken)
 
 - "Ich möchte verschiedene Statistiken der Benutzer des Forums auswerten und anzeigen lassen, wie das Beitrittsdatum, die Anzahl an Threads oder Kommentaren. Was für interessante Statistiken kann man aus meinem Datenbankschema noch hervorheben?"
@@ -69,8 +71,12 @@ zur schnellen Recherche und Analyse von Fehlern.
 - "Füg mir unter den Statistiken noch ein Link zu dem letzen Thread des Users ein."
 
 
+### Emtwicklung (Tests)
 
-
+- "Welche Möglichkeiten für Tests würden in unser Projekt passen?"
+- "Gib mir ein paar Idee für erste Tests"
+- "Übersetz dieses bash script [...] in ein .bat Script"
+- "Gib mir Unit Tests für unsere jwtProvider implementierung"
 
 ## Details
 
