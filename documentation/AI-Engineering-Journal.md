@@ -25,6 +25,7 @@ zur schnellen Recherche und Analyse von Fehlern.
 - "Erstelle mir für meine User Statistiken noch ein passendes CSS zum designen."
 - "Anbei ist meine .JSX Datei für das bearbeiten zum Anzeigen des Userprofils inkl. Bearbeitungs Dialog. Scheribe dafür eine CSS Datei."
 - "Wie bekomme ich Benutzername, E-Mail, Rolle und User-ID gleichmäßig nebeneinander in eine Card, sodass unter jeder Beschriftung der jeweilige Wert steht? Die Überschrift ‚Mein Profil‘ soll mittig über der Card stehen."
+- "Guck dir mal diese css dateien an, wir haben hier Elemente die nicht zum style der restlichen website passen, verbesser das mal [...]"
 
 ### Debugging von schweren Fehlern
 
