@@ -19,6 +19,21 @@
     font-size: 0.875rem;
 }
 
+.thread-card-edit {
+    margin-inline-start: auto;
+    padding: 0.4rem 0.65rem;
+    border: 1px solid var(--border);
+    border-radius: 0.5rem;
+    background: var(--elevated);
+    color: var(--text);
+    font: inherit;
+    cursor: pointer;
+}
+
+.thread-card-edit:hover {
+    background: var(--elevated-hover);
+}
+
 .thread-card h2 {
     margin: 0.85rem 0 0.45rem;
     font-size: clamp(1.2rem, 3vw, 1.5rem);

@@ -1,17 +1,22 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { getThreadById } from "../api/threads";
+import { editThread, getThreadById } from "../api/threads";
+import { useUser } from "../context/UserProvider";
+import EditThreadDialog from "./EditThreadDialog";
 import ThreadCard from "./ThreadCard";
 import ThreadComments from "./ThreadComments";
 import "./ThreadDetail.css";
 
 export default function ThreadDetail() {
     const {threadId} = useParams();
+    const {user} = useUser();
     const [thread, setThread] = useState(null);
+    const [editing, setEditing] = useState(false);
 
     useEffect(() => {
         let active = true;
         setThread(null);
+        setEditing(false);
 
         getThreadById(threadId)
             .then((thread) => {
@@ -31,13 +36,22 @@ export default function ThreadDetail() {
             : current);
     }
 
+    async function handleEdit(changes) {
+        const id = thread.id;
+        await editThread(id, changes);
+        setThread((current) => current?.id === id ? {...current, ...changes} : current);
+    }
+
+    const canEdit = user && thread && (user.id === thread.authorId || user.role === "Admin");
+
     return (
         <div className="thread-detail">
             {thread === null ? (
                 <p role="status">Beitrag nicht gefunden.</p>
             ) : (
                 <>
-                    <ThreadCard thread={thread} />
+                    <ThreadCard thread={thread} onEdit={canEdit ? () => setEditing(true) : undefined} />
+                    {editing && <EditThreadDialog thread={thread} onSave={handleEdit} onClose={() => setEditing(false)} />}
                     <ThreadComments key={thread.id} threadId={thread.id} onCommentCreated={handleCommentCreated} />
                 </>
             )}

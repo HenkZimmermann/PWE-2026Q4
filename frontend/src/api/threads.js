@@ -38,6 +38,21 @@ export async function getThreadById(threadId) {
     return response.json();
 }
 
+export async function editThread(threadId, {title, content}) {
+    const token = localStorage.getItem("accessToken");
+    const response = await fetch(apiBaseUrl + "/threads/" + encodeURIComponent(threadId), {
+        method: "PUT",
+        headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({title, message: content}),
+    });
+
+    if (!response.ok)
+        throw new Error("Änderungen konnten nicht gespeichert werden.");
+}
+
 // Thread mit gegebenen Inhalt erstellen und ans Backend schicken
 export async function createThread({title, content, groupId, userId}) {
     const response = await fetch(apiBaseUrl + "/threads/create", {

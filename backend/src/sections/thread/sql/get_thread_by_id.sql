@@ -3,6 +3,7 @@ SELECT
     t.title,
     t.message AS content,
     t.created_at AS "publishedAt",
+    t.user_id AS "authorId",
     u.username AS "authorName",
     g.group_name AS "groupName",
     (SELECT COUNT(*) FROM comments AS c WHERE c.thread_id = t.thread_id) AS "commentCount"
