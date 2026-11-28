@@ -46,6 +46,8 @@ zur schnellen Recherche und Analyse von Fehlern.
 - "Gib mir Ideen für Vote Buttons wie bei Reddit. Gibts dafür ASCII Zeichen? Oder bessere Alternativen"
 - "Gib mir für diese Routen passende SQL statements [...]"
 - "Nimm diese SQL statements der thread votes [...] und pass die an für Kommentare"
+- "Löschroute wirft immer Fehler, findest du was [...] [...]"
+- "Wieso löscht das hier den thread nicht [...]"
 
 ### Entwicklung (Suche)
 

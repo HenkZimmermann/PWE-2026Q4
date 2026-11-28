@@ -19,8 +19,14 @@
     font-size: 0.875rem;
 }
 
-.thread-card-edit {
+.thread-card-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
     margin-inline-start: auto;
+}
+
+.thread-card-actions button {
     padding: 0.4rem 0.65rem;
     border: 1px solid var(--border);
     border-radius: 0.5rem;
@@ -30,7 +36,7 @@
     cursor: pointer;
 }
 
-.thread-card-edit:hover {
+.thread-card-actions button:hover {
     background: var(--elevated-hover);
 }
 

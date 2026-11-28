@@ -34,14 +34,17 @@ def create_thread_route(request: CreateThreadModel):
     return thread
     
 @router.delete("/threads/{thread_id}")
-def delete_thread_route(thread_id: int):
+def delete_thread_route(thread_id: int, current_user: dict = Depends(get_current_user)):
     try:
-        result = delete_thread_by_id(thread_id)
-        if not result:
-            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Thread not found")
-        return {"message": "Thread deleted successfully"}
-    except Exception as e:
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
+        deleted = delete_thread_by_id(thread_id, current_user["user_id"], current_user["role"] == 1)
+    except Error:
+        raise HTTPException(status_code=500, detail="Thread could not be deleted")
+
+    if deleted is None:
+        raise HTTPException(status_code=404, detail="Thread not found")
+    if not deleted:
+        raise HTTPException(status_code=403, detail="Only the author or an admin can delete this thread")
+    return {"message": "Thread deleted successfully"}
     
 @router.put("/threads/{thread_id}")
 def edit_thread_route(thread_id: int, request: EditThreadModel, current_user: dict = Depends(get_current_user)):

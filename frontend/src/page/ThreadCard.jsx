@@ -30,7 +30,7 @@ function highlightMatches(text, pattern) {
     ));
 }
 
-export default function ThreadCard({thread, preview = false, searchTerm = "", onOpen, onEdit}) {
+export default function ThreadCard({thread, preview = false, searchTerm = "", onOpen, onEdit, onDelete}) {
     // Sonderzeichen als normalen Text suchen, nicht als Regex interpretieren
     const escapedTerm = searchTerm.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
     const pattern = escapedTerm ? new RegExp("(" + escapedTerm + ")", "iu") : null;
@@ -84,7 +84,14 @@ export default function ThreadCard({thread, preview = false, searchTerm = "", on
             <footer className="thread-card-stats">
                 <VoteControls key={thread.id} path={`/threads/${thread.id}/vote`} label="Beitrag bewerten" />
                 <span>{thread.commentCount} Kommentare</span>
-                {onEdit && <button className="thread-card-edit" type="button" onClick={onEdit}>Bearbeiten</button>}
+
+                {/* Aktionen */}
+                {(onEdit || onDelete) && (
+                    <div className="thread-card-actions">
+                        {onEdit && <button type="button" onClick={onEdit}>Bearbeiten</button>}
+                        {onDelete && <button type="button" onClick={onDelete}>Löschen</button>}
+                    </div>
+                )}
             </footer>
         </article>
     );

@@ -38,6 +38,19 @@ export async function getThreadById(threadId) {
     return response.json();
 }
 
+// Thread löschen
+export async function deleteThread(threadId) {
+    const token = localStorage.getItem("accessToken");
+    const response = await fetch(apiBaseUrl + "/threads/" + encodeURIComponent(threadId), {
+        method: "DELETE",
+        headers: {Authorization: `Bearer ${token}`},
+    });
+
+    if (!response.ok)
+        throw new Error("Beitrag konnte nicht gelöscht werden.");
+}
+
+// Thread bearbeiten
 export async function editThread(threadId, {title, content}) {
     const token = localStorage.getItem("accessToken");
     const response = await fetch(apiBaseUrl + "/threads/" + encodeURIComponent(threadId), {

@@ -35,18 +35,23 @@ def create_thread(request: ThreadModel):
         print("Fehler beim Erstellen des Threads: ", e)
         return False
     
-def delete_thread_by_id(thread_id: int):
+def delete_thread_by_id(thread_id: int, user_id: int, is_admin: bool):
     sql = load_sql_file("sql/delete_thread_by_id.sql", __file__)
+    conn = get_db_connection()
     try:
-        conn = get_db_connection()
         cursor = conn.cursor()
+        cursor.execute("SELECT user_id FROM threads WHERE thread_id = %s FOR UPDATE", [thread_id])
+        thread = cursor.fetchone()
+        if thread is None:
+            return None
+        if thread[0] != user_id and not is_admin:
+            return False
+
         cursor.execute(sql, [thread_id])
         conn.commit()
-        cursor.close()
         return True
-    except Exception as e:
-        print("Fehler beim Löschen des Threads: ", e)
-        return False
+    finally:
+        conn.close()
     
 def edit_thread_by_id(thread_id: int, request: EditThreadModel, user_id: int, is_admin: bool):
     sql = load_sql_file("sql/edit_thread_by_id.sql", __file__)
