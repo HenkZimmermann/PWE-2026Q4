@@ -1,1 +1,1 @@
-UPDATE threads SET title = %s, content = %s WHERE thread_id = %s;
+UPDATE threads SET title = %s, message = %s WHERE thread_id = %s;

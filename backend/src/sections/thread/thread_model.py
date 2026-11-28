@@ -7,6 +7,10 @@ class ThreadModel(BaseModel):
     group_id: int
     title: str
 
-# Thread create nimmt kein votes, weil kann ja noch keine haben
+# Create nimmt kein votes, weil kann ja noch keine haben können bei Erstellung
 class CreateThreadModel(ThreadModel):
     votes: int = 0
+
+class EditThreadModel(BaseModel):
+    title: str
+    message: str

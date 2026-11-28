@@ -1,4 +1,6 @@
-from fastapi import APIRouter, HTTPException, Query, status
+from fastapi import APIRouter, Depends, HTTPException, Query, status
+from psycopg2 import Error
+from src.security.jwtProvider import get_current_user
 from src.sections.thread.thread_model import *
 from src.sections.thread.thread_service import *
 
@@ -42,14 +44,21 @@ def delete_thread_route(thread_id: int):
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
     
 @router.put("/threads/{thread_id}")
-def edit_thread_route(thread_id: int, request: ThreadModel):
+def edit_thread_route(thread_id: int, request: EditThreadModel, current_user: dict = Depends(get_current_user)):
+    request.title = request.title.strip()
+    if not request.title or len(request.title) > 255 or not request.message.strip():
+        raise HTTPException(status_code=422, detail="A title of up to 255 characters and a message are required")
+
     try:
-        result = edit_thread_by_id(thread_id, request)
-        if not result:
-            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Thread not found")
-        return {"message": "Thread updated successfully"}
-    except Exception as e:
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
+        updated = edit_thread_by_id(thread_id, request, current_user["user_id"], current_user["role"] == 1)
+    except Error:
+        raise HTTPException(status_code=500, detail="Thread could not be updated")
+
+    if updated is None:
+        raise HTTPException(status_code=404, detail="Thread not found")
+    if not updated:
+        raise HTTPException(status_code=403, detail="Only the author or an admin can edit this thread")
+    return {"message": "Thread updated successfully"}
     
 @router.get("/threads/search")
 def search_threads_route(search_term: str, limit: int, group_id: int | None = None):
