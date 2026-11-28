@@ -43,6 +43,9 @@ zur schnellen Recherche und Analyse von Fehlern.
 - "Gib mir eine grobe SQL Abfrage um Thread Titel via String zu durchsuchen"
 - "Wie kann ich mit react markdown render ohne viel Aufwand"
 - "Schreib dieses seed script neu mit mehr daten und markdown Inhalten [...]"
+- "Gib mir Ideen für Vote Buttons wie bei Reddit. Gibts dafür ASCII Zeichen? Oder bessere Alternativen"
+- "Gib mir für diese Routen passende SQL statements [...]"
+- "Nimm diese SQL statements der thread votes [...] und pass die an für Kommentare"
 
 ### Entwicklung (Suche)
 

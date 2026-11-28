@@ -55,6 +55,45 @@
     color: var(--text-soft);
 }
 
+.thread-comment footer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+    margin-block-start: 0.75rem;
+}
+
+.thread-comment-edit-form {
+    margin-block-start: 0.5rem;
+}
+
+.thread-comment-edit-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.thread-comment-edit {
+    margin-inline-start: auto;
+    padding: 0.4rem 0.65rem;
+    border: 1px solid var(--border);
+    border-radius: 0.5rem;
+    background: var(--elevated);
+    color: var(--text);
+    font: inherit;
+    cursor: pointer;
+}
+
+.thread-comment-edit:hover,
+.thread-comment-edit-actions button[type="button"]:hover {
+    background: var(--elevated-hover);
+}
+
+.thread-comment-edit-actions button[type="button"] {
+    background: var(--elevated);
+    color: var(--text);
+}
+
 .thread-comment .markdown-content {
     margin-block-start: 0.5rem;
 }

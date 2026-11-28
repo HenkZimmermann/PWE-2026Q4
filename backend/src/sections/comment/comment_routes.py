@@ -1,4 +1,6 @@
-from fastapi import APIRouter, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, status
+from psycopg2 import Error
+from src.security.jwtProvider import get_current_user
 from src.sections.comment.comment_model import *
 from src.sections.comment.comment_service import *
 
@@ -25,14 +27,20 @@ def delete_comment_route(comment_id: int):
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
 
 @router.put("/comments/{comment_id}")
-def edit_comment_route(comment_id: int, request: CommentModel):
+def edit_comment_route(comment_id: int, request: EditCommentModel, current_user: dict = Depends(get_current_user)):
+    if not request.message.strip():
+        raise HTTPException(status_code=422, detail="A message is required")
+
     try:
-        result = edit_comment_by_id(comment_id, request)
-        if not result:
-            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Comment not found")
-        return {"message": "Comment updated successfully"}
-    except Exception as e:
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
+        updated = edit_comment_by_id(comment_id, request, current_user["user_id"], current_user["role"] == 1)
+    except Error:
+        raise HTTPException(status_code=500, detail="Comment could not be updated")
+
+    if updated is None:
+        raise HTTPException(status_code=404, detail="Comment not found")
+    if not updated:
+        raise HTTPException(status_code=403, detail="Only the author or an admin can edit this comment")
+    return {"message": "Comment updated successfully"}
 
 @router.get("/comments/parent/{parent_comment_id}")
 def get_comments_by_parent_comment_id_route(parent_comment_id: int):

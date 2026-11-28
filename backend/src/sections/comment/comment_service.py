@@ -36,25 +36,23 @@ def delete_comment_by_id(comment_id: int):
         print("Fehler beim Löschen des Kommentars: ", e)
         return False
     
-def edit_comment_by_id(comment_id: int, request: CommentModel):
+def edit_comment_by_id(comment_id: int, request: EditCommentModel, user_id: int, is_admin: bool):
     sql = load_sql_file("sql/edit_comment_by_id.sql", __file__)
+    conn = get_db_connection()
     try:
-        conn = get_db_connection()
         cursor = conn.cursor()
-        cursor.execute(sql, [
-            request.thread_id, 
-            request.parent_comment_id, 
-            request.message, 
-            request.votes,
-            request.user_id,
-            comment_id
-        ])
+        cursor.execute("SELECT user_id FROM comments WHERE comment_id = %s FOR UPDATE", [comment_id])
+        comment = cursor.fetchone()
+        if comment is None:
+            return None
+        if comment[0] != user_id and not is_admin:
+            return False
+
+        cursor.execute(sql, [request.message, comment_id])
         conn.commit()
-        cursor.close()
         return True
-    except Exception as e:
-        print("Fehler beim Bearbeiten des Kommentars: ", e)
-        return False
+    finally:
+        conn.close()
     
 def get_all_comments_by_thread_id(thread_id: int):
     sql = load_sql_file("sql/get_all_comments_by_thread_id.sql", __file__)

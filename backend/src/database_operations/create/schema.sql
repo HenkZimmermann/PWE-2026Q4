@@ -46,9 +46,17 @@ CREATE TABLE IF NOT EXISTS Comments (
 CREATE TABLE IF NOT EXISTS votes (
     user_id INT NOT NULL REFERENCES Users(user_id),
     thread_id INT REFERENCES Threads(thread_id) ON DELETE CASCADE,
+    direction SMALLINT NOT NULL DEFAULT 1 CHECK (direction IN (-1, 1)),
     PRIMARY KEY (user_id, thread_id),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
 
+CREATE TABLE IF NOT EXISTS comment_votes (
+    user_id INT NOT NULL REFERENCES Users(user_id),
+    comment_id INT NOT NULL REFERENCES Comments(comment_id) ON DELETE CASCADE,
+    direction SMALLINT NOT NULL CHECK (direction IN (-1, 1)),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (user_id, comment_id)
 );
 
 CREATE TABLE IF NOT EXISTS member_of (
@@ -62,5 +70,4 @@ CREATE TABLE IF NOT EXISTS follows (
     user_id INT NOT NULL REFERENCES Users(user_id),
     followed_user_id INT NOT NULL REFERENCES Users(user_id),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-
 );

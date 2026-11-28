@@ -1,0 +1,42 @@
+.vote-controls {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    width: fit-content;
+    padding: 0.2rem;
+    border: 1px solid var(--border);
+    border-radius: 1rem;
+    background: var(--elevated);
+    font-size: 0.875rem;
+}
+
+.vote-controls button {
+    min-width: 2rem;
+    min-height: 2rem;
+    border: 0;
+    border-radius: 0.75rem;
+    background: transparent;
+    color: var(--text-soft);
+    font: inherit;
+    cursor: pointer;
+}
+
+.vote-controls button:hover {
+    background: var(--elevated-hover);
+}
+
+.vote-controls button[aria-pressed="true"] {
+    background: var(--accent);
+    color: var(--background);
+}
+
+.vote-controls button:focus-visible {
+    outline: 2px solid var(--accent-light);
+    outline-offset: 2px;
+}
+
+.vote-controls output {
+    min-width: 2ch;
+    text-align: center;
+    font-variant-numeric: tabular-nums;
+}

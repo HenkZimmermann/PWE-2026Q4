@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { fromMarkdown } from "mdast-util-from-markdown";
 import MarkdownContent from "./MarkdownContent";
+import VoteControls from "./VoteControls";
 import "./ThreadCard.css";
 
 const blockContainers = new Set(["root", "blockquote", "list", "listItem"]);
@@ -29,7 +30,7 @@ function highlightMatches(text, pattern) {
     ));
 }
 
-export default function ThreadCard({thread, preview = false, searchTerm = "", onOpen}) {
+export default function ThreadCard({thread, preview = false, searchTerm = "", onOpen, onEdit}) {
     // Sonderzeichen als normalen Text suchen, nicht als Regex interpretieren
     const escapedTerm = searchTerm.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
     const pattern = escapedTerm ? new RegExp("(" + escapedTerm + ")", "iu") : null;
@@ -80,9 +81,10 @@ export default function ThreadCard({thread, preview = false, searchTerm = "", on
                 <MarkdownContent>{thread.content}</MarkdownContent>
             )}
 
-            {/* Statistik wie Anzahl Kommentare und mehr später */}
             <footer className="thread-card-stats">
+                <VoteControls key={thread.id} path={`/threads/${thread.id}/vote`} label="Beitrag bewerten" />
                 <span>{thread.commentCount} Kommentare</span>
+                {onEdit && <button className="thread-card-edit" type="button" onClick={onEdit}>Bearbeiten</button>}
             </footer>
         </article>
     );

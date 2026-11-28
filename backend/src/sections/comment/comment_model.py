@@ -6,3 +6,6 @@ class CommentModel(BaseModel):
     message: str
     votes: int
     user_id: int
+
+class EditCommentModel(BaseModel):
+    message: str
