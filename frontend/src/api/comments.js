@@ -25,3 +25,18 @@ export async function createComment({threadId, message, userId}) {
     if (!response.ok)
         throw new Error("Kommentar konnte nicht gespeichert werden.");
 }
+
+export async function editComment(commentId, message) {
+    const token = localStorage.getItem("accessToken");
+    const response = await fetch(apiBaseUrl + "/comments/" + encodeURIComponent(commentId), {
+        method: "PUT",
+        headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({message}),
+    });
+
+    if (!response.ok)
+        throw new Error("Änderungen konnten nicht gespeichert werden.");
+}
