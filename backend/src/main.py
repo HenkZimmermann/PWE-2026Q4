@@ -10,6 +10,7 @@ from src.sections.follows import follows_routes
 from src.sections.member_of import member_of_routes
 from src.sections.vote import vote_routes
 from src.sections.user import user_routes
+from src.sections.user_statistics import user_statistics_routes
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
@@ -29,6 +30,8 @@ app.include_router(follows_routes.router)
 app.include_router(member_of_routes.router)
 app.include_router(vote_routes.router)
 app.include_router(user_routes.router)
+app.include_router(user_statistics_routes.router)
+
 
 @app.get("/")
 def root():
